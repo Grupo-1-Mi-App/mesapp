@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+// import { observador } from '../firebase/auth.js'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,16 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/menu',
+    name: 'Menu',
+    component: () => import('../views/Menu.vue')
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: () => import('../views/Users.vue')
   }
 ]
 
@@ -25,5 +36,11 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+//Usar el observador cuando se tenga el login y logout creados
+// router.beforeEach((to, from, next) => {
+//   observador(to, next);
+// });
+
 
 export default router
