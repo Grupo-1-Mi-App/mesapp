@@ -9,7 +9,7 @@
       <v-toolbar-title><router-link to="/" class="text-decoration-none title" >mesapp</router-link></v-toolbar-title>
 
       <v-toolbar-items class="ml-5 hidden-sm-and-down">
-        <v-btn to="#" plain elevation="0">Generar código QR</v-btn>
+        <v-btn to="/qr" plain elevation="0">Generar código QR</v-btn>
         <v-btn to="/users" plain elevation="0">Usuarios</v-btn>
         <v-btn to="#" plain elevation="0">Menú</v-btn>
       </v-toolbar-items>

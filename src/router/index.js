@@ -28,6 +28,11 @@ const routes = [
     path: '/users',
     name: 'Users',
     component: () => import('../views/Users.vue')
+  },
+  {
+    path: '/qr',
+    name: 'QR',
+    component: () => import('../views/QR.vue')
   }
 ]
 
