@@ -90,7 +90,7 @@
                           color="#FFC107"
                           class="mr-4 my-3"
                           elevation="2"
-                          @click="save"
+                          @click="createUser"
                         >
                           Crear Usuario
                         </v-btn>
@@ -234,7 +234,7 @@ export default {
       this.dialogDelete = true;
     },
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
+      this.users.splice(this.editedIndex, 1);
       this.closeDelete();
     },
     close() {
@@ -251,11 +251,11 @@ export default {
         this.editedIndex = -1;
       });
     },
-    save() {
+    createUser() {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem);
       } else {
-        this.desserts.push(this.editedItem);
+        this.users.push(this.editedItem);
       }
       this.close();
     },
