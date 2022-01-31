@@ -120,7 +120,8 @@
                 </v-toolbar>
               </template>
               <template v-slot:item.actions="{ item }">
-                <v-btn
+                <div class="justify-end d-flex">
+                  <v-btn
                   class="btn-editar mr-5"
                   color="#31302E"
                   small
@@ -139,6 +140,7 @@
                 >
                   Borrar
                 </v-btn>
+                </div>
               </template>
               <template v-slot:no-data>
                 <v-btn color="primary" @click="initialize"> Reset </v-btn>
@@ -162,7 +164,7 @@ export default {
       headers: [
         { text: "Nombre", value: "name" },
         { text: "Rol", value: "role" },
-        { text: "Acciones", value: "actions", sortable: false },
+        { text: "Acciones", value: "actions", sortable: false, class: "text-end" },
       ],
       // Usuarios: Users,
       editedIndex: -1,
