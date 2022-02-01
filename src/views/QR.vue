@@ -11,7 +11,12 @@
             :src="qrimage"
             v-if="qrimage"
             ></v-img>
-            <p class="generando" v-else>Generando QR...</p>
+            <div class="generando" v-else>
+              <v-progress-circular
+              indeterminate
+              color="amber"
+            ></v-progress-circular>
+            </div>
           </v-flex>
       </v-layout>
       <div class="text-center mt-5">
@@ -87,8 +92,10 @@ export default {
     p.creado{
         display: none;
     }
-    p.generando{
+    .generando{
         height: 235px;
+        display: flex;
+        align-items: center;
     }
     @media print {
         body {
