@@ -8,15 +8,16 @@
 
       <v-toolbar-title><router-link to="/" class="text-decoration-none title" >mesapp</router-link></v-toolbar-title>
 
-      <v-toolbar-items class="ml-5 hidden-sm-and-down">
+      <v-toolbar-items class="ml-5 hidden-sm-and-down" v-if="auth">
         <v-btn to="/qr" plain elevation="0">Generar código QR</v-btn>
         <v-btn to="/users" plain elevation="0">Usuarios</v-btn>
         <v-btn to="#" plain elevation="0">Menú</v-btn>
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn to="#" plain elevation="0">
+      <v-toolbar-items v-if="auth">
+        <v-btn @click="logout" plain elevation="0">
+          {{ userEmail }}
             Salir <v-icon right dark> mdi-logout </v-icon>
         </v-btn>
       </v-toolbar-items>
@@ -47,11 +48,42 @@
 </template>
 
 <script>
+import { logout } from "../firebase/auth.js";
 export default {
   data: () => ({
     drawer: false,
     group: null,
+    auth: false,
   }),
+  methods: {
+    logout() {
+      logout();
+      this.$store.commit("eraseEmail");
+    },
+    setAuthState() {
+      if (this.userEmail == "") {
+        this.auth = false;
+      } else {
+        this.auth = true;
+      }
+    },
+  },
+
+  computed: {
+    userEmail() {
+      return this.$store.state.email;
+    },
+  },
+
+  watch: {
+    userEmail() {
+      this.setAuthState();
+    },
+  },
+
+  mounted() {
+    this.setAuthState();
+  },
 };
 </script>
 

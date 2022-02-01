@@ -34,18 +34,34 @@ El administrador es el único en conocer la ruta del sistema de administración
 **Guía de Estilos**
 
 ***Colores y tipografía***
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c86ec3880bf364d7f6c5f1e71ee7b9c5561807c
 La siguiente imagen es la guía de estilos propuesto.
 ![alt text](https://github.com/Grupo-1-Mi-App/mesapp/blob/hito1/tipografia.png?raw=true)
 
 ***Maqueta***
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c86ec3880bf364d7f6c5f1e71ee7b9c5561807c
 Para la realización de la maqueta definimos la herramienta figma, puede encontrar el detalle en el siguiente enlace:
 https://www.figma.com/proto/YYYSx3DrT7EYjLYLVgrYfU/Coffee-APP?node-id=0%3A1&scaling=min-zoom&page-id=0%3A1
 
 ***Resultado***
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c86ec3880bf364d7f6c5f1e71ee7b9c5561807c
 El resultado que deseamos obtener del proyecto se encuentra en el siguiente enlace, de aquí nos guiamos en el diseño gráfico propuesto.
 https://xd.adobe.com/view/d90c3c28-3536-4d31-a985-3f1b7d7b39a9-8c5f/
 
 **Guía de instalación del proyecto**
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c86ec3880bf364d7f6c5f1e71ee7b9c5561807c
 *Project setup*
 ```
 npm install

@@ -1,15 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-// import { observador } from '../firebase/auth.js'
+import { observador } from '../firebase/auth.js'
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Login",
+    component: () => import("../views/Login.vue"),
   },
   {
     path: "/about",
@@ -35,11 +34,11 @@ const routes = [
     name: "QR",
     component: () => import("../views/QR.vue"),
   },
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/Login.vue"),
-  },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   component: () => import("../views/Login.vue"),
+  // },
 ];
 
 const router = new VueRouter({
@@ -48,9 +47,8 @@ const router = new VueRouter({
   routes,
 });
 
-//Usar el observador cuando se tenga el login y logout creados
-// router.beforeEach((to, from, next) => {
-//   observador(to, next);
-// });
+router.beforeEach((to, from, next) => {
+  observador(to, next);
+});
 
 export default router;

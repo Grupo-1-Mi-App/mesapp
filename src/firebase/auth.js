@@ -4,7 +4,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  // onAuthStateChanged,
+  onAuthStateChanged,
   signOut,
 } from "firebase/auth";
 
@@ -63,22 +63,22 @@ const logout = () => {
 
 // Observador: Usarlo cuando tengamos el login y logout creados
 
-// const observador = (to, next) => {
-//   onAuthStateChanged(auth, (user) => {
-//     if (user) {
-//       if (to.path === "/" || to.path === "/register") {
-//         next("/home" || "/admin");
-//       } else {
-//         next();
-//       }
-//     } else  {
-//       if (to.path !== "/" && to.path !== "/register") {
-//         next("/");
-//       } else {
-//         next(); 
-//       }
-//     }
-//   });
-// };
+const observador = (to, next) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      if (to.path === "/") {
+        next("/qr" );
+      } else {
+        next();
+      }
+    } else  {
+      if (to.path !== "/") {
+        next("/");
+      } else {
+        next(); 
+      }
+    }
+  });
+};
 
-export { registrarUsuario, login, logout};
+export { registrarUsuario, login, logout, observador};
