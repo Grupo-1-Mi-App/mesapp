@@ -34,7 +34,7 @@ El administrador es el único en conocer la ruta del sistema de administración
 **Guía de Estilos**
 ***Colores y tipografía***
 La siguiente imagen es la guía de estilos propuesto.
-![alt text](https://github.com/Grupo-1-Mi-App/mesapp/blob/hito1/tipografia.png?raw=true)
+![alt text](https://github.com/Grupo-1-Mi-App/mesapp/blob/hito1/tipografia1.png?raw=true)
 
 ***Maqueta***
 Para la realización de la maqueta definimos la herramienta figma, puede encontrar el detalle en el siguiente enlace:
