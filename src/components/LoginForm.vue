@@ -22,7 +22,7 @@
         @click:append="show1 = !show1"
         @keydown.enter="loginUser"
       ></v-text-field>
-      <v-btn elevation="2" class="">Iniciar Sesión</v-btn>
+      <v-btn elevation="2" class="" @click="loginUser">Iniciar Sesión</v-btn>
     </v-form>
   </div>
 </template>

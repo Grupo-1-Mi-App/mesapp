@@ -66,15 +66,21 @@ const logout = () => {
 const observador = (to, next) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      //si está logeado
       if (to.path === "/") {
         next("/qr" );
       } else {
         next();
       }
     } else  {
-      if (to.path !== "/") {
+      //no está
+      if(to.path == "/menu"){
+        next(); 
+      }
+      else if (to.path !== "/") {
         next("/");
-      } else {
+      } 
+      else {
         next(); 
       }
     }

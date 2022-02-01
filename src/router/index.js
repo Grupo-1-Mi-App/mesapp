@@ -34,6 +34,11 @@ const routes = [
     name: "QR",
     component: () => import("../views/QR.vue"),
   },
+  {
+    path: "/*",
+    name: "404",
+    component: () => import("../views/404.vue"),
+  },
   // {
   //   path: "/login",
   //   name: "Login",

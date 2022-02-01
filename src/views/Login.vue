@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div class="login-page">
     <navbarComponent></navbarComponent>
-    <v-container>
       <v-row>
         <v-col cols="12" lg="6" md="6" sm="12" class="izquierda">
           <img src="../../public/img/login.png" alt="" />
         </v-col>
         <v-col cols="12" lg="6" md="6" sm="12" class="derecha">
-          <formularioLogin></formularioLogin>
+          <v-container>
+            <formularioLogin></formularioLogin>
+          </v-container>
         </v-col>
         <footerComponent></footerComponent>
       </v-row>
-    </v-container>
   </div>
 </template>
 
