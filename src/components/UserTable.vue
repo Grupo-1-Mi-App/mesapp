@@ -120,7 +120,7 @@
                 </v-toolbar>
               </template>
               <template v-slot:item.actions="{ item }">
-                <div class="justify-end d-lg-flex">
+                <div class="justify-end d-lg-flex d-md-flex">
                   <v-btn
                   class="btn-editar mr-5"
                   color="#31302E"
@@ -284,4 +284,12 @@ export default {
     width: initial;
   }
 }
+
+@media( max-width: 992px) {
+  .btn-borrar,
+  .btn-editar {
+    width: initial;
+  }
+}
+
 </style>
