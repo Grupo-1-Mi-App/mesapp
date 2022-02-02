@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import { observador } from '../firebase/auth.js'
+import { observador } from "../firebase/auth.js";
 
 Vue.use(VueRouter);
 
@@ -33,6 +33,11 @@ const routes = [
     path: "/qr",
     name: "QR",
     component: () => import("../views/QR.vue"),
+  },
+  {
+    path: "/admin_menu",
+    name: "admMenu",
+    component: () => import("../views/AdminMenu.vue"),
   },
   {
     path: "/*",
