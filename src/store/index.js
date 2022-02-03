@@ -84,6 +84,10 @@ export default new Vuex.Store({
       state.email = "";
     },
 
+    deleteUser(state, id) {
+      state.users.splice(id, 1);
+    },
+
     upadateUser(state, data) {
       state.users[data.index] = data.user;
     },

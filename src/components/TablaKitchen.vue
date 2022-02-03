@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-row class="mt-5">
-        <v-col cols="12">
+        <v-col cols="8">
           <v-card class="px-4 py-4" elevation="0">
             <v-data-table
               :headers="headers"
@@ -14,16 +14,6 @@
                 <v-toolbar flat>
                   <v-spacer></v-spacer>
                   <v-dialog v-model="dialog" max-width="500px">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        color="#FFC107"
-                        class="mb-2 text-capitalize"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        Crear usuario
-                      </v-btn>
-                    </template>
                     <v-card>
                       <v-card-title>
                         <span class="text-h5">{{ formTitle }}</span>
@@ -154,6 +144,46 @@
             </v-data-table>
           </v-card>
         </v-col>
+        <v-col cols="4" class="detalles">
+          <v-card outlined class="px-4 py-4" elevation="0">
+            <v-card-title>Resumen del Pedido</v-card-title>
+            <v-select
+              :items="mesas"
+              label="Mesa"
+              outlined
+            ></v-select>
+            <v-list three-line>
+              <v-row class="el-pedido">
+                <div>
+                  <v-list-item-title>Pescao</v-list-item-title>
+                </div>
+                <div class="d-flex cantidades">
+                  <v-btn
+                      color="orange"
+                      dark
+                      x-small
+                      @click="add(-1)" :disabled="inputpescao < 2"
+                    >-
+                    </v-btn>
+                    <v-text-field v-model.number="inputpescao" hide-details></v-text-field>
+                    <v-btn
+                      color="orange"
+                      dark
+                      x-small
+                      @click="add(+1)"
+                    >+
+                    </v-btn>
+                </div>
+              </v-row>
+              <v-divider></v-divider>
+            </v-list>
+            <v-btn
+              color="orange"
+            >
+              Crear pedido
+            </v-btn>
+          </v-card>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -165,27 +195,24 @@ export default {
   props:['users'],
   data() {
     return {
-      roles: [
-        "Administrador",
-        "Garzon",
-        "Cocina"
-      ],
-      show1: false,
       dialog: false,
       dialogDelete: false,
       headers: [
-        { text: "Nombre", value: "name" },
-        { text: "Rol", value: "role" },
+        { text: "Orden", value: "order" },
+        { text: "Mesa", value: "table_number" },
+        { text: "Hora de Inicio", value: "date_start" },
+        { text: "Estado", value: "status" },
+        { text: "Hora de Entrega", value: "date_finish" },
         { text: "Acciones", value: "actions", sortable: false, class: "text-end" },
       ],
       // Usuarios: Users,
       editedIndex: -1,
       editedItem: {
-        id: "",
-        name: "",
-        email: "",
-        password: "",
-        role: "",
+        order: "",
+        table_number: "",
+        data_start: "",
+        status: "",
+        date_finish: "",
       },
       defaultItem: {
         name: "",
@@ -193,6 +220,9 @@ export default {
         password: "",
         role: "",
       },
+      mesas:['Mesa 1', 'Mesa 2', 'Mesa 3', 'Mesa 4'],
+      inputpescao: 0,
+
     };
   },
   computed: {
@@ -222,9 +252,10 @@ export default {
   },
   methods: {
     initialize() {
-      
+
       
     },
+
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -261,6 +292,10 @@ export default {
       }
       this.close();
     },
+    add(num) {
+      let res = parseInt(this.inputpescao) + parseInt(num);
+      this.inputpescao = res;
+    }
   },
 };
 </script>
@@ -279,6 +314,25 @@ export default {
   border: 1px solid #31302e;
   border-radius: 2px;
   opacity: 1;
+}
+.el-pedido{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em;
+}
+.cantidades{
+  display: flex;
+  align-items: center;
+  width: 90px;
+}
+.cantidades .v-btn{
+  font-size: 1.3em;
+}
+.cantidades .v-text-field{
+  text-align: center !important;
+}
+.cantidades .v-text-field input{
+  text-align: center !important;
 }
 @media(max-width: 480px){
   .btn-borrar,
