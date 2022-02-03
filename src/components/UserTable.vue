@@ -205,7 +205,7 @@ export default {
     },
 
     filtrarUser() {
-      return this.$store.getters.filterCourse(this.traerId);
+      return this.$store.getters.filtrarUser(this.traerId);
 
     },
   },

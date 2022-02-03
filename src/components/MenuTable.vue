@@ -98,7 +98,7 @@
 
 <script>
 export default {
-  props: ["products"],
+  props: ['products'],
   data() {
     return {
       categoria: [

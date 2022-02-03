@@ -19,7 +19,7 @@ export default {
     Footer,
   },
 
-  computers: {
+  computed: {
     products() {
       return this.$store.state.products;
     },
