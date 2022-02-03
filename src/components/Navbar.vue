@@ -2,7 +2,8 @@
   <div>
     <v-app-bar dark>
       <v-app-bar-nav-icon
-        @click="drawer = true"
+        @click.stop="drawer = !drawer"
+        v-if="auth"
         class="hidden-sm-and-up"
       ></v-app-bar-nav-icon>
 
@@ -11,7 +12,7 @@
       <v-toolbar-items class="ml-5 hidden-sm-and-down" v-if="auth">
         <v-btn to="/qr" plain elevation="0">Generar código QR</v-btn>
         <v-btn to="/users" plain elevation="0">Usuarios</v-btn>
-        <v-btn to="#" plain elevation="0">Menú</v-btn>
+        <v-btn to="/admin_menu" plain elevation="0">Menú</v-btn>
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
@@ -23,7 +24,7 @@
       </v-toolbar-items>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" fixed temporary>
+    <v-navigation-drawer v-model="drawer" absolute left temporary >
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
@@ -39,7 +40,8 @@
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title>Menú</v-list-item-title>
+            <v-list-item-title><router-link to="/admin_menu" class="link"
+                >Menú</router-link></v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
