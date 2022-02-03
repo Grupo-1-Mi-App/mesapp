@@ -144,45 +144,41 @@
             </v-data-table>
           </v-card>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="4" class="detalles">
           <v-card outlined class="px-4 py-4" elevation="0">
             <v-card-title>Resumen del Pedido</v-card-title>
             <v-select
-              :items="items"
+              :items="mesas"
               label="Mesa"
               outlined
             ></v-select>
             <v-list three-line>
-              <v-row>
-                <v-col cols="8">
+              <v-row class="el-pedido">
+                <div>
                   <v-list-item-title>Pescao</v-list-item-title>
-                </v-col>
-                <v-col cols="4 d-flex cantidades">
+                </div>
+                <div class="d-flex cantidades">
                   <v-btn
                       color="orange"
                       dark
                       x-small
-                      @click="minus(inputpescao)"
-                    >+
+                      @click="add(-1)" :disabled="inputpescao < 2"
+                    >-
                     </v-btn>
-                    <v-text-field v-model="inputpescao" class="text-center"></v-text-field>
+                    <v-text-field v-model.number="inputpescao" hide-details></v-text-field>
                     <v-btn
                       color="orange"
                       dark
                       x-small
-                      @click="minus(inputpescao)"
-                    >-
+                      @click="add(+1)"
+                    >+
                     </v-btn>
-                </v-col>
+                </div>
               </v-row>
-              <v-divider></v-divider>
-
-              <v-list-item-title>Pescao</v-list-item-title>
               <v-divider></v-divider>
             </v-list>
             <v-btn
               color="orange"
-              text
             >
               Crear pedido
             </v-btn>
@@ -224,6 +220,7 @@ export default {
         password: "",
         role: "",
       },
+      mesas:['Mesa 1', 'Mesa 2', 'Mesa 3', 'Mesa 4'],
       inputpescao: 0,
 
     };
@@ -295,6 +292,10 @@ export default {
       }
       this.close();
     },
+    add(num) {
+      let res = parseInt(this.inputpescao) + parseInt(num);
+      this.inputpescao = res;
+    }
   },
 };
 </script>
@@ -314,12 +315,24 @@ export default {
   border-radius: 2px;
   opacity: 1;
 }
+.el-pedido{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em;
+}
 .cantidades{
   display: flex;
   align-items: center;
+  width: 90px;
 }
-.text-center{
-  text-align: center;
+.cantidades .v-btn{
+  font-size: 1.3em;
+}
+.cantidades .v-text-field{
+  text-align: center !important;
+}
+.cantidades .v-text-field input{
+  text-align: center !important;
 }
 @media(max-width: 480px){
   .btn-borrar,
