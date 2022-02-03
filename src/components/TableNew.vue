@@ -15,6 +15,7 @@
           </template>
           <img
             height="250"
+            class="img-producto"
             :src='baseRoutes(product.Foto)'
           >
           <v-card-title>{{baseRoutes(product.Foto)}}</v-card-title>
@@ -151,6 +152,10 @@ export default {
 }
 .cantidades .v-text-field input{
   text-align: center !important;
+}
+.img-producto{
+  object-fit: cover;
+  width: 100%;
 }
 @media(max-width: 480px){
   .btn-borrar,
