@@ -91,7 +91,14 @@ export default new Vuex.Store({
     upadateUser(state, data) {
       state.users[data.index] = data.user;
     },
+
+    
   },
-  actions: {},
+  actions: {
+    addProduct(context, data) {
+      context.commit("addProduct", data);
+    }
+   
+  },
   modules: {},
 });

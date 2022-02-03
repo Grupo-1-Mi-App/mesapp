@@ -159,7 +159,7 @@
                 </div>
                 <div class="d-flex cantidades">
                   <v-btn
-                      color="#FFC107"
+                      color="orange"
                       dark
                       x-small
                       @click="add(-1)" :disabled="inputpescao < 1"
@@ -167,7 +167,7 @@
                     </v-btn>
                     <v-text-field v-model.number="inputpescao" hide-details></v-text-field>
                     <v-btn
-                      color="#FFC107"
+                      color="orange"
                       dark
                       x-small
                       @click="add(+1)"
@@ -178,7 +178,7 @@
               <v-divider></v-divider>
             </v-list>
             <v-btn
-              color="#FFC107"
+              color="orange"
             >
               Crear pedido
             </v-btn>
