@@ -162,7 +162,7 @@
                       color="orange"
                       dark
                       x-small
-                      @click="add(-1)" :disabled="inputpescao < 2"
+                      @click="add(-1)" :disabled="inputpescao < 1"
                     >-
                     </v-btn>
                     <v-text-field v-model.number="inputpescao" hide-details></v-text-field>
