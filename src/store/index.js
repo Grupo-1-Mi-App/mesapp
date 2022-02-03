@@ -1,11 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import createPersistedState from "vuex-persistedstate";
+// import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  plugins: [createPersistedState()],
+  // plugins: [createPersistedState()],
   state: {
     email: "",
 
@@ -15,14 +15,14 @@ export default new Vuex.Store({
         Descripcion: "coffee with milk",
         Precio: 2000,
         Categoria: "drinks",
-        Foto: "../../public/ProductosImg/Cafe1.png",
+        Foto: "https://i.picsum.photos/id/11/10/6",
       },
       {
         NombreProducto: "El sandwitch de Lina",
         Descripcion: "Haulla con queso muy muy derretido.",
         Precio: 2000,
         Categoria: "sandwitch",
-        Foto: "../../public/ProductosImg/pancito1.png",
+        Foto: "img/productos/pan1.png",
       },
       {
         NombreProducto: "A la Lucas",
@@ -30,14 +30,14 @@ export default new Vuex.Store({
           "Marraqueta con tomate, lechuga, 1 lámina de queso, mostaza y mayo",
         Precio: 2000,
         Categoria: "sandwitch",
-        Foto: "../../public/ProductosImg/pancito2.png",
+        Foto: "img/productos/pan2.png",
       },
       {
         NombreProducto: "Dulce dulson",
         Descripcion: "Torta de triple chocolate",
         Precio: 2000,
         Categoria: "postre",
-        Foto: "../../public/ProductosImg/pancito3.png",
+        Foto: "img/productos/pan3.png",
       },
     ],
 
@@ -95,9 +95,9 @@ export default new Vuex.Store({
     
   },
   actions: {
-    addProduct(context, data) {
-      context.commit("addProduct", data);
-    }
+    // addProduct(context, data) {
+    //   context.commit("addProduct", data);
+    // }
    
   },
   modules: {},

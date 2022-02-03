@@ -13,11 +13,11 @@
               indeterminate
             ></v-progress-linear>
           </template>
-          <v-img
+          <img
             height="250"
-            src="../../public/ProductosImg/Cafe1.png"
-          ></v-img>
-          <v-card-title>{{product.NombreProducto}}</v-card-title>
+            :src='baseRoutes(product.Foto)'
+          >
+          <v-card-title>{{baseRoutes(product.Foto)}}</v-card-title>
           <v-card-text>
             <div>{{product.Descripcion}}</div>
             <div class="my-4 text-subtitle-1">
@@ -108,6 +108,11 @@ export default {
     addProduct(product){
       this.$store.dispatch('addProduct', product);
     },
+
+    baseRoutes(img){
+      return `http://localhost:8080/${img}`
+
+    }
   }
  
 };
