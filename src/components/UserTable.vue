@@ -63,12 +63,13 @@
                               ></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                              <v-text-field
+                              <v-autocomplete
                                 outlined
-                                dense
                                 v-model="editedItem.role"
+                                :items="roles"
                                 label="Rol"
-                              ></v-text-field>
+                                placeholder="Select..."
+                              ></v-autocomplete>
                             </v-col>
                           </v-row>
                         </v-container>
@@ -90,9 +91,9 @@
                           color="#FFC107"
                           class="mr-4 my-3"
                           elevation="2"
-                          @click="createUser"
+                          @click="save"
                         >
-                          Crear Usuario
+                          Editar Usuario
                         </v-btn>
                       </v-card-actions>
                     </v-card>
@@ -156,8 +157,14 @@
 <script>
 // import Users from "../../users.js"
 export default {
+  props:['users'],
   data() {
     return {
+      roles: [
+        "Administrador",
+        "Garzon",
+        "Cocina"
+      ],
       show1: false,
       dialog: false,
       dialogDelete: false,
@@ -186,6 +193,15 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "Crear Usuario" : "Editar Usuario";
     },
+
+    traerId(){
+      return this.$route.params.id
+    },
+
+    filtrarUser() {
+      return this.$store.getters.filterCourse(this.traerId);
+
+    },
   },
   watch: {
     dialog(val) {
@@ -200,28 +216,8 @@ export default {
   },
   methods: {
     initialize() {
-      this.users = [
-        {
-          name: "Juan Juanito",
-          role: "Admin",
-        },
-        {
-          name: "Pablo Wixtamante",
-          role: "Garzon",
-        },
-        {
-          name: "Jose Pepe",
-          role: "Garzon",
-        },
-        {
-          name: "Pedro Perez",
-          role: "Admin",
-        },
-        {
-          name: "Jerry",
-          role: "Garzon",
-        },
-      ];
+      
+      
     },
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);
@@ -251,9 +247,9 @@ export default {
         this.editedIndex = -1;
       });
     },
-    createUser() {
+    save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        Object.assign(this.users[this.editedIndex], this.editedItem);
       } else {
         this.users.push(this.editedItem);
       }

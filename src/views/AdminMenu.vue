@@ -1,20 +1,28 @@
 <template>
   <div>
-    <navbarComponent></navbarComponent>
-    <menuTable></menuTable>
-    <footerComponent></footerComponent>
+    <Navbar />
+    <MenuTable :products="products" />
+    <Footer />
   </div>
 </template>
 
 <script>
-import navbarComponent from "../components/Navbar.vue";
-import menuTable from "../components/MenuTable.vue";
-import footerComponent from "../components/Footer.vue";
+import Navbar from "../components/Navbar.vue";
+import MenuTable from "../components/MenuTable.vue";
+import Footer from "../components/Footer.vue";
 export default {
+  name: "Products",
+
   components: {
-    navbarComponent,
-    menuTable,
-    footerComponent,
+    Navbar,
+    MenuTable,
+    Footer,
+  },
+
+  computers: {
+    products() {
+      return this.$store.state.products;
+    },
   },
 };
 </script>

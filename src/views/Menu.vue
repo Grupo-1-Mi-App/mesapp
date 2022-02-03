@@ -2,22 +2,29 @@
   <div>
     <div class="header">
       <h1>mesapp</h1>
+      <v-flex class="menu">
+        <a href="#id-1" v-smooth-scroll="{ duration: 500, offset: -125 }"
+          >Categoría</a
+        >
+        <a href="#id-2" v-smooth-scroll="{ duration: 500, offset: -125 }"
+          >Categoría</a
+        >
+        <a href="#id-3" v-smooth-scroll="{ duration: 500, offset: -125 }"
+          >Categoría</a
+        >
+        <a href="#id-4" v-smooth-scroll="{ duration: 500, offset: -125 }"
+          >Categoría</a
+        >
+      </v-flex>
     </div>
+
+    <span class="separator"></span>
     <div class="section" v-for="index in cateogiries" :key="index">
       <img src="/img/destacados.png" alt="Destacados" class="bg" />
-      <v-container>
+      <div class="container" :id="`id-${index}`">
         <h2>Destacados</h2>
         <v-row class="cards">
-          <v-col cols="12" lg="6">
-            <menuCardComponent></menuCardComponent>
-          </v-col>
-          <v-col
-            cols="12"
-            lg="6"
-            v-for="index in plates"
-            :key="index"
-            :align-self="index == 1 ? 'stretch' : ''"
-          >
+          <v-col cols="12" lg="6" v-for="index in plates" :key="index">
             <v-card elevation="0" outlined>
               <v-layout>
                 <v-flex xs4>
@@ -37,13 +44,12 @@
             </v-card>
           </v-col>
         </v-row>
-      </v-container>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import menuCardComponent from "../components/MenuCardPrincipal.vue";
 export default {
   data() {
     return {
@@ -51,10 +57,7 @@ export default {
       plates: [1, 2, 3, 4, 5, 6, 7, 8],
     };
   },
-
-  components: {
-    menuCardComponent,
-  },
+  methods: {},
 };
 </script>
 
@@ -63,18 +66,44 @@ export default {
 .v-main {
   overflow-x: hidden;
 }
+.menu {
+  width: 100%;
+  background: white;
+  overflow-x: scroll;
+  display: flex;
+  box-shadow: 0px 5px 12px -5px #000000;
+  height: 60px;
+}
+.menu::-webkit-scrollbar {
+  display: none;
+}
+.menu a {
+  padding: 10px 18px;
+  text-decoration: none;
+  color: #555;
+  font-size: 1.2em;
+}
 .header {
   background-image: url("/img/bg-coffee.jpg");
   background-size: cover;
   background-position: center;
+  width: 100%;
   height: 300px;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   color: white;
+  flex-direction: column;
+  display: block;
+  z-index: 9;
+  position: fixed;
 }
 .header h1 {
-  padding: 1em;
+  padding: 3em 1em;
 }
+.separator {
+    height: 300px;
+    display: block;
+  }
 h2 {
   font-family: "Satisfy", cursive;
   font-size: 3em;
@@ -117,7 +146,18 @@ h2 {
 }
 @media (max-width: 480px) {
   .header {
-    height: 200px;
+    height: 150px;
+    width: 100%;
+    display: block;
+    z-index: 9;
+    position: fixed;
+  }
+  .header h1 {
+    padding: 1em;
+}
+  .separator {
+    height: 150px;
+    display: block;
   }
   .section .bg {
     width: 45%;

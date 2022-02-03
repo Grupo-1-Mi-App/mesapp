@@ -1,19 +1,17 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="menuProductos"
-    sort-by="calories"
+    :items="products"
+    sort-by="NombreProducto"
     class="elevation-1"
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>My CRUD</v-toolbar-title>
-        <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              New Item
+              Agregar producto
             </v-btn>
           </template>
           <v-card>
@@ -32,25 +30,25 @@
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.calories"
+                      v-model="editedItem.Categoria"
                       label="Categoría del producto"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.fat"
+                      v-model="editedItem.Precio"
                       label="Precio del producto"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.carbs"
+                      v-model="editedItem.Foto"
                       label="URL Foto"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.protein"
+                      v-model="editedItem.Descripcion"
                       label="Descripción"
                     ></v-text-field>
                   </v-col>
@@ -100,32 +98,44 @@
 
 <script>
 export default {
-  data: () => ({
-    dialog: false,
-    dialogDelete: false,
-    headers: [
-      { text: "Producto", value: "NombreProducto" },
-      { text: "Precio", value: "Precio" },
-      { text: "Categoría", value: "Categoria" },
-      { text: "Actions", value: "actions", sortable: false },
-    ],
-    menuProductos: [],
-    editedIndex: -1,
-    editedItem: {
-      NombreProducto: "",
-      Descripcion: "",
-      Precio: 0,
-      Categoria: "",
-      Foto: "",
-    },
-    defaultItem: {
-      NombreProducto: "",
-      Descripcion: "",
-      Precio: 0,
-      Categoria: "",
-      Foto: "",
-    },
-  }),
+  props: ["products"],
+  data() {
+    return {
+      categoria: [
+        "Tortas",
+        "Postres",
+        "Sandwiches",
+        "Helados",
+        "Cafetería",
+        "Bebestibles",
+      ],
+
+      dialog: false,
+      dialogDelete: false,
+
+      headers: [
+        { text: "Producto", value: "NombreProducto" },
+        { text: "Precio", value: "Precio" },
+        { text: "Categoría", value: "Categoria" },
+        { text: "Acciones", value: "actions", sortable: false },
+      ],
+      editedIndex: -1,
+      editedItem: {
+        NombreProducto: "",
+        Descripcion: "",
+        Precio: 0,
+        Categoria: "",
+        Foto: "",
+      },
+      defaultItem: {
+        NombreProducto: "",
+        Descripcion: "",
+        Precio: 0,
+        Categoria: "",
+        Foto: "",
+      },
+    };
+  },
 
   computed: {
     formTitle() {
@@ -147,54 +157,22 @@ export default {
   },
 
   methods: {
-    initialize() {
-      this.menuProductos = [
-        {
-          NombreProducto: "coffee",
-          Descripcion: "coffee with milk",
-          Precio: 2000,
-          Categoria: "drinks",
-          Foto: "../../public/ProductosImg/Cafe1.png",
-        },
-        {
-          NombreProducto: "El sandwitch de Lina",
-          Descripcion: "Haulla con queso muy muy derretido.",
-          Precio: 2000,
-          Categoria: "sandwitch",
-          Foto: "../../public/ProductosImg/pancito1.png",
-        },
-        {
-          NombreProducto: "A la Lucas",
-          Descripcion:
-            "Marraqueta con tomate, lechuga, 1 lámina de queso, mostaza y mayo",
-          Precio: 2000,
-          Categoria: "sandwitch",
-          Foto: "../../public/ProductosImg/pancito2.png",
-        },
-        {
-          NombreProducto: "Dulce dulson",
-          Descripcion: "Torta de triple chocolate",
-          Precio: 2000,
-          Categoria: "postre",
-          Foto: "../../public/ProductosImg/pancito3.png",
-        },
-      ];
-    },
+    initialize() {},
 
     editItem(item) {
-      this.editedIndex = this.menuProductos.indexOf(item);
+      this.editedIndex = this.products.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      this.editedIndex = this.menuProductos.indexOf(item);
+      this.editedIndex = this.products.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.menuProductos.splice(this.editedIndex, 1);
+      this.products.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
@@ -216,9 +194,9 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.menuProductos[this.editedIndex], this.editedItem);
+        Object.assign(this.products[this.editedIndex], this.editedItem);
       } else {
-        this.menuProductos.push(this.editedItem);
+        this.products.push(this.editedItem);
       }
       this.close();
     },
