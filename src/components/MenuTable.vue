@@ -87,8 +87,10 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <v-btn small class="mr-2" @click="editItem(item)" color="#31302E" dark
+        >Editar</v-btn
+      >
+      <v-btn small @click="deleteItem(item)" color="white">Borrar </v-btn>
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
@@ -97,11 +99,8 @@
 </template>
 
 <script>
-import menuProductos from "../../menu.json";
 export default {
   data: () => ({
-    // Importación del menu.json
-    menuProductos: menuProductos,
     dialog: false,
     dialogDelete: false,
     headers: [
@@ -110,19 +109,21 @@ export default {
       { text: "Categoría", value: "Categoria" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-
+    menuProductos: [],
     editedIndex: -1,
     editedItem: {
-      NombreProducto: menuProductos.product_name,
-      Descripcion: menuProductos.description,
-      Precio: menuProductos.price,
-      Categoria: menuProductos.category,
+      NombreProducto: "",
+      Descripcion: "",
+      Precio: 0,
+      Categoria: "",
+      Foto: "",
     },
     defaultItem: {
       NombreProducto: "",
       Descripcion: "",
       Precio: 0,
       Categoria: "",
+      Foto: "",
     },
   }),
 
@@ -147,25 +148,53 @@ export default {
 
   methods: {
     initialize() {
-      this.desserts = [
-       
+      this.menuProductos = [
+        {
+          NombreProducto: "coffee",
+          Descripcion: "coffee with milk",
+          Precio: 2000,
+          Categoria: "drinks",
+          Foto: "../../public/ProductosImg/Cafe1.png",
+        },
+        {
+          NombreProducto: "El sandwitch de Lina",
+          Descripcion: "Haulla con queso muy muy derretido.",
+          Precio: 2000,
+          Categoria: "sandwitch",
+          Foto: "../../public/ProductosImg/pancito1.png",
+        },
+        {
+          NombreProducto: "A la Lucas",
+          Descripcion:
+            "Marraqueta con tomate, lechuga, 1 lámina de queso, mostaza y mayo",
+          Precio: 2000,
+          Categoria: "sandwitch",
+          Foto: "../../public/ProductosImg/pancito2.png",
+        },
+        {
+          NombreProducto: "Dulce dulson",
+          Descripcion: "Torta de triple chocolate",
+          Precio: 2000,
+          Categoria: "postre",
+          Foto: "../../public/ProductosImg/pancito3.png",
+        },
       ];
     },
 
     editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.menuProductos.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.menuProductos.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
+      this.menuProductos.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
@@ -187,9 +216,9 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        Object.assign(this.menuProductos[this.editedIndex], this.editedItem);
       } else {
-        this.desserts.push(this.editedItem);
+        this.menuProductos.push(this.editedItem);
       }
       this.close();
     },
