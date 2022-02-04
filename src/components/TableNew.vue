@@ -18,7 +18,7 @@
             class="img-producto"
             :src='baseRoutes(product.Foto)'
           >
-          <v-card-title>{{baseRoutes(product.Foto)}}</v-card-title>
+          <v-card-title>{{ product.NombreProducto }}</v-card-title>
           <v-card-text>
             <div>{{product.Descripcion}}</div>
             <div class="my-4 text-subtitle-1">
@@ -32,7 +32,7 @@
               class="text-capitalize"
               color="#FFC107"
               
-              @click="reserve"
+              @click="addProduct(product)"
             >
               Agregar
             </v-btn>
@@ -47,25 +47,25 @@
               label="Mesa"
               outlined
             ></v-select>
-            <v-list three-line>
+            <v-list three-line v-for="(product, index) in pedido" :key="index">
               <v-row class="el-pedido">
                 <div>
-                  <v-list-item-title>Pescao</v-list-item-title>
+                  <v-list-item-title>{{ product.NombreProducto }}</v-list-item-title>
                 </div>
                 <div class="d-flex cantidades">
                   <v-btn
                       color="#FFC107"
                       dark
                       x-small
-                      @click="add(-1)" :disabled="inputpescao < 1"
+                      @click="removeProduct(product)"
                     >-
                     </v-btn>
-                    <v-text-field v-model.number="inputpescao" hide-details></v-text-field>
+                    <p>{{ product.count }}</p>
                     <v-btn
                       color="#FFC107"
                       dark
                       x-small
-                      @click="add(+1)"
+                      @click="addProduct(product)"
                     >+
                     </v-btn>
                 </div>
@@ -93,10 +93,8 @@ export default {
       Precio: 0,
       Categoria: "",
       Foto: "",
-
       mesas:['Mesa 1', 'Mesa 2', 'Mesa 3', 'Mesa 4'],
       inputpescao: 0,
-
     };
    
   },
@@ -107,12 +105,20 @@ export default {
     },
 
     addProduct(product){
-      this.$store.dispatch('addProduct', product);
+      this.$store.commit('addProduct', product)
+    },
+
+    removeProduct(product){
+      this.$store.commit('removeProduct', product)
     },
 
     baseRoutes(img){
-      return `http://localhost:8080/${img}`
-
+      return `${window.location.origin}/${img}`
+    }
+  },
+  computed:{
+    pedido(){
+      return this.$store.state.pedido
     }
   }
  
@@ -146,6 +152,16 @@ export default {
 }
 .cantidades .v-btn{
   font-size: 1.3em;
+  min-width: auto;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+}
+.cantidades p{
+  margin-bottom: 0;
+  padding: 0;
+  text-align: center;
+  width: 30px;
 }
 .cantidades .v-text-field{
   text-align: center !important;
