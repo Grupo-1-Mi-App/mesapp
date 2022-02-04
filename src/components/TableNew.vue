@@ -1,10 +1,9 @@
 <template>
-  <v-container class="product">
+  <v-container fluid class="product">
     <v-row class="mt-5">
       <v-col cols="8" md="2" v-for="(product, index) in products" :key="index">
         <v-card
-          class="mx-auto "
-          max-width="250"
+          class="mx-auto food-card"
         >
           <template slot="progress">
             <v-progress-linear
@@ -172,6 +171,9 @@ export default {
 .img-producto{
   object-fit: cover;
   width: 100%;
+}
+.food-card{
+  min-height: 520px;
 }
 @media(max-width: 480px){
   .btn-borrar,

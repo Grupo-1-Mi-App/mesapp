@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container fluid>
       <v-row class="mt-5">
         <v-col cols="8">
           <v-card class="px-4 py-4" elevation="0">
