@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="products"
-    sort-by="NombreProducto"
+    sort-by="productName"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -24,31 +24,31 @@
                 <v-row>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.NombreProducto"
+                      v-model="editedItem.productName"
                       label="Nombre del producto"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.Categoria"
+                      v-model="editedItem.category"
                       label="Categoría del producto"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.Precio"
-                      label="Precio del producto"
+                      v-model="editedItem.price"
+                      label="price del producto"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.Foto"
-                      label="URL Foto"
+                      v-model="editedItem.image"
+                      label="URL image"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.Descripcion"
+                      v-model="editedItem.description"
                       label="Descripción"
                     ></v-text-field>
                   </v-col>
@@ -101,7 +101,7 @@ export default {
   props: ['products'],
   data() {
     return {
-      categoria: [
+      category: [
         "Tortas",
         "Postres",
         "Sandwiches",
@@ -114,25 +114,25 @@ export default {
       dialogDelete: false,
 
       headers: [
-        { text: "Producto", value: "NombreProducto" },
-        { text: "Precio", value: "Precio" },
-        { text: "Categoría", value: "Categoria" },
+        { text: "Producto", value: "productName" },
+        { text: "price", value: "price" },
+        { text: "Categoría", value: "category" },
         { text: "Acciones", value: "actions", sortable: false },
       ],
       editedIndex: -1,
       editedItem: {
-        NombreProducto: "",
-        Descripcion: "",
-        Precio: 0,
-        Categoria: "",
-        Foto: "",
+        productName: "",
+        description: "",
+        price: 0,
+        category: "",
+        image: "",
       },
       defaultItem: {
-        NombreProducto: "",
-        Descripcion: "",
-        Precio: 0,
-        Categoria: "",
-        Foto: "",
+        productName: "",
+        description: "",
+        price: 0,
+        category: "",
+        image: "",
       },
     };
   },

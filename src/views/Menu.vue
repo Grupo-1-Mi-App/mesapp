@@ -3,8 +3,8 @@
     <div class="header">
       <h1>mesapp</h1>
       <v-flex class="menu">
-        <a href="#id-1" v-smooth-scroll="{ duration: 500, offset: -125 }"
-          >Categoría</a
+        <a href="#destacados" v-smooth-scroll="{ duration: 500, offset: -125 }"
+          >destacados</a
         >
         <a href="#id-2" v-smooth-scroll="{ duration: 500, offset: -125 }"
           >Categoría</a
@@ -19,45 +19,38 @@
     </div>
 
     <span class="separator"></span>
-    <div class="section" v-for="index in cateogiries" :key="index">
-      <img src="/img/destacados.png" alt="Destacados" class="bg" />
-      <div class="container" :id="`id-${index}`">
-        <h2>Destacados</h2>
-        <v-row class="cards">
-          <v-col cols="12" lg="6" v-for="index in plates" :key="index">
-            <v-card elevation="0" outlined>
-              <v-layout>
-                <v-flex xs4>
-                  <v-img src="/img/sandwich.jpg"></v-img>
-                </v-flex>
-                <v-flex xs8>
-                  <v-card-title primary-title>
-                    Text on the right
-                    <span class="price">$9.990</span>
-                  </v-card-title>
-                  <v-card-text>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Nihil magni sint explicabo.
-                  </v-card-text>
-                </v-flex>
-              </v-layout>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
-    </div>
+
+  <MenuSection :section="destacados" name="Destacados" img="/img/destacados.png" />
+  <MenuSection :section="drinks" name="Bebestibles" img="/img/postres.png"  />
+  <MenuSection :section="sandwitch" name="Sandwichs" img="/img/sandwichs.png" />
+    
   </div>
 </template>
 
 <script>
+import MenuSection from '@/components/MenuSection.vue'
 export default {
   data() {
     return {
-      cateogiries: [1, 2, 3],
-      plates: [1, 2, 3, 4, 5, 6, 7, 8],
+      
     };
   },
+  computed: {
+      destacados() {
+        return this.$store.state.products.filter( product => product.category == 'destacados' )
+      },
+      drinks() {
+        return this.$store.state.products.filter( product => product.category == 'drinks' )
+      },
+      postres() {
+        return this.$store.state.products.filter( product => product.category == 'postres' )
+      },
+      sandwitch() {
+        return this.$store.state.products.filter( product => product.category == 'sandwitch' )
+      }
+    },
   methods: {},
+  components: {MenuSection}
 };
 </script>
 
@@ -104,7 +97,7 @@ export default {
     height: 300px;
     display: block;
   }
-h2 {
+.section h2 {
   font-family: "Satisfy", cursive;
   font-size: 3em;
   background-image: url("/img/bg-titles.png");
@@ -121,21 +114,21 @@ h2 {
   top: 0;
   z-index: 0;
 }
-.v-sheet.v-card {
+.section .v-sheet.v-card {
   border-radius: 10px !important;
   border-color: #8a5d3b;
 }
-.v-card__title {
+.section .v-card__title {
   color: #8a5d3b;
   justify-content: space-between;
 }
-.v-card__title .price {
+.section .v-card__title .price {
   background: #8a5d3b;
   color: white;
   border-radius: 8px;
   padding: 0 10px;
 }
-.theme--light.v-image {
+.section .theme--light.v-image {
   height: 100%;
   -webkit-border-top-left-radius: 10px;
   -webkit-border-bottom-left-radius: 10px;
@@ -164,10 +157,10 @@ h2 {
     right: -10%;
     top: 2%;
   }
-  h2 {
+  .section h2 {
     padding-left: 0.6em;
   }
-  .v-card__title {
+  .section .v-card__title {
     justify-content: flex-end;
   }
 }

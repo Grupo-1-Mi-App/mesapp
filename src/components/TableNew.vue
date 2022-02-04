@@ -16,13 +16,13 @@
           <img
             height="250"
             class="img-producto"
-            :src='baseRoutes(product.Foto)'
+            :src='baseRoutes(product.image)'
           >
-          <v-card-title>{{ product.NombreProducto }}</v-card-title>
+          <v-card-title>{{ product.productName }}</v-card-title>
           <v-card-text>
-            <div>{{product.Descripcion}}</div>
+            <div>{{product.description}}</div>
             <div class="my-4 text-subtitle-1">
-              ${{product.Precio}}
+              ${{product.price}}
             </div>
           </v-card-text>
 
@@ -50,7 +50,7 @@
             <v-list three-line v-for="(product, index) in pedido" :key="index">
               <v-row class="el-pedido">
                 <div>
-                  <v-list-item-title>{{ product.NombreProducto }}</v-list-item-title>
+                  <v-list-item-title>{{ product.productName }}</v-list-item-title>
                 </div>
                 <div class="d-flex cantidades">
                   <v-btn
@@ -88,11 +88,11 @@ export default {
   props: ['products'],
   data() {
     return {
-      NombreProducto: "",
-      Descripcion: "",
-      Precio: 0,
-      Categoria: "",
-      Foto: "",
+      productName: "",
+      description: "",
+      price: 0,
+      category: "",
+      image: "",
       mesas:['Mesa 1', 'Mesa 2', 'Mesa 3', 'Mesa 4'],
       inputpescao: 0,
     };

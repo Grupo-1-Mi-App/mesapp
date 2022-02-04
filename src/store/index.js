@@ -1,47 +1,47 @@
 import Vue from "vue";
 import Vuex from "vuex";
-//import createPersistedState from "vuex-persistedstate";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  //plugins: [createPersistedState()],
+  plugins: [createPersistedState()],
   state: {
     email: "",
     pedido:[],
     products: [
       {
         id: 0,
-        NombreProducto: "coffee",
-        Descripcion: "coffee with milk",
-        Precio: 2000,
-        Categoria: "drinks",
-        Foto: "https://i.picsum.photos/id/11/10/6",
+        productName: "coffee",
+        description: "coffee with milk",
+        price: 2000,
+        category: "drinks",
+        image: "img/productos/coffee1.png",
       },
       {
         id: 1,
-        NombreProducto: "El sandwitch de Lina",
-        Descripcion: "Haulla con queso muy muy derretido.",
-        Precio: 2000,
-        Categoria: "sandwitch",
-        Foto: "img/productos/pan1.png",
+        productName: "El sandwitch de Lina",
+        description: "Haulla con queso muy muy derretido.",
+        price: 2000,
+        category: "destacados",
+        image: "img/productos/pan1.png",
       },
       {
         id: 2,
-        NombreProducto: "A la Lucas",
-        Descripcion:
+        productName: "A la Lucas",
+        description:
           "Marraqueta con tomate, lechuga, 1 lámina de queso, mostaza y mayo",
-        Precio: 2000,
-        Categoria: "sandwitch",
-        Foto: "img/productos/pan2.png",
+        price: 2000,
+        category: "sandwitch",
+        image: "img/productos/pan2.png",
       },
       {
         id: 3,
-        NombreProducto: "Dulce dulson",
-        Descripcion: "Torta de triple chocolate",
-        Precio: 2000,
-        Categoria: "postre",
-        Foto: "img/productos/pan3.png",
+        productName: "Dulce dulson",
+        description: "Torta de triple chocolate",
+        price: 2000,
+        category: "postre",
+        image: "img/productos/pan3.png",
       },
     ],
 

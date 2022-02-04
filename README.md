@@ -24,7 +24,7 @@ La proyección del proyecto es para un solo cliente.
 
 **Usuarios**
 Los usuarios a los que apunta este proyecto son:
-1. ***Administrador:*** Encargado de crear, actualizar, eliminar productos, categorias y usuarios (garzones), puede verificar el reporte y genera el código QR del menú.
+1. ***Administrador:*** Encargado de crear, actualizar, eliminar productos, categorys y usuarios (garzones), puede verificar el reporte y genera el código QR del menú.
 2. ***Garzón:*** Actualiza y elimina productos de un pedido.
 3. ***Cocina:*** Encargado de revisar y enviar el estado del producto (Creado a Finalizado).
 4. ***Comensal/Usuario anónimo:*** Usuario final, puede ver el producto gracias al sistema de QR
