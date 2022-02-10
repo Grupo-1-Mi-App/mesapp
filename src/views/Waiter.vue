@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <TableWaiter />
+    <TableWaiter :products="products"/>
     <Footer/>
   </div>
 </template>
@@ -10,9 +10,14 @@
   import Footer from '../components/Footer.vue'
   import TableWaiter from '../components/TableWaiter.vue'
   export default {
-    name: 'Users',
+    name: 'Kitchen',
     components: {
       Navbar, Footer, TableWaiter
+    },
+    computed: {
+      products() {
+        return this.$store.state.products
+      }
     },
   }
 </script>

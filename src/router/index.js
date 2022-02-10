@@ -40,14 +40,9 @@ const routes = [
     component: () => import("../views/AdminMenu.vue"),
   },
   {
-    path: "/order",
-    name: "Order",
+    path: "/waiter",
+    name: "Waiter",
     component: () => import("../views/Waiter.vue"),
-  },
-  {
-    path: "/kitchen",
-    name: "Kitchen",
-    component: () => import("../views/Kitchen.vue"),
   },
   {
     path: "/*",

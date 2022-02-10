@@ -1,150 +1,44 @@
 <template>
-  <div>
-    <v-container>
-      <v-row class="mt-5">
-        <v-col cols="8">
-          <v-card class="px-4 py-4" elevation="0">
-            <v-data-table
-              :headers="headers"
-              :items="users"
-              sort-by="name"
-              class="elevation-0"
+  <v-container fluid class="product">
+    <v-row class="mt-5">
+      <v-col cols="8" md="2" v-for="(product, index) in products" :key="index">
+        <v-card
+          class="mx-auto food-card"
+        >
+          <template slot="progress">
+            <v-progress-linear
+              color="deep-purple"
+              height="10"
+              indeterminate
+            ></v-progress-linear>
+          </template>
+          <img
+            height="250"
+            class="img-producto"
+            :src='baseRoutes(product.image)'
+          >
+          <v-card-title>{{ product.productName }}</v-card-title>
+          <v-card-text>
+            <div>{{product.description}}</div>
+            <div class="my-4 text-subtitle-1">
+              ${{product.price}}
+            </div>
+          </v-card-text>
+
+          <v-divider class="mx-4"></v-divider>
+          <v-card-actions>
+            <v-btn
+              class="text-capitalize"
+              color="#FFC107"
+              
+              @click="addProduct(product)"
             >
-              <template v-slot:top>
-                <v-toolbar flat>
-                  <v-spacer></v-spacer>
-                  <v-dialog v-model="dialog" max-width="500px">
-                    <v-card>
-                      <v-card-title>
-                        <span class="text-h5">{{ formTitle }}</span>
-                      </v-card-title>
-
-                      <v-card-text>
-                        <v-container>
-                          <v-row>
-                            <v-text-field 
-                            v-model ="editedItem.id"
-                            type= "hidden">
-
-                            </v-text-field>
-                            <v-col cols="12">
-                              <v-text-field
-                                outlined
-                                dense
-                                v-model="editedItem.name"
-                                label="Nombre"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="12">
-                              <v-text-field
-                                label="E-mail"
-                                outlined
-                                dense
-                                v-model="editedItem.email"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="12">
-                              <v-text-field
-                                outlined
-                                dense
-                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                :type="show1 ? 'text' : 'password'"
-                                name="input-10-1"
-                                label="Password"
-                                hint="Ingrese su contraseña de 6 caracteres"
-                                counter
-                                @click:append="show1 = !show1"
-                                v-model="editedItem.password"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="12">
-                              <v-autocomplete
-                                outlined
-                                v-model="editedItem.role"
-                                :items="roles"
-                                label="Rol"
-                                placeholder="Select..."
-                              ></v-autocomplete>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </v-card-text>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                          color="#31302E"
-                          dark
-                          outlined
-                          class="mr-4 my-3"
-                          elevation="2"
-                          @click="close"
-                        >
-                          Cancel
-                        </v-btn>
-                        <v-btn
-                          color="#FFC107"
-                          class="mr-4 my-3"
-                          elevation="2"
-                          @click="save"
-                        >
-                          Editar Usuario
-                        </v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
-                  <v-dialog v-model="dialogDelete" max-width="500px">
-                    <v-card>
-                      <v-card-title class="text-h5"
-                        >¿Desea eliminar este usuario?</v-card-title
-                      >
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="closeDelete"
-                          >Cancelar</v-btn
-                        >
-                        <v-btn
-                          color="blue darken-1"
-                          text
-                          @click="deleteItemConfirm"
-                          >Eliminar</v-btn
-                        >
-                        <v-spacer></v-spacer>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
-                </v-toolbar>
-              </template>
-              <template v-slot:item.actions="{ item }">
-                <div class="justify-end d-lg-flex d-md-flex">
-                  <v-btn
-                  class="btn-editar mr-5"
-                  color="#31302E"
-                  small
-                  dark
-                  @click="editItem(item)"
-                >
-                  Editar
-                </v-btn>
-                <v-btn
-                  class="btn-borrar"
-                  color="#31302E"
-                  small
-                  dark
-                  outlined
-                  @click="deleteItem(item)"
-                >
-                  Borrar
-                </v-btn>
-                </div>
-              </template>
-              <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize"> Reset </v-btn>
-              </template>
-            </v-data-table>
-          </v-card>
-        </v-col>
-        <v-col cols="4" class="detalles">
+              Agregar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+       <v-col cols="4" class="detalles">
           <v-card outlined class="px-4 py-4" elevation="0">
             <v-card-title>Resumen del Pedido</v-card-title>
             <v-select
@@ -152,25 +46,25 @@
               label="Mesa"
               outlined
             ></v-select>
-            <v-list three-line>
+            <v-list three-line v-for="(product, index) in pedido" :key="index">
               <v-row class="el-pedido">
                 <div>
-                  <v-list-item-title>Pescao</v-list-item-title>
+                  <v-list-item-title>{{ product.productName }}</v-list-item-title>
                 </div>
                 <div class="d-flex cantidades">
                   <v-btn
                       color="#FFC107"
                       dark
                       x-small
-                      @click="add(-1)" :disabled="inputpescao < 1"
+                      @click="removeProduct(product)"
                     >-
                     </v-btn>
-                    <v-text-field v-model.number="inputpescao" hide-details></v-text-field>
+                    <p>{{ product.count }}</p>
                     <v-btn
                       color="#FFC107"
                       dark
                       x-small
-                      @click="add(+1)"
+                      @click="addProduct(product)"
                     >+
                     </v-btn>
                 </div>
@@ -179,124 +73,54 @@
             </v-list>
             <v-btn
               color="#FFC107"
+              class="text-capitalize"
             >
               Crear pedido
             </v-btn>
           </v-card>
         </v-col>
-      </v-row>
-    </v-container>
-  </div>
+    </v-row>
+  </v-container>
 </template>
-
 <script>
-// import Users from "../../users.js"
 export default {
-  props:['users'],
+  props: ['products'],
   data() {
     return {
-      dialog: false,
-      dialogDelete: false,
-      headers: [
-        { text: "Orden", value: "order" },
-        { text: "Mesa", value: "table_number" },
-        { text: "Hora de Inicio", value: "date_start" },
-        { text: "Estado", value: "status" },
-        { text: "Hora de Entrega", value: "date_finish" },
-        { text: "Acciones", value: "actions", sortable: false, class: "text-end" },
-      ],
-      // Usuarios: Users,
-      editedIndex: -1,
-      editedItem: {
-        order: "",
-        table_number: "",
-        data_start: "",
-        status: "",
-        date_finish: "",
-      },
-      defaultItem: {
-        name: "",
-        email: "",
-        password: "",
-        role: "",
-      },
+      productName: "",
+      description: "",
+      price: 0,
+      category: "",
+      image: "",
       mesas:['Mesa 1', 'Mesa 2', 'Mesa 3', 'Mesa 4'],
       inputpescao: 0,
-
     };
+   
   },
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? "Crear Usuario" : "Editar Usuario";
-    },
-
-    traerId(){
-      return this.$route.params.id
-    },
-
-    filtrarUser() {
-      return this.$store.getters.filterCourse(this.traerId);
-
-    },
-  },
-  watch: {
-    dialog(val) {
-      val || this.close();
-    },
-    dialogDelete(val) {
-      val || this.closeDelete();
-    },
-  },
-  created() {
-    this.initialize();
-  },
-  methods: {
-    initialize() {
-
-      
-    },
-
-    editItem(item) {
-      this.editedIndex = this.users.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
-    deleteItem(item) {
-      this.editedIndex = this.users.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialogDelete = true;
-    },
-    deleteItemConfirm() {
-      this.$store.commit("deleteUser", this.editedIndex, 1);
-      this.closeDelete();
-    },
-    close() {
-      this.dialog = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
-    closeDelete() {
-      this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.users[this.editedIndex], this.editedItem);
-      } else {
-        this.users.push(this.editedItem);
-      }
-      this.close();
-    },
+  methods:{
     add(num) {
       let res = parseInt(this.inputpescao) + parseInt(num);
       this.inputpescao = res;
+    },
+
+    addProduct(product){
+      this.$store.commit('addProduct', product)
+    },
+
+    removeProduct(product){
+      this.$store.commit('removeProduct', product)
+    },
+
+    baseRoutes(img){
+      return `${window.location.origin}/${img}`
     }
   },
+  computed:{
+    pedido(){
+      return this.$store.state.pedido
+    }
+  }
+ 
 };
 </script>
 
@@ -327,12 +151,29 @@ export default {
 }
 .cantidades .v-btn{
   font-size: 1.3em;
+  min-width: auto;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+}
+.cantidades p{
+  margin-bottom: 0;
+  padding: 0;
+  text-align: center;
+  width: 30px;
 }
 .cantidades .v-text-field{
   text-align: center !important;
 }
 .cantidades .v-text-field input{
   text-align: center !important;
+}
+.img-producto{
+  object-fit: cover;
+  width: 100%;
+}
+.food-card{
+  min-height: 520px;
 }
 @media(max-width: 480px){
   .btn-borrar,
@@ -347,5 +188,4 @@ export default {
     width: initial;
   }
 }
-
-</style>
+</style> 
