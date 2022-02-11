@@ -63,28 +63,48 @@ const logout = () => {
 
 // Observador: Usarlo cuando tengamos el login y logout creados
 
-const observador = (to, next) => {
+//  const observador = (to, next) => {
+//   onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//       //si está logeado
+//       if (to.path === "/") {
+//         next("/qr" );
+//       } else {
+//         next();
+//       }
+//     } else  {
+//       //no está
+//       if(to.path == "/menu"){
+//         next(); 
+//       }
+//       else if (to.path !== "/") {
+//         next("/");
+//       } 
+//       else {
+//         next(); 
+//       }
+//     }
+//   });
+// }; 
+
+//guard
+function guardMyroute (to, from, next) {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      //si está logeado
       if (to.path === "/") {
-        next("/qr" );
+        next("/qr" )
       } else {
-        next();
+        next()
       }
-    } else  {
-      //no está
-      if(to.path == "/menu"){
-        next(); 
-      }
-      else if (to.path !== "/") {
+    } else {
+      if (to.path !== "/") {
         next("/");
       } 
       else {
         next(); 
       }
     }
-  });
-};
+  })
+}
 
-export { registrarUsuario, login, logout, observador};
+export { registrarUsuario, login, logout,  guardMyroute};

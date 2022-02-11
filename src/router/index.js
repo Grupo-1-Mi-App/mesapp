@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import { observador } from "../firebase/auth.js";
+import { guardMyroute } from "../firebase/auth.js";
 
 Vue.use(VueRouter);
 
@@ -9,15 +9,9 @@ const routes = [
     path: "/",
     name: "Login",
     component: () => import("../views/Login.vue"),
+    beforeEnter: (to, from, next) => {
+      guardMyroute(to, from, next)
   },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
     path: "/menu",
@@ -28,6 +22,9 @@ const routes = [
     path: "/users",
     name: "Users",
     component: () => import("../views/Users.vue"),
+    beforeEnter: (to, from, next) => {
+        guardMyroute(to, from, next)
+    },
   },
   {
     path: "/qr",
@@ -38,33 +35,29 @@ const routes = [
     path: "/admin_menu",
     name: "admMenu",
     component: () => import("../views/AdminMenu.vue"),
+    beforeEnter: (to, from, next) => {
+      guardMyroute(to, from, next)
+    },
   },
   {
     path: "/waiter",
     name: "Waiter",
     component: () => import("../views/Waiter.vue"),
+    beforeEnter: (to, from, next) => {
+      guardMyroute(to, from, next)
+    },
   },
   {
     path: "/*",
     name: "404",
     component: () => import("../views/404.vue"),
   },
- 
-  // {
-  //   path: "/login",
-  //   name: "Login",
-  //   component: () => import("../views/Login.vue"),
-  // },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
-});
-
-router.beforeEach((to, from, next) => {
-  observador(to, next);
 });
 
 export default router;

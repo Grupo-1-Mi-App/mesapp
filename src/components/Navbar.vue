@@ -11,8 +11,8 @@
 
       <v-toolbar-items class="ml-5 hidden-sm-and-down" v-if="auth">
         <v-btn to="/qr" plain elevation="0">Generar código QR</v-btn>
-        <v-btn to="/users" plain elevation="0">Usuarios</v-btn>
-        <v-btn to="/admin_menu" plain elevation="0">Menú</v-btn>
+        <v-btn to="/admin/users" plain elevation="0">Usuarios</v-btn>
+        <v-btn to="/admin/admin_menu" plain elevation="0">Menú</v-btn>
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
