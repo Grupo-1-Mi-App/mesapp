@@ -1,6 +1,6 @@
 <template>
   <v-container>
-      <v-data-table
+    <v-data-table
       :headers="headers"
       :items="products"
       sort-by="productName"
@@ -11,7 +11,12 @@
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="#FFC107" class="mb-2" v-bind="attrs" v-on="on">
+              <v-btn
+                color="#FFC107"
+                class="mb-2 text-capitalize"
+                v-bind="attrs"
+                v-on="on"
+              >
                 Agregar producto
               </v-btn>
             </template>
@@ -30,10 +35,17 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
-                      <v-text-field
+                      <v-autocomplete
+                        outlined
+                        v-model="editedItem.category"
+                        :items="category"
+                        label="Categoría del producto"
+                        placeholder="Seleccionar..."
+                      ></v-autocomplete>
+                      <!-- <v-text-field
                         v-model="editedItem.category"
                         label="Categoría del producto"
-                      ></v-text-field>
+                      ></v-text-field> -->
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
                       <v-text-field
@@ -59,8 +71,22 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-                <v-btn color="blue darken-1" text @click="save">
+                <v-btn
+                  color="#31302E"
+                  dark
+                  outlined
+                  class="mr-4 my-3"
+                  elevation="2"
+                  @click="close"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                  color="#FFC107"
+                  class="mr-4 my-3"
+                  elevation="2"
+                  @click="save"
+                >
                   Crear producto
                 </v-btn>
               </v-card-actions>
@@ -69,15 +95,15 @@
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
-                >Are you sure you want to delete this item?</v-card-title
+                >¿Desea eliminar este producto?</v-card-title
               >
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeDelete"
-                  >Cancel</v-btn
+                  >Cancelar</v-btn
                 >
                 <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                  >OK</v-btn
+                  >Eliminar</v-btn
                 >
                 <v-spacer></v-spacer>
               </v-card-actions>
@@ -86,9 +112,27 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn class="mr-2 btn-editar" @click="editItem(item)" color="#31302E" small outlined>Editar</v-btn
-        >
-        <v-btn class="btn-borrar" @click="deleteItem(item)" color="#31302E" small outlined dark>Borrar </v-btn>
+        <div class="justify-end d-lg-flex d-md-flex">
+          <v-btn
+            class="btn-editar mr-5"
+            color="#31302E"
+            small
+            dark
+            @click="editItem(item)"
+          >
+            Editar
+          </v-btn>
+          <v-btn
+            class="btn-borrar"
+            color="#31302E"
+            small
+            dark
+            outlined
+            @click="deleteItem(item)"
+          >
+            Borrar
+          </v-btn>
+        </div>
       </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="initialize"> Reset </v-btn>
@@ -99,7 +143,7 @@
 
 <script>
 export default {
-  props: ['products'],
+  props: ["products"],
   data() {
     return {
       category: [
@@ -110,7 +154,6 @@ export default {
         "Cafetería",
         "Bebestibles",
       ],
-
       dialog: false,
       dialogDelete: false,
 
@@ -118,7 +161,12 @@ export default {
         { text: "Producto", value: "productName" },
         { text: "price", value: "price" },
         { text: "Categoría", value: "category" },
-        { text: "Acciones", value: "actions", sortable: false },
+        {
+          text: "Acciones",
+          value: "actions",
+          sortable: false,
+          class: "text-end",
+        },
       ],
       editedIndex: -1,
       editedItem: {
@@ -140,7 +188,7 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+      return this.editedIndex === -1 ? "Nuevo Producto" : "Editar Producto";
     },
   },
 
@@ -219,14 +267,14 @@ export default {
   border-radius: 2px;
   opacity: 1;
 }
-@media(max-width: 480px){
+@media (max-width: 480px) {
   .btn-borrar,
   .btn-editar {
     width: initial;
   }
 }
 
-@media( max-width: 992px) {
+@media (max-width: 992px) {
   .btn-borrar,
   .btn-editar {
     width: initial;
