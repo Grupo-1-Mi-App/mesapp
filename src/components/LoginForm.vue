@@ -51,8 +51,14 @@ export default {
         case "auth/invalid-email":
           this.msg = "El email es incorrecto";
           break;
+        case "auth/user-not-found":
+          this.msg = "El usuario no es correcto";
+          break;
         case "auth/wrong-password":
           this.msg = "La contraseña es incorrecta";
+          break;
+        default:
+          this.msg = "Error desconocido";
           break;
       }
       this.alert = true;

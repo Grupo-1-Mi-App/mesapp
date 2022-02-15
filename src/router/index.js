@@ -6,15 +6,15 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
+    path: "/admin",
     name: "Login",
     component: () => import("../views/Login.vue"),
     beforeEnter: (to, from, next) => {
       guardMyroute(to, from, next)
-  },
+    },
   },
   {
-    path: "/menu",
+    path: "/",
     name: "Menu",
     component: () => import("../views/Menu.vue"),
   },
@@ -30,6 +30,9 @@ const routes = [
     path: "/qr",
     name: "QR",
     component: () => import("../views/QR.vue"),
+    beforeEnter: (to, from, next) => {
+      guardMyroute(to, from, next)
+    },
   },
   {
     path: "/admin_menu",

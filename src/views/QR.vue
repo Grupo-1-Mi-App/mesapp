@@ -47,7 +47,7 @@ export default {
   name: "Users",
    data() {
     return {
-        url: 'https://www.mesapp.cl',
+        url: window.location.origin,
         qrimage: '',
         label: 'codigo_qr_mesapp.png'
     };
