@@ -51,6 +51,14 @@ const routes = [
     },
   },
   {
+    path: "/kitchen",
+    name: "Kitchen",
+    component: () => import("../views/Kitchen.vue"),
+    beforeEnter: (to, from, next) => {
+      guardMyroute(to, from, next)
+    },
+  },
+  {
     path: "/*",
     name: "404",
     component: () => import("../views/404.vue"),

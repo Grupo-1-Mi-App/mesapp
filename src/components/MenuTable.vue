@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <navbarComponent></navbarComponent>
     <v-data-table
       :headers="headers"
       :items="products"

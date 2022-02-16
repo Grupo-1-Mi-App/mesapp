@@ -1,9 +1,8 @@
 <template>
   <v-container fluid class="product">
-    <v-row class="mt-5">
-      <v-col cols="8">
+      <div class="productos">
         <v-row>
-          <v-col cols="3" v-for="(product, index) in products" :key="index">
+          <v-col cols="6" md="3" v-for="(product, index) in products" :key="index">
             <v-card class="mx-auto food-card">
               <template slot="progress">
                 <v-progress-linear
@@ -36,8 +35,8 @@
             </v-card>
           </v-col>
         </v-row>
-      </v-col>
-      <v-col cols="4" class="detalles">
+      </div>
+      <div class="detalles">
         <v-card outlined class="px-4 py-4" elevation="0">
           <v-card-title>Resumen del Pedido</v-card-title>
           <v-select :items="mesas" label="Mesa" outlined></v-select>
@@ -64,8 +63,7 @@
           </v-list>
           <v-btn color="#FFC107" class="text-capitalize"> Crear pedido </v-btn>
         </v-card>
-      </v-col>
-    </v-row>
+      </div>
   </v-container>
 </template>
 <script>
@@ -109,6 +107,16 @@ export default {
 </script>
 
 <style scoped>
+.productos{
+  width: 65%;
+  float: left;
+}
+.detalles{
+  width: 34%;
+  float: left;
+  margin-left: 1%;
+  
+}
 .btn-editar {
   width: 260px;
   height: 31px;
@@ -164,9 +172,24 @@ export default {
   .btn-editar {
     width: initial;
   }
+  .productos{
+    width: 100%;
+  }
   .detalles{
     position: fixed;
     right: 0;
+    width: 100%;
+    bottom: 0;
+    z-index: 99;
+  }
+  .food-card{
+    min-height: auto;
+  }
+  .img-producto{
+    height: 80px;
+  }
+  .v-card__text{
+    display: none;
   }
 }
 
