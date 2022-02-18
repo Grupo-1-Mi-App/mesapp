@@ -45,33 +45,7 @@ export default new Vuex.Store({
       },
     ],
 
-    users: [
-      {
-        id: 1,
-        name: "Juan Juanito",
-        role: "Admin",
-      },
-      {
-        id: 2,
-        name: "Pablo Wixtamante",
-        role: "Garzon",
-      },
-      {
-        id: 3,
-        name: "Jose Pepe",
-        role: "Garzon",
-      },
-      {
-        id: 4,
-        name: "Pedro Perez",
-        role: "Admin",
-      },
-      {
-        id: 5,
-        name: "Jerry",
-        role: "Garzon",
-      },
-    ],
+    users: [],
   },
 
   getters: {
@@ -82,6 +56,10 @@ export default new Vuex.Store({
   mutations: {
     setEmail(state, data) {
       state.email = data;
+    },
+
+    getUsers(state, data) {
+      state.users = data;
     },
 
     eraseEmail(state) {
@@ -122,6 +100,12 @@ export default new Vuex.Store({
     
   },
   actions: {
+    // getData(context) {
+    //   let saveUsers = ( data ) => {
+    //     context.commit("getUsers", data);
+    //   }
+    //   // listData(saveUsers);
+    // }
     // addProduct(context, data) {
     //   context.commit("addProduct", data);
     // }

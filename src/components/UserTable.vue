@@ -160,9 +160,10 @@
 </template>
 
 <script>
-// import Users from "../../users.js"
+import { registrarUsuario } from '../firebase/auth';
+
 export default {
-  props:['users'],
+  // props:['users'],
   data() {
     return {
       roles: [
@@ -178,7 +179,6 @@ export default {
         { text: "Rol", value: "role" },
         { text: "Acciones", value: "actions", sortable: false, class: "text-end" },
       ],
-      // Usuarios: Users,
       editedIndex: -1,
       editedItem: {
         id: "",
@@ -199,15 +199,17 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "Crear Usuario" : "Editar Usuario";
     },
-
-    traerId(){
-      return this.$route.params.id
+    users() {
+      return this.$store.state.users;
     },
+    // traerId(){
+    //   return this.$route.params.id
+    // },
 
-    filtrarUser() {
-      return this.$store.getters.filtrarUser(this.traerId);
+    // filtrarUser() {
+    //   return this.$store.getters.filtrarUser(this.traerId);
 
-    },
+    // },
   },
   watch: {
     dialog(val) {
@@ -253,12 +255,24 @@ export default {
         this.editedIndex = -1;
       });
     },
+
+    createUserCallback(){
+      alert("Usuario creado con exito");
+      this.editedItem.name = '';
+      this.editedItem.email = '';
+      this.editedItem.password = '';
+      this.editedItem.role = '';
+    },
+
     save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.users[this.editedIndex], this.editedItem);
+        this.users.push(this.editedItem);
+        registrarUsuario(this.editedItem.email, this.editedItem.password, this.editedItem.role, this.editedItem.name, this.createUserCallback);
+        
+        /*
       } else {
         this.users.push(this.editedItem);
       }
+      */
       this.close();
     },
   },
