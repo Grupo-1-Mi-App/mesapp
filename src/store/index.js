@@ -1,14 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-
+import { /*addUser,*/ getUsers } from "../firebase/firestore.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     email: "",
-    pedido:[],
+    pedido: [],
     products: [
       {
         id: 0,
@@ -60,6 +60,7 @@ export default new Vuex.Store({
 
     getUsers(state, data) {
       state.users = data;
+      console.log(data)
     },
 
     eraseEmail(state) {
@@ -76,11 +77,11 @@ export default new Vuex.Store({
 
     addProduct(state, data) {
       const index = state.pedido.findIndex(fid => fid.id === data.id);
-      if(index == -1){
+      if (index == -1) {
         data.count = 1
         state.pedido.push(data)
       }
-      else{
+      else {
         state.pedido[index].count += 1
       }
       state.pedido = [...state.pedido]
@@ -88,28 +89,28 @@ export default new Vuex.Store({
     removeProduct(state, data) {
       const index = state.pedido.findIndex(fid => fid.id === data.id);
       let count = state.pedido[index].count
-      if(count > 1){
+      if (count > 1) {
         state.pedido[index].count -= 1
-        
+
       }
-      else{
+      else {
         state.pedido.splice(index, 1)
       }
       state.pedido = [...state.pedido]
     }
-    
+
   },
   actions: {
-    // getData(context) {
-    //   let saveUsers = ( data ) => {
-    //     context.commit("getUsers", data);
-    //   }
-    //   // listData(saveUsers);
-    // }
+    getUsers(context) {
+      let saveUsers = ( data ) => {
+          context.commit("getUsers", data);
+      }
+      getUsers(saveUsers);
+    }
     // addProduct(context, data) {
     //   context.commit("addProduct", data);
     // }
-   
+
   },
   modules: {},
 });

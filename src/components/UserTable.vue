@@ -202,6 +202,7 @@ export default {
     users() {
       return this.$store.state.users;
     },
+
     // traerId(){
     //   return this.$route.params.id
     // },
@@ -220,7 +221,8 @@ export default {
     },
   },
   created() {
-    this.initialize();
+    this.initialize()
+    this.$store.dispatch('getUsers')
   },
   methods: {
     initialize() {
