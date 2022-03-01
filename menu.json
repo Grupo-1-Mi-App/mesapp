@@ -1,0 +1,30 @@
+[
+  {
+    "product_name": "coffee",
+    "description": "coffee with milk",
+    "price": 2000,
+    "category": "drinks",
+    "image": "/img/recipes/pancito.jpg"
+  },
+  {
+    "product_name": "El sandwitch de Lina",
+    "description": "Haulla con queso muy muy derretido.",
+    "price": 2000,
+    "category": "sandwitch",
+    "image": "/img/recipes/pancito.jpg"
+  },
+  {
+    "product_name": "A la Lucas",
+    "description": "Marraqueta con tomate, lechuga, 1 lámina de queso, mostaza y mayo",
+    "price": 2000,
+    "category": "sandwitch",
+    "image": "/img/recipes/pancito.jpg"
+  },
+  {
+    "product_name": "Dulce dulson",
+    "description": "Marraqueta con tomate, lechuga, 1 lámina de queso, mostaza y mayo",
+    "price": 2000,
+    "category": "drinks",
+    "image": "/img/recipes/pancito.jpg"
+  }
+]

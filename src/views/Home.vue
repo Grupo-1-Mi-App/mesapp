@@ -1,15 +1,19 @@
 <template>
-  <hello-world />
+  <div>
+    <Navbar />
+    <Footer />
+  </div>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
+  import Navbar from '../components/Navbar'
+  import Footer from '../components/Footer'
 
   export default {
     name: 'Home',
 
     components: {
-      HelloWorld,
+      Navbar, Footer
     },
   }
 </script>
