@@ -4,13 +4,13 @@
       <h1>mesapp</h1>
       <v-flex class="menu">
         <a href="#destacados" v-smooth-scroll="{ duration: 500, offset: -125 }"
-          >destacados</a
+          >Cafetería</a
         >
         <a href="#id-2" v-smooth-scroll="{ duration: 500, offset: -125 }"
-          >Categoría</a
+          >Sandwiches</a
         >
         <a href="#id-3" v-smooth-scroll="{ duration: 500, offset: -125 }"
-          >Categoría</a
+          >Helados</a
         >
         <a href="#id-4" v-smooth-scroll="{ duration: 500, offset: -125 }"
           >Categoría</a
@@ -20,9 +20,9 @@
 
     <span class="separator"></span>
 
-  <MenuSection :section="destacados" name="Destacados" img="/img/destacados.png" />
-  <MenuSection :section="drinks" name="Bebestibles" img="/img/postres.png"  />
-  <MenuSection :section="sandwitch" name="Sandwichs" img="/img/sandwichs.png" />
+  <MenuSection :section="destacados" name="Cafetería" img="/img/destacados.png" />
+  <MenuSection :section="drinks" name="Helados" img="/img/postres.png"  />
+  <MenuSection :section="sandwitch" name="Sandwiches" img="/img/sandwichs.png" />
     
   </div>
 </template>
@@ -37,17 +37,17 @@ export default {
   },
   computed: {
       destacados() {
-        return this.$store.state.products.filter( product => product.category == 'destacados' )
+        return this.$store.state.products.filter( product => product.category == 'Cafetería' )
       },
       drinks() {
-        return this.$store.state.products.filter( product => product.category == 'drinks' )
-      },
-      postres() {
-        return this.$store.state.products.filter( product => product.category == 'postres' )
+        return this.$store.state.products.filter( product => product.category == 'Helados' )
       },
       sandwitch() {
-        return this.$store.state.products.filter( product => product.category == 'sandwitch' )
-      }
+        return this.$store.state.products.filter( product => product.category == 'Sandwiches' )
+      },
+      // sandwitch() {
+      //   return this.$store.state.products.filter( product => product.category == 'sandwitch' )
+      // }
     },
   methods: {},
   components: {MenuSection}

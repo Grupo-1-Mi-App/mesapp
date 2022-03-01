@@ -38,7 +38,7 @@ const addProduct = async(data) => {
 // Obtener datos
 
 //Usuario
-const getUsers = async (/*callback*/) => {
+const importUsers = async (callback) => {
   const q = query(collection(db, colUsers));
   try {
     const querySnapshot = await getDocs(q);
@@ -48,13 +48,13 @@ const getUsers = async (/*callback*/) => {
       data.push(user);
     });
     console.log(data)
-    //callback(data)
+    callback(data)
   } catch (e) {
     console.log("Error", e);
   }
 };
 
-const getProducts = async (/*callback*/) => {
+const importProducts = async (callback) => {
   const q = query(collection(db, colProducts));
   try {
     const querySnapshot = await getDocs(q);
@@ -64,7 +64,7 @@ const getProducts = async (/*callback*/) => {
       data.push(user);
     });
     console.log(data)
-    //callback(data)
+    callback(data)
   } catch (e) {
     console.log("Error", e);
   }
@@ -93,4 +93,4 @@ const deleteProduct = async (id) => {
 };
 
 
-export { addUser, getUsers, addProduct, getProducts, deleteUser, deleteProduct };
+export { addUser, importUsers, addProduct, importProducts, deleteUser, deleteProduct };

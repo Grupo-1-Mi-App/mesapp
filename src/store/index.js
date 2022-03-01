@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import { /*addUser,*/ getUsers, getProducts } from "../firebase/firestore.js";
+import { /*addUser,*/ importUsers, importProducts } from "../firebase/firestore.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -10,39 +10,39 @@ export default new Vuex.Store({
     email: "",
     pedido: [],
     products: [
-      {
-        id: 0,
-        productName: "coffee",
-        description: "coffee with milk",
-        price: 2000,
-        category: "drinks",
-        image: "img/productos/coffee1.png",
-      },
-      {
-        id: 1,
-        productName: "El sandwitch de Lina",
-        description: "Haulla con queso muy muy derretido.",
-        price: 2000,
-        category: "destacados",
-        image: "img/productos/pan1.png",
-      },
-      {
-        id: 2,
-        productName: "A la Lucas",
-        description:
-          "Marraqueta con tomate, lechuga, 1 lámina de queso, mostaza y mayo",
-        price: 2000,
-        category: "sandwitch",
-        image: "img/productos/pan2.png",
-      },
-      {
-        id: 3,
-        productName: "Dulce dulson",
-        description: "Torta de triple chocolate",
-        price: 2000,
-        category: "postre",
-        image: "img/productos/pan3.png",
-      },
+      // {
+      //   id: 0,
+      //   productName: "coffee",
+      //   description: "coffee with milk",
+      //   price: 2000,
+      //   category: "drinks",
+      //   image: "img/productos/coffee1.png",
+      // },
+      // {
+      //   id: 1,
+      //   productName: "El sandwitch de Lina",
+      //   description: "Haulla con queso muy muy derretido.",
+      //   price: 2000,
+      //   category: "destacados",
+      //   image: "img/productos/pan1.png",
+      // },
+      // {
+      //   id: 2,
+      //   productName: "A la Lucas",
+      //   description:
+      //     "Marraqueta con tomate, lechuga, 1 lámina de queso, mostaza y mayo",
+      //   price: 2000,
+      //   category: "sandwitch",
+      //   image: "img/productos/pan2.png",
+      // },
+      // {
+      //   id: 3,
+      //   productName: "Dulce dulson",
+      //   description: "Torta de triple chocolate",
+      //   price: 2000,
+      //   category: "postre",
+      //   image: "img/productos/pan3.png",
+      // },
     ],
 
     users: [],
@@ -60,7 +60,6 @@ export default new Vuex.Store({
 
     getUsers(state, data) {
       state.users = data;
-      console.log(data)
     },
 
     getProducts(state, data) {
@@ -107,17 +106,18 @@ export default new Vuex.Store({
   },
   actions: {
     getUsers(context) {
+      console.log('holita profe')
       let saveUsers = ( data ) => {
           context.commit("getUsers", data);
       }
-      getUsers(saveUsers);
+      importUsers(saveUsers);
     },
 
     getProducts(context) {
       let saveProducts = ( data ) => {
           context.commit("getProducts", data);
       }
-      getProducts(saveProducts);
+      importProducts(saveProducts);
     }
     // addProduct(context, data) {
     //   context.commit("addProduct", data);

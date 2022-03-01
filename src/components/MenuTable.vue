@@ -160,7 +160,7 @@ export default {
 
       headers: [
         { text: "Producto", value: "productName" },
-        { text: "price", value: "price" },
+        { text: "Precio", value: "price" },
         { text: "Categoría", value: "category" },
         {
           text: "Acciones",
