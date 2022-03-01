@@ -226,8 +226,6 @@ export default {
   },
   methods: {
     initialize() {
-      
-      
     },
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);

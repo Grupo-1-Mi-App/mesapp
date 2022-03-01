@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import {addData} from './firestore.js'
+import {addUser} from './firestore.js'
 initializeApp(firebaseConfig);
 
 const auth = getAuth();
@@ -18,7 +18,7 @@ const registrarUsuario = (email, password, rol, name,callback) => {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      addData({
+      addUser({
         email: email,
         name: name,
         rol: rol
