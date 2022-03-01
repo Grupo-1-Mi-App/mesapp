@@ -161,6 +161,7 @@
 
 <script>
 import { registrarUsuario } from '../firebase/auth';
+import { deleteUser} from '../firebase/firestore';
 
 export default {
   // props:['users'],
@@ -227,6 +228,10 @@ export default {
   methods: {
     initialize() {
     },
+
+    deleteUser(id){
+      this.$store.dispatch("deleteUser", id)
+    },
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -238,8 +243,13 @@ export default {
       this.dialogDelete = true;
     },
     deleteItemConfirm() {
-      this.$store.commit("deleteUser", this.editedIndex, 1);
+      this.users.splice(this.editedIndex, 1);
+      deleteUser(this.editedItem.id, this.deleteUser)
+      this.$store.dispatch("getUsers")
       this.closeDelete();
+      
+      // this.$store.commit("deleteUser", this.editedIndex, 1);
+      // this.closeDelete();
     },
     close() {
       this.dialog = false;

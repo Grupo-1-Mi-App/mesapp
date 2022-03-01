@@ -142,6 +142,7 @@
 </template>
 
 <script>
+import { addProduct, deleteProduct } from '../firebase/firestore.js'
 export default {
   props: ["products"],
   data() {
@@ -202,11 +203,16 @@ export default {
   },
 
   created() {
-    this.initialize();
+    this.initialize()
+    this.$store.dispatch('getProducts')
   },
 
   methods: {
     initialize() {},
+
+    deleteProduct(id){
+      this.$store.dispatch("deleteProduct", id)
+    },
 
     editItem(item) {
       this.editedIndex = this.products.indexOf(item);
@@ -222,6 +228,8 @@ export default {
 
     deleteItemConfirm() {
       this.products.splice(this.editedIndex, 1);
+      deleteProduct(this.editedItem.id, this.deleteProduct)
+      this.$store.dispatch("getProducts")
       this.closeDelete();
     },
 
@@ -241,11 +249,22 @@ export default {
       });
     },
 
+    saveProductCallback(){
+      alert("Producto creado con éxito");
+      this.editedItem.productName = ''
+      this.editedItem.description = ''
+      this.editedItem.price = ''
+      this.editedItem.number_signup = ''
+      this.editedItem.category = ''
+      this.editedItem.image = ''
+    },
+
     save() {
       if (this.editedIndex > -1) {
         Object.assign(this.products[this.editedIndex], this.editedItem);
       } else {
         this.products.push(this.editedItem);
+        addProduct(this.editedItem, this.saveProductCallback);
       }
       this.close();
     },
