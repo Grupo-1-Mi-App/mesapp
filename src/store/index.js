@@ -9,42 +9,7 @@ export default new Vuex.Store({
   state: {
     email: "",
     pedido: [],
-    products: [
-      // {
-      //   id: 0,
-      //   productName: "coffee",
-      //   description: "coffee with milk",
-      //   price: 2000,
-      //   category: "drinks",
-      //   image: "img/productos/coffee1.png",
-      // },
-      // {
-      //   id: 1,
-      //   productName: "El sandwitch de Lina",
-      //   description: "Haulla con queso muy muy derretido.",
-      //   price: 2000,
-      //   category: "destacados",
-      //   image: "img/productos/pan1.png",
-      // },
-      // {
-      //   id: 2,
-      //   productName: "A la Lucas",
-      //   description:
-      //     "Marraqueta con tomate, lechuga, 1 lámina de queso, mostaza y mayo",
-      //   price: 2000,
-      //   category: "sandwitch",
-      //   image: "img/productos/pan2.png",
-      // },
-      // {
-      //   id: 3,
-      //   productName: "Dulce dulson",
-      //   description: "Torta de triple chocolate",
-      //   price: 2000,
-      //   category: "postre",
-      //   image: "img/productos/pan3.png",
-      // },
-    ],
-
+    products: [],
     users: [],
   },
 
