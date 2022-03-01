@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import { /*addUser,*/ getUsers } from "../firebase/firestore.js";
+import { /*addUser,*/ getUsers, getProducts } from "../firebase/firestore.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -63,6 +63,11 @@ export default new Vuex.Store({
       console.log(data)
     },
 
+    getProducts(state, data) {
+      state.products = data;
+      console.log(data)
+    },
+
     eraseEmail(state) {
       state.email = "";
     },
@@ -106,6 +111,13 @@ export default new Vuex.Store({
           context.commit("getUsers", data);
       }
       getUsers(saveUsers);
+    },
+
+    getProducts(context) {
+      let saveProducts = ( data ) => {
+          context.commit("getProducts", data);
+      }
+      getProducts(saveProducts);
     }
     // addProduct(context, data) {
     //   context.commit("addProduct", data);

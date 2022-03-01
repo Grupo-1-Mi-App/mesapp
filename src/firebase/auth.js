@@ -13,7 +13,7 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 
 // Registrar usuario
-const registrarUsuario = (email, password, rol, name,callback) => {
+const registrarUsuario = (email, password, role, name,callback) => {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
@@ -21,7 +21,7 @@ const registrarUsuario = (email, password, rol, name,callback) => {
       addUser({
         email: email,
         name: name,
-        rol: rol
+        role: role
       })
       console.log(user);
 
