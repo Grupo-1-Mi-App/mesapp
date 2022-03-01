@@ -58,23 +58,23 @@ El segundo Hito consiste en la obtención de datos y el desarrollo de la lógica
 - Creación de usuarios del restaurante, tales como garzón, administrador o cocinero.
 - Creación de productos que se vinculan al menú del restaurante.
 
-**Flujo de cración de usuario**
+**Flujo de creación de usuario**
 
 - En la vista de usuarios realizamos click en el botón de **crear usuario**
-  ![alt text](src/assets/1.jpg)
+  ![alt text](src/assets/readme/1.jpg)
 
 - Rellenamos todos los campos
-  ![alt text](src/assets/2.jpg)
-  ![alt text](src/assets/3.jpg)
+  ![alt text](src/assets/readme/2.jpg)
+  ![alt text](src/assets/readme/3.jpg)
 
 - Guardamos y vemos como ahora en nuestra vista de usuarios tenemos la alert que confirma la creación de usuario y este en el listado de usuarios.
-  ![alt text](src/assets/4.jpg)
+  ![alt text](src/assets/readme/4.jpg)
 
 - Para probar la conección, nos deslogueamos y probamos iniciar sesión con este nuevo usuario.
-  ![alt text](src/assets/5.jpg)
+  ![alt text](src/assets/readme/5.jpg)
 
 - Finalmente vemos que todo funciona al entrar a la vista inicial del qr. Además podemos confirmar el usuario en la esquina superior derecha.
-  ![alt text](src/assets/6.jpg)
+  ![alt text](src/assets/readme/6.jpg)
 
 **Guía de instalación del proyecto**
 _Project setup_
