@@ -58,6 +58,8 @@ El segundo Hito consiste en la obtención de datos y el desarrollo de la lógica
 - Creación de usuarios del restaurante, tales como garzón, administrador o cocinero.
 - Creación de productos que se vinculan al menú del restaurante.
 
+3. Como bonus de avance se pueden ver algunos de avances de firebase, tales como la autentificación, creación de usuario y producto, junto con su edición correspondiente.
+
 **Flujo de creación de usuario**
 
 - En la vista de usuarios realizamos click en el botón de **crear usuario**
@@ -119,8 +121,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 **Rutas de Acceso**
 Por el momento estamos usando las rutas de ambiente de desarrollo. Las rutas existentes son:
 
-- **_Administrativo_** Se encuentra todo lo que el admin puede realizar, puede visualizarlo ingresando a http://localhost:8080 (aún en etapa de desarrollo)
-- **_El menú_** lo pueden visualizar ingresando a: http://localhost:8080/menu en donde el usuario final puede elegir que desea pedir.
+- **_Administrativo_** Se encuentra todo lo que el admin puede realizar, puede visualizarlo ingresando a http://localhost:8080/admin (aún en etapa de desarrollo)
+- **_El menú_** lo pueden visualizar ingresando a: http://localhost:8080/ en donde el usuario final puede elegir que desea pedir.
+- **_Garzón_** Se encuentra en: http://localhost:/8080/waiter aquí este puede tomar el pedido de los clientes.
+- **_Cocina_** En esta vista podemos ver todos los pedidos recibidos en la cocina en http://localhost:/8080/kitchen que fueron creados por el garzón anteriormente.
 
 ### Aclaraciones 📋
 
