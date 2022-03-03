@@ -8,6 +8,8 @@ const db = getFirestore();
 
 const colUsers = "users";
 const colProducts = "products";
+const colOrders = "orders";
+
 
 // Agregar datos
 
@@ -34,6 +36,19 @@ const addProduct = async(data) => {
     alert("Error adding document");
   }
 };
+
+// Pedidos
+const addOrder = async(data, callback) => {
+  try {
+    const docRef = await addDoc(collection(db, colOrders), data);
+    console.log("Document written with ID: ", docRef.id);
+    callback();
+  } catch (e) {
+    console.error("Error adding document: ", e);
+    alert("Error adding document");
+  }
+};
+
 
 // Obtener datos
 
@@ -106,4 +121,4 @@ const updateProduct = async (id,item) => {
 };
 
 
-export { addUser, importUsers, addProduct, importProducts, deleteUser, deleteProduct, updateProduct };
+export { addUser, importUsers, addProduct, importProducts, deleteUser, deleteProduct, updateProduct, addOrder };

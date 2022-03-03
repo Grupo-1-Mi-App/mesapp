@@ -39,7 +39,7 @@
       <div class="detalles">
         <v-card outlined class="px-4 py-4" elevation="0">
           <v-card-title>Resumen del Pedido</v-card-title>
-          <v-select :items="mesas" label="Mesa" outlined></v-select>
+          <v-select :items="tables" label="Mesa" outlined v-model="currentTable"></v-select>
           <v-list three-line v-for="(product, index) in pedido" :key="index">
             <v-row class="el-pedido">
               <div>
@@ -61,12 +61,13 @@
             </v-row>
             <v-divider></v-divider>
           </v-list>
-          <v-btn color="#FFC107" class="text-capitalize"> Crear pedido </v-btn>
+          <v-btn color="#FFC107" class="text-capitalize" @click="createOrder" :disabled="!currentTable" > Crear pedido </v-btn>
         </v-card>
       </div>
   </v-container>
 </template>
 <script>
+import {addOrder} from "@/firebase/firestore.js"
 export default {
   props: ["products"],
   data() {
@@ -76,8 +77,8 @@ export default {
       price: 0,
       category: "",
       image: "",
-      mesas: ["Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4"],
-      inputpescao: 0,
+      tables: ["Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4"],
+      currentTable: ''
     };
   },
   methods: {
@@ -97,6 +98,16 @@ export default {
     baseRoutes(img) {
       return `${window.location.origin}/${img}`;
     },
+    createOrderCallback() {
+      alert("Pedido creado con éxito");
+      this.currentTable = "";
+      this.$store.commit("resetOrder");
+    },
+    createOrder(){
+     // this.$store.commit("createOrder", this.currentTable);
+     let data = { ...this.$store.state.pedido.concat({'mesa': this.currentTable}) }
+      addOrder(data, this.createOrderCallback)
+    }
   },
   computed: {
     pedido() {

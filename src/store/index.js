@@ -55,6 +55,7 @@ export default new Vuex.Store({
 
     addProduct(state, data) {
       const index = state.pedido.findIndex(fid => fid.id === data.id);
+      console.log('index:', index)
       if (index == -1) {
         data.count = 1
         state.pedido.push(data)
@@ -75,6 +76,13 @@ export default new Vuex.Store({
         state.pedido.splice(index, 1)
       }
       state.pedido = [...state.pedido]
+    },
+    createOrder(state, table){
+      //_enfiar a firebase
+      console.log(state.pedido, table)
+    }, 
+    resetOrder(state){
+      state.pedido = []
     }
 
   },
@@ -92,11 +100,10 @@ export default new Vuex.Store({
           context.commit("getProducts", data);
       }
       importProducts(saveProducts);
-    }
+    },
     // addProduct(context, data) {
     //   context.commit("addProduct", data);
     // }
-
   },
   modules: {},
 });
