@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import { /*addUser,*/ importUsers, importProducts } from "../firebase/firestore.js";
+import { importUsers, importProducts } from "../firebase/firestore.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -17,6 +17,11 @@ export default new Vuex.Store({
     filtrarUser: (state) => (id) => {
       return state.users[id];
     },
+
+    filterProduct: (state) => (id) => {
+      return state.products[id]
+    },
+ 
   },
   mutations: {
     setEmail(state, data) {
@@ -42,6 +47,10 @@ export default new Vuex.Store({
 
     upadateUser(state, data) {
       state.users[data.index] = data.user;
+    },
+
+    updateProduct(state, data) {
+      state.products[data.index] = data.product;
     },
 
     addProduct(state, data) {

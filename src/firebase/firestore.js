@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./config.js";
-import { getFirestore, collection, addDoc, query, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, query, getDocs, deleteDoc, doc, setDoc } from "firebase/firestore";
 
 initializeApp(firebaseConfig);
 
@@ -92,5 +92,18 @@ const deleteProduct = async (id) => {
   }
 };
 
+const updateProduct = async (id,item) => {
+  try {
+    console.log("DATA",id, item);
+    await setDoc(doc(db, colProducts, id), item);
+    alert("Datos actualizados");
+    
+    // Agregar callback aca
+  } catch (e) {
+    console.log("Error", e);
+    alert("Error agregando documento");
+  }
+};
 
-export { addUser, importUsers, addProduct, importProducts, deleteUser, deleteProduct };
+
+export { addUser, importUsers, addProduct, importProducts, deleteUser, deleteProduct, updateProduct };
