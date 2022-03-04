@@ -13,7 +13,7 @@
           >Helados</a
         >
         <a href="#id-4" v-smooth-scroll="{ duration: 500, offset: -125 }"
-          >Categoría</a
+          >Bebestibles</a
         >
       </v-flex>
     </div>
@@ -21,8 +21,9 @@
     <span class="separator"></span>
 
   <MenuSection :section="destacados" name="Cafetería" img="/img/destacados.png" />
-  <MenuSection :section="drinks" name="Helados" img="/img/postres.png"  />
+  <MenuSection :section="icecream" name="Helados" img="/img/postres.png"  />
   <MenuSection :section="sandwitch" name="Sandwiches" img="/img/sandwichs.png" />
+  <MenuSection :section="drinks" name="Bebestibles" img="/img/postres.png"  />
     
   </div>
 </template>
@@ -39,15 +40,15 @@ export default {
       destacados() {
         return this.$store.state.products.filter( product => product.category == 'Cafetería' )
       },
-      drinks() {
+      icecream() {
         return this.$store.state.products.filter( product => product.category == 'Helados' )
       },
       sandwitch() {
         return this.$store.state.products.filter( product => product.category == 'Sandwiches' )
       },
-      // sandwitch() {
-      //   return this.$store.state.products.filter( product => product.category == 'sandwitch' )
-      // }
+      drinks() {
+        return this.$store.state.products.filter( product => product.category == 'Bebestibles' )
+      }
     },
   methods: {},
   components: {MenuSection}

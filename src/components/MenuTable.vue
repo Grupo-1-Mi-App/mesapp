@@ -1,10 +1,13 @@
 <template>
   <v-container>
+    <!-- <v-row class="mt-5">
+        <v-col cols="12"> -->
+    <!-- <v-card class="px-4 py-4" elevation="0"> -->
     <v-data-table
       :headers="headers"
       :items="products"
       sort-by="productName"
-      class="elevation-0 mt-5"
+      class="elevation-0"
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -228,7 +231,6 @@ export default {
       this.editedIndex = this.products.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
-      console.log(this.editedItem);
     },
 
     deleteItem(item) {
@@ -285,6 +287,10 @@ export default {
     editProduct() {
       updateProduct(this.editedItem.id, this.editedItem);
     },
+  },
+
+  mounted() {
+    this.filterProducts;
   },
 };
 </script>
