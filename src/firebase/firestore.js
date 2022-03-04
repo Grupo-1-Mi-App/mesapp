@@ -96,13 +96,13 @@ const importOrders = async (callback) => {
   const q = query(collection(db, colOrders));
   try {
     const querySnapshot = await getDocs(q);
-    let data = []
+    let data = [];
     querySnapshot.forEach((doc) => {
-      let user = { ...doc.data(), id: doc.id};
+      let user = { ...doc.data(), id: doc.id };
       data.push(user);
     });
-    console.log(data)
-    callback(data)
+    console.log(data);
+    callback(data);
   } catch (e) {
     console.log("Error", e);
   }
@@ -139,6 +139,13 @@ const updateProduct = async (id, data) => {
   }
 };
 
+const updateUser = async (id, data) => {
+  try {
+    await updateDoc(doc(db, colUsers, id), data);
+  } catch (e) {
+    console.log("update", e);
+  }
+};
 
 export {
   addUser,
@@ -149,5 +156,6 @@ export {
   deleteProduct,
   updateProduct,
   addOrder,
-  importOrders
+  importOrders,
+  updateUser,
 };

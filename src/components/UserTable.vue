@@ -32,10 +32,7 @@
                       <v-card-text>
                         <v-container>
                           <v-row>
-                            <v-text-field 
-                            v-model ="editedItem.id"
-                            type= "hidden">
-
+                            <v-text-field v-model="editedItem.id" type="hidden">
                             </v-text-field>
                             <v-col cols="12">
                               <v-text-field
@@ -73,7 +70,7 @@
                                 v-model="editedItem.role"
                                 :items="roles"
                                 label="Rol"
-                                placeholder="Select..."
+                                placeholder="Seleccionar..."
                               ></v-autocomplete>
                             </v-col>
                           </v-row>
@@ -98,7 +95,7 @@
                           elevation="2"
                           @click="save"
                         >
-                          Editar Usuario
+                          {{ textoBoton }}
                         </v-btn>
                       </v-card-actions>
                     </v-card>
@@ -128,24 +125,24 @@
               <template v-slot:item.actions="{ item }">
                 <div class="justify-end d-lg-flex d-md-flex">
                   <v-btn
-                  class="btn-editar mr-5"
-                  color="#31302E"
-                  small
-                  dark
-                  @click="editItem(item)"
-                >
-                  Editar
-                </v-btn>
-                <v-btn
-                  class="btn-borrar"
-                  color="#31302E"
-                  small
-                  dark
-                  outlined
-                  @click="deleteItem(item)"
-                >
-                  Borrar
-                </v-btn>
+                    class="btn-editar mr-5"
+                    color="#31302E"
+                    small
+                    dark
+                    @click="editItem(item)"
+                  >
+                    Editar
+                  </v-btn>
+                  <v-btn
+                    class="btn-borrar"
+                    color="#31302E"
+                    small
+                    dark
+                    outlined
+                    @click="deleteItem(item)"
+                  >
+                    Borrar
+                  </v-btn>
                 </div>
               </template>
               <template v-slot:no-data>
@@ -160,25 +157,26 @@
 </template>
 
 <script>
-import { registrarUsuario } from '../firebase/auth';
-import { deleteUser} from '../firebase/firestore';
+import { registrarUsuario } from "../firebase/auth";
+import { deleteUser, updateUser } from "../firebase/firestore";
 
 export default {
   // props:['users'],
   data() {
     return {
-      roles: [
-        "Administrador",
-        "Garzon",
-        "Cocina"
-      ],
+      roles: ["Administrador", "Garzon", "Cocina"],
       show1: false,
       dialog: false,
       dialogDelete: false,
       headers: [
         { text: "Nombre", value: "name" },
         { text: "Rol", value: "role" },
-        { text: "Acciones", value: "actions", sortable: false, class: "text-end" },
+        {
+          text: "Acciones",
+          value: "actions",
+          sortable: false,
+          class: "text-end",
+        },
       ],
       editedIndex: -1,
       editedItem: {
@@ -204,6 +202,12 @@ export default {
       return this.$store.state.users;
     },
 
+    textoBoton() {
+      return this.formTitle === "Crear Usuario"
+        ? "Crear Usuario"
+        : "Editar Usuario";
+    },
+
     // traerId(){
     //   return this.$route.params.id
     // },
@@ -222,35 +226,38 @@ export default {
     },
   },
   created() {
-    this.initialize()
-    this.$store.dispatch('getUsers')
+    this.initialize();
+    this.$store.dispatch("getUsers");
   },
   methods: {
-    initialize() {
+    initialize() {},
+
+    deleteUser(id) {
+      this.$store.dispatch("deleteUser", id);
     },
 
-    deleteUser(id){
-      this.$store.dispatch("deleteUser", id)
-    },
     editItem(item) {
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
+
     deleteItem(item) {
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
+
     deleteItemConfirm() {
       this.users.splice(this.editedIndex, 1);
-      deleteUser(this.editedItem.id, this.deleteUser)
-      this.$store.dispatch("getUsers")
+      deleteUser(this.editedItem.id, this.deleteUser);
+      this.$store.dispatch("getUsers");
       this.closeDelete();
-      
+
       // this.$store.commit("deleteUser", this.editedIndex, 1);
       // this.closeDelete();
     },
+
     close() {
       this.dialog = false;
       this.$nextTick(() => {
@@ -258,6 +265,7 @@ export default {
         this.editedIndex = -1;
       });
     },
+
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
@@ -266,24 +274,48 @@ export default {
       });
     },
 
-    createUserCallback(){
+    createUserCallback() {
       alert("Usuario creado con exito");
-      this.editedItem.name = '';
-      this.editedItem.email = '';
-      this.editedItem.password = '';
-      this.editedItem.role = '';
+      this.editedItem.name = "";
+      this.editedItem.email = "";
+      this.editedItem.password = "";
+      this.editedItem.role = "";
     },
 
     save() {
+      if (this.formTitle == "Crear Usuario") {
+        // Crear Usuario
         this.users.push(this.editedItem);
-        registrarUsuario(this.editedItem.email, this.editedItem.password, this.editedItem.role, this.editedItem.name, this.createUserCallback);
-        
-        /*
+        registrarUsuario(
+          this.editedItem.email,
+          this.editedItem.password,
+          this.editedItem.role,
+          this.editedItem.name,
+          this.createUserCallback
+        );
       } else {
-        this.users.push(this.editedItem);
+        this.editUser();
       }
-      */
       this.close();
+
+      // this.users.push(this.editedItem);
+      // registrarUsuario(
+      //   this.editedItem.email,
+      //   this.editedItem.password,
+      //   this.editedItem.role,
+      //   this.editedItem.name,
+      //   this.createUserCallback
+      // );
+      // /*
+      // } else {
+      //   this.users.push(this.editedItem);
+      // }
+      // */
+      // this.close();
+    },
+
+    editUser() {
+      updateUser(this.editedItem.id, this.editedItem);
     },
   },
 };
@@ -304,18 +336,17 @@ export default {
   border-radius: 2px;
   opacity: 1;
 }
-@media(max-width: 480px){
+@media (max-width: 480px) {
   .btn-borrar,
   .btn-editar {
     width: initial;
   }
 }
 
-@media( max-width: 992px) {
+@media (max-width: 992px) {
   .btn-borrar,
   .btn-editar {
     width: initial;
   }
 }
-
 </style>
