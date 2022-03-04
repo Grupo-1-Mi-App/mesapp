@@ -10,6 +10,9 @@
             sort-by="productName"
             class="elevation-0 mt-5"
           >
+            <template v-slot:item.orden="{ item }">
+                {{ pedidos.indexOf(item) + 1 }}
+            </template>
             <template v-slot:item.actions="{ item }">
               <div class="justify-end d-lg-flex d-md-flex">
                 <v-btn
@@ -24,12 +27,18 @@
               </div>
             </template>
             <template v-slot:item.estado="{ item }">
-              <span class="ficha-estado mr-5" :class="item.estado">
-                {{ item.estado }}
+              <span class="ficha-estado mr-5" :class="item.detalles.estado">
+                {{ item.detalles.estado }}
               </span>
             </template>
+            <template v-slot:item.fecha="{ item }">
+                {{ item.detalles.fecha }}
+            </template>
+            <template v-slot:item.mesa="{ item }">
+                {{ item.detalles.mesa }}
+            </template>
             <template v-slot:no-data>
-              <v-btn color="primary" @click="initialize"> Reset </v-btn>
+              <v-btn color="primary"> Reset </v-btn>
             </template>
           </v-data-table>
         </v-col>
@@ -41,8 +50,8 @@
               >
               <div>Estado: {{ activeEstado }}</div>
               <p v-for="(plato, index) in activePlatos" :key="index">
-                <span>{{ plato.cantidad }}</span>
-                <span>{{ plato.nombre }}</span>
+                <span>{{ plato.count }}</span>
+                <span>{{ plato.productName }}</span>
               </p>
               <v-btn color="#FFC107" class="text-capitalize">
                 Finalizar pedido
@@ -65,49 +74,11 @@ export default {
       headers: [
         { text: "Orden", value: "orden" },
         { text: "Mesa", value: "mesa" },
-        { text: "H. inicio", value: "inicio" },
+        { text: "H. inicio", value: "fecha" },
         { text: "Estado", value: "estado" },
-        {
-          text: "Acciones",
-          value: "actions",
-          sortable: false,
-          class: "text-end",
-        },
+        { text: "Acciones", value: "actions", sortable: false, class: "text-end"},
       ],
-      pedidos: [
-        {
-          orden: 1,
-          mesa: 5,
-          inicio: "21:00:45",
-          estado: "pendiente",
-          platos: [
-            {
-              nombre: "Café",
-              cantidad: 2,
-            },
-            {
-              nombre: "pan",
-              cantidad: 1,
-            },
-          ],
-        },
-        {
-          orden: 2,
-          mesa: 2,
-          inicio: "21:00:45",
-          estado: "listo",
-          platos: [
-            {
-              nombre: "Pastel",
-              cantidad: 1,
-            },
-            {
-              nombre: "Helado",
-              cantidad: 3,
-            },
-          ],
-        },
-      ],
+    //  pedidos: [],
       activePlatos: "",
       activeMesa: "",
       activeEstado: "",
@@ -119,10 +90,19 @@ export default {
   },
   methods: {
     showDetails(item) {
-      this.activePlatos = item.platos;
-      this.activeMesa = `Mesa N°${item.mesa}`;
-      this.activeEstado = item.estado;
+      this.activePlatos = item.productos;
+      this.activeMesa = item.detalles.mesa;
+      this.activeEstado = item.detalles.estado;
+      console.log(this.activePlatos)
     },
+  },
+  created() {
+    this.$store.dispatch("getOrders");
+  },
+  computed: {
+    pedidos() {
+      return this.$store.state.orders
+    }
   },
 };
 </script>

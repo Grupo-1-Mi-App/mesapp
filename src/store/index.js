@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import { importUsers, importProducts } from "../firebase/firestore.js";
+import { importUsers, importProducts, importOrders } from "../firebase/firestore.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -11,6 +11,7 @@ export default new Vuex.Store({
     pedido: [],
     products: [],
     users: [],
+    orders: []
   },
 
   getters: {
@@ -34,6 +35,11 @@ export default new Vuex.Store({
 
     getProducts(state, data) {
       state.products = data;
+      console.log(data)
+    },
+
+    getOrders(state, data) {
+      state.orders = data;
       console.log(data)
     },
 
@@ -100,6 +106,12 @@ export default new Vuex.Store({
           context.commit("getProducts", data);
       }
       importProducts(saveProducts);
+    },
+    getOrders(context) {
+      let saveOrders = ( data ) => {
+          context.commit("getOrders", data);
+      }
+      importOrders(saveOrders);
     },
     // addProduct(context, data) {
     //   context.commit("addProduct", data);

@@ -14,7 +14,7 @@
               <img
                 height="250"
                 class="img-producto"
-                :src="baseRoutes(product.image)"
+                :src="product.image"
               />
               <v-card-title>{{ product.productName }}</v-card-title>
               <v-card-text>
@@ -105,7 +105,14 @@ export default {
     },
     createOrder(){
      // this.$store.commit("createOrder", this.currentTable);
-     let data = { ...this.$store.state.pedido.concat({'mesa': this.currentTable}) }
+      let date = new Date();
+      let base = {'mesa': this.currentTable, 'estado': 'pendiente', 'fecha': date.toLocaleString()};
+      //let data = { ...base.concat(this.$store.state.pedido) }
+      let data = {
+        'detalles': base,
+        'productos': this.$store.state.pedido
+      }
+      //data = [...data]
       addOrder(data, this.createOrderCallback)
     }
   },

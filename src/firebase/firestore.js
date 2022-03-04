@@ -85,6 +85,22 @@ const importProducts = async (callback) => {
   }
 };
 
+const importOrders = async (callback) => {
+  const q = query(collection(db, colOrders));
+  try {
+    const querySnapshot = await getDocs(q);
+    let data = []
+    querySnapshot.forEach((doc) => {
+      let user = { ...doc.data(), id: doc.id};
+      data.push(user);
+    });
+    console.log(data)
+    callback(data)
+  } catch (e) {
+    console.log("Error", e);
+  }
+};
+
 //Borrar datos
 
 // Usuario
@@ -121,4 +137,4 @@ const updateProduct = async (id,item) => {
 };
 
 
-export { addUser, importUsers, addProduct, importProducts, deleteUser, deleteProduct, updateProduct, addOrder };
+export { addUser, importUsers, addProduct, importProducts, deleteUser, deleteProduct, updateProduct, addOrder, importOrders };
