@@ -1,6 +1,15 @@
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./config.js";
-import { getFirestore, collection, addDoc, query, getDocs, deleteDoc, doc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 initializeApp(firebaseConfig);
 
@@ -10,11 +19,10 @@ const colUsers = "users";
 const colProducts = "products";
 const colOrders = "orders";
 
-
 // Agregar datos
 
 //Usuario
-const addUser = async(data) => {
+const addUser = async (data) => {
   try {
     const docRef = await addDoc(collection(db, colUsers), data);
     console.log("Document written with ID: ", docRef.id);
@@ -26,7 +34,7 @@ const addUser = async(data) => {
 };
 
 // Productos
-const addProduct = async(data) => {
+const addProduct = async (data) => {
   try {
     const docRef = await addDoc(collection(db, colProducts), data);
     console.log("Document written with ID: ", docRef.id);
@@ -38,7 +46,7 @@ const addProduct = async(data) => {
 };
 
 // Pedidos
-const addOrder = async(data, callback) => {
+const addOrder = async (data, callback) => {
   try {
     const docRef = await addDoc(collection(db, colOrders), data);
     console.log("Document written with ID: ", docRef.id);
@@ -49,7 +57,6 @@ const addOrder = async(data, callback) => {
   }
 };
 
-
 // Obtener datos
 
 //Usuario
@@ -57,13 +64,13 @@ const importUsers = async (callback) => {
   const q = query(collection(db, colUsers));
   try {
     const querySnapshot = await getDocs(q);
-    let data = []
+    let data = [];
     querySnapshot.forEach((doc) => {
-      let user = { ...doc.data(), id: doc.id};
+      let user = { ...doc.data(), id: doc.id };
       data.push(user);
     });
-    console.log(data)
-    callback(data)
+    console.log(data);
+    callback(data);
   } catch (e) {
     console.log("Error", e);
   }
@@ -73,13 +80,13 @@ const importProducts = async (callback) => {
   const q = query(collection(db, colProducts));
   try {
     const querySnapshot = await getDocs(q);
-    let data = []
+    let data = [];
     querySnapshot.forEach((doc) => {
-      let user = { ...doc.data(), id: doc.id};
+      let user = { ...doc.data(), id: doc.id };
       data.push(user);
     });
-    console.log(data)
-    callback(data)
+    console.log(data);
+    callback(data);
   } catch (e) {
     console.log("Error", e);
   }
@@ -123,18 +130,24 @@ const deleteProduct = async (id) => {
   }
 };
 
-const updateProduct = async (id,item) => {
+// update
+const updateProduct = async (id, data) => {
   try {
-    console.log("DATA",id, item);
-    await setDoc(doc(db, colProducts, id), item);
-    alert("Datos actualizados");
-    
-    // Agregar callback aca
+    await updateDoc(doc(db, colProducts, id), data);
   } catch (e) {
-    console.log("Error", e);
-    alert("Error agregando documento");
+    console.log("update", e);
   }
 };
 
 
-export { addUser, importUsers, addProduct, importProducts, deleteUser, deleteProduct, updateProduct, addOrder, importOrders };
+export {
+  addUser,
+  importUsers,
+  addProduct,
+  importProducts,
+  deleteUser,
+  deleteProduct,
+  updateProduct,
+  addOrder,
+  importOrders
+};

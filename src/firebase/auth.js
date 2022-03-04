@@ -7,13 +7,13 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import {addUser} from './firestore.js'
+import { addUser } from "./firestore.js";
 initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
 // Registrar usuario
-const registrarUsuario = (email, password, role, name,callback) => {
+const registrarUsuario = (email, password, role, name, callback) => {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
@@ -21,8 +21,8 @@ const registrarUsuario = (email, password, role, name,callback) => {
       addUser({
         email: email,
         name: name,
-        role: role
-      })
+        role: role,
+      });
       console.log(user);
 
       callback();
@@ -67,23 +67,22 @@ const logout = () => {
 };
 
 //guard
-function guardMyroute (to, from, next) {
+function guardMyroute(to, from, next) {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       if (to.path === "/admin") {
-        next("/qr" )
+        next("/qr");
       } else {
-        next()
+        next();
       }
     } else {
       if (to.path !== "/" && to.path !== "/admin") {
         next("/admin");
-      } 
-      else {
-        next(); 
+      } else {
+        next();
       }
     }
-  })
+  });
 }
 
-export { registrarUsuario, login, logout,  guardMyroute};
+export { registrarUsuario, login, logout, guardMyroute };

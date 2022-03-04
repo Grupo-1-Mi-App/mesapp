@@ -117,5 +117,8 @@ export default new Vuex.Store({
     //   context.commit("addProduct", data);
     // }
   },
+  
   modules: {},
+
+
 });

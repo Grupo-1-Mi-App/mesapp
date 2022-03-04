@@ -1,159 +1,155 @@
 <template>
-  <div>
-    <v-container>
-      <v-row class="mt-5">
-        <v-col cols="12">
-          <v-card class="px-4 py-4" elevation="0">
-            <v-data-table
-              :headers="headers"
-              :items="products"
-              sort-by="productName"
-              class="elevation-0"
-            >
-              <template v-slot:top>
-                <v-toolbar flat>
-                  <v-spacer></v-spacer>
-                  <v-dialog v-model="dialog" max-width="500px">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        color="#FFC107"
-                        class="mb-2 text-capitalize"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        Agregar producto
-                      </v-btn>
-                    </template>
-                    <v-card>
-                      <v-card-title>
-                        <span class="text-h5">{{ formTitle }}</span>
-                      </v-card-title>
+  <v-container>
+    <!-- <v-row class="mt-5">
+        <v-col cols="12"> -->
+    <!-- <v-card class="px-4 py-4" elevation="0"> -->
+    <v-data-table
+      :headers="headers"
+      :items="products"
+      sort-by="productName"
+      class="elevation-0"
+    >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" max-width="500px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="#FFC107"
+                class="mb-2 text-capitalize"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Agregar producto
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">{{ formTitle }}</span>
+              </v-card-title>
 
-                      <v-card-text>
-                        <v-container>
-                          <v-row>
-                            <v-col cols="12" sm="12" md="12">
-                              <v-text-field
-                                v-model="editedItem.productName"
-                                label="Nombre del producto"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="12">
-                              <v-autocomplete
-                                outlined
-                                v-model="editedItem.category"
-                                :items="category"
-                                label="Categoría del producto"
-                                placeholder="Seleccionar..."
-                              ></v-autocomplete>
-                              <!-- <v-text-field
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="12" md="12">
+                      <v-text-field
+                        v-model="editedItem.productName"
+                        label="Nombre del producto"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="12">
+                      <v-autocomplete
+                        outlined
+                        v-model="editedItem.category"
+                        :items="category"
+                        label="Categoría del producto"
+                        placeholder="Seleccionar..."
+                      ></v-autocomplete>
+                      <!-- <v-text-field
                         v-model="editedItem.category"
                         label="Categoría del producto"
                       ></v-text-field> -->
-                            </v-col>
-                            <v-col cols="12" sm="12" md="12">
-                              <v-text-field
-                                v-model="editedItem.price"
-                                label="price del producto"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="12">
-                              <v-text-field
-                                v-model="editedItem.image"
-                                label="URL image"
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="12" md="12">
-                              <v-text-field
-                                v-model="editedItem.description"
-                                label="Descripción"
-                              ></v-text-field>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </v-card-text>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="12">
+                      <v-text-field
+                        v-model="editedItem.price"
+                        label="price del producto"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="12">
+                      <v-text-field
+                        v-model="editedItem.image"
+                        label="URL image"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="12">
+                      <v-text-field
+                        v-model="editedItem.description"
+                        label="Descripción"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
 
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                          color="#31302E"
-                          dark
-                          outlined
-                          class="mr-4 my-3"
-                          elevation="2"
-                          @click="close"
-                        >
-                          Cancel
-                        </v-btn>
-                        <v-btn
-                          color="#FFC107"
-                          class="mr-4 my-3"
-                          elevation="2"
-                          @click="save"
-                        >
-                          Crear producto
-                        </v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
-                  <v-dialog v-model="dialogDelete" max-width="500px">
-                    <v-card>
-                      <v-card-title class="text-h5"
-                        >¿Desea eliminar este producto?</v-card-title
-                      >
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="closeDelete"
-                          >Cancelar</v-btn
-                        >
-                        <v-btn
-                          color="blue darken-1"
-                          text
-                          @click="deleteItemConfirm"
-                          >Eliminar</v-btn
-                        >
-                        <v-spacer></v-spacer>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
-                </v-toolbar>
-              </template>
-              <template v-slot:item.actions="{ item }">
-                <div class="justify-end d-lg-flex d-md-flex">
-                  <v-btn
-                    class="btn-editar mr-5"
-                    color="#31302E"
-                    small
-                    dark
-                    @click="editItem(item)"
-                  >
-                    Editar
-                  </v-btn>
-                  <v-btn
-                    class="btn-borrar"
-                    color="#31302E"
-                    small
-                    dark
-                    outlined
-                    @click="deleteItem(item)"
-                  >
-                    Borrar
-                  </v-btn>
-                </div>
-              </template>
-              <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize"> Reset </v-btn>
-              </template>
-            </v-data-table>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="#31302E"
+                  dark
+                  outlined
+                  class="mr-4 my-3"
+                  elevation="2"
+                  @click="close"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                  color="#FFC107"
+                  class="mr-4 my-3"
+                  elevation="2"
+                  @click="save"
+                >
+                  {{ textoBoton }}
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="dialogDelete" max-width="500px">
+            <v-card>
+              <v-card-title class="text-h5"
+                >¿Desea eliminar este producto?</v-card-title
+              >
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeDelete"
+                  >Cancelar</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                  >Eliminar</v-btn
+                >
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <div class="justify-end d-lg-flex d-md-flex">
+          <v-btn
+            class="btn-editar mr-5"
+            color="#31302E"
+            small
+            dark
+            @click="editItem(item)"
+          >
+            Editar
+          </v-btn>
+          <v-btn
+            class="btn-borrar"
+            color="#31302E"
+            small
+            dark
+            outlined
+            @click="deleteItem(item)"
+          >
+            Borrar
+          </v-btn>
+        </div>
+      </template>
+      <template v-slot:no-data>
+        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+      </template>
+    </v-data-table>
+  </v-container>
 </template>
 
 <script>
-import { addProduct, deleteProduct, /*updateProduct*/ } from "../firebase/firestore.js";
+import {
+  addProduct,
+  deleteProduct,
+  updateProduct,
+} from "../firebase/firestore.js";
 export default {
   props: ["products"],
   data() {
@@ -203,13 +199,11 @@ export default {
       return this.editedIndex === -1 ? "Nuevo Producto" : "Editar Producto";
     },
 
-    getId(){
-      return this.$route.params.id
+    textoBoton() {
+      return this.formTitle === "Nuevo Producto"
+        ? "Crear Producto"
+        : "Editar Producto";
     },
-
-    filterProducts(){
-      return this.$store.getters.filterProduct(this.getId)
-    }
   },
 
   watch: {
@@ -237,10 +231,7 @@ export default {
       this.editedIndex = this.products.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
-      // updateProduct(this.id, this.filterProducts, item);
-      // this.$router.push('/admin_menu');
     },
-    
 
     deleteItem(item) {
       this.editedIndex = this.products.indexOf(item);
@@ -282,19 +273,25 @@ export default {
     },
 
     save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.products[this.editedIndex], this.editedItem);
-      } else {
+      if (this.formTitle == "Nuevo Producto") {
+        // Craear producto
         this.products.push(this.editedItem);
         addProduct(this.editedItem, this.saveProductCallback);
+      } else {
+        // Codigo para actualizar producto
+        this.editProduct();
       }
       this.close();
     },
+
+    editProduct() {
+      updateProduct(this.editedItem.id, this.editedItem);
+    },
   },
 
-  mounted(){
+  mounted() {
     this.filterProducts;
-  }
+  },
 };
 </script>
 <style scoped>
