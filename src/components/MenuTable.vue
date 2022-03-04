@@ -87,7 +87,7 @@
                   elevation="2"
                   @click="save"
                 >
-                  Crear producto
+                  {{ textoBoton }}
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -142,7 +142,11 @@
 </template>
 
 <script>
-import { addProduct, deleteProduct } from '../firebase/firestore.js'
+import {
+  addProduct,
+  deleteProduct,
+  updateProduct,
+} from "../firebase/firestore.js";
 export default {
   props: ["products"],
   data() {
@@ -191,6 +195,12 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "Nuevo Producto" : "Editar Producto";
     },
+
+    textoBoton() {
+      return this.formTitle === "Nuevo Producto"
+        ? "Crear Producto"
+        : "Editar Producto";
+    },
   },
 
   watch: {
@@ -203,21 +213,22 @@ export default {
   },
 
   created() {
-    this.initialize()
-    this.$store.dispatch('getProducts')
+    this.initialize();
+    this.$store.dispatch("getProducts");
   },
 
   methods: {
     initialize() {},
 
-    deleteProduct(id){
-      this.$store.dispatch("deleteProduct", id)
+    deleteProduct(id) {
+      this.$store.dispatch("deleteProduct", id);
     },
 
     editItem(item) {
       this.editedIndex = this.products.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
+      console.log(this.editedItem);
     },
 
     deleteItem(item) {
@@ -228,8 +239,8 @@ export default {
 
     deleteItemConfirm() {
       this.products.splice(this.editedIndex, 1);
-      deleteProduct(this.editedItem.id, this.deleteProduct)
-      this.$store.dispatch("getProducts")
+      deleteProduct(this.editedItem.id, this.deleteProduct);
+      this.$store.dispatch("getProducts");
       this.closeDelete();
     },
 
@@ -249,24 +260,30 @@ export default {
       });
     },
 
-    saveProductCallback(){
+    saveProductCallback() {
       alert("Producto creado con éxito");
-      this.editedItem.productName = ''
-      this.editedItem.description = ''
-      this.editedItem.price = ''
-      this.editedItem.number_signup = ''
-      this.editedItem.category = ''
-      this.editedItem.image = ''
+      this.editedItem.productName = "";
+      this.editedItem.description = "";
+      this.editedItem.price = "";
+      this.editedItem.number_signup = "";
+      this.editedItem.category = "";
+      this.editedItem.image = "";
     },
 
     save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.products[this.editedIndex], this.editedItem);
-      } else {
+      if (this.formTitle == "Nuevo Producto") {
+        // Craear producto
         this.products.push(this.editedItem);
         addProduct(this.editedItem, this.saveProductCallback);
+      } else {
+        // Codigo para actualizar producto
+        this.editProduct();
       }
       this.close();
+    },
+
+    editProduct() {
+      updateProduct(this.editedItem.id, this.editedItem);
     },
   },
 };

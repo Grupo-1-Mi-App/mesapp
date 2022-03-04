@@ -1,6 +1,15 @@
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "./config.js";
-import { getFirestore, collection, addDoc, query, getDocs, deleteDoc, doc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 initializeApp(firebaseConfig);
 
@@ -12,7 +21,7 @@ const colProducts = "products";
 // Agregar datos
 
 //Usuario
-const addUser = async(data) => {
+const addUser = async (data) => {
   try {
     const docRef = await addDoc(collection(db, colUsers), data);
     console.log("Document written with ID: ", docRef.id);
@@ -24,7 +33,7 @@ const addUser = async(data) => {
 };
 
 // Productos
-const addProduct = async(data) => {
+const addProduct = async (data) => {
   try {
     const docRef = await addDoc(collection(db, colProducts), data);
     console.log("Document written with ID: ", docRef.id);
@@ -42,13 +51,13 @@ const importUsers = async (callback) => {
   const q = query(collection(db, colUsers));
   try {
     const querySnapshot = await getDocs(q);
-    let data = []
+    let data = [];
     querySnapshot.forEach((doc) => {
-      let user = { ...doc.data(), id: doc.id};
+      let user = { ...doc.data(), id: doc.id };
       data.push(user);
     });
-    console.log(data)
-    callback(data)
+    console.log(data);
+    callback(data);
   } catch (e) {
     console.log("Error", e);
   }
@@ -58,13 +67,13 @@ const importProducts = async (callback) => {
   const q = query(collection(db, colProducts));
   try {
     const querySnapshot = await getDocs(q);
-    let data = []
+    let data = [];
     querySnapshot.forEach((doc) => {
-      let user = { ...doc.data(), id: doc.id};
+      let user = { ...doc.data(), id: doc.id };
       data.push(user);
     });
-    console.log(data)
-    callback(data)
+    console.log(data);
+    callback(data);
   } catch (e) {
     console.log("Error", e);
   }
@@ -92,5 +101,21 @@ const deleteProduct = async (id) => {
   }
 };
 
+// update
+const updateProduct = async (id, data) => {
+  try {
+    await updateDoc(doc(db, colProducts, id), data);
+  } catch (e) {
+    console.log("update", e);
+  }
+};
 
-export { addUser, importUsers, addProduct, importProducts, deleteUser, deleteProduct };
+export {
+  addUser,
+  importUsers,
+  addProduct,
+  importProducts,
+  deleteUser,
+  deleteProduct,
+  updateProduct,
+};
