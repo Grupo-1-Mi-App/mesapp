@@ -64,7 +64,7 @@ export default {
     logout() {
       logout();
       this.$store.commit("eraseEmail");
-      this.$swal("Te has deslogeado correctamente");
+      this.$swal("Te has deslogeado correctamente", "Nos vemos la próxima vez", "success")
     },
     setAuthState() {
       if (this.userEmail == "") {

@@ -7,7 +7,13 @@ import VueSmoothScroll from 'vue2-smooth-scroll'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-Vue.use(VueSweetalert2)
+Vue.use(VueSweetalert2, {
+  confirmButtonColor: '#ffc107',
+  confirmButtonText: 'Aceptar',
+  customClass: {
+    confirmButton: 'sweet-alert-button'
+  },
+})
 Vue.use(VueSmoothScroll)
 
 Vue.config.productionTip = false
