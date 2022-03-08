@@ -36,7 +36,21 @@ const getUserRole = async (email, callback) => {
     console.log("Error", e);
   }
 };
+//Update order
+const updateOrder = async (id, data) => {
+  try {
+    await updateDoc(doc(db, colOrders, id), {
+      "detalles":{
+        "estado": data.estado,
+        "fecha": data.fecha,
+        "mesa": data.mesa
+      }
+  });
 
+  } catch (e) {
+    console.log("update", e);
+  }
+};
 //Usuario
 const addUser = async (data) => {
   try {
@@ -174,5 +188,6 @@ export {
   addOrder,
   importOrders,
   updateUser,
-  getUserRole
+  getUserRole,
+  updateOrder
 };

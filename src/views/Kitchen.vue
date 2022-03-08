@@ -53,8 +53,11 @@
                 <span>{{ plato.count }}</span>
                 <span>{{ plato.productName }}</span>
               </p>
-              <v-btn color="#FFC107" class="text-capitalize">
+              <v-btn color="#FFC107" class="text-capitalize" @click="changeOrder('finalizado')" v-if="this.activeEstado !== 'finalizado' && this.activeEstado !== 'terminado'">
                 Finalizar pedido
+              </v-btn>
+              <v-btn color="#FFC107" class="text-capitalize" @click="changeOrder('terminado')" v-if="this.activeEstado == 'finalizado' && this.activeEstado !== 'terminado'">
+                Eliminar
               </v-btn>
             </div>
             <div v-else>Selecciona un pedido</div>
@@ -68,6 +71,8 @@
 <script>
 import navbarComponent from "../components/Navbar.vue";
 import footerComponent from "../components/Footer.vue";
+import { updateOrder } from "../firebase/firestore.js";
+
 export default {
   data() {
     return {
@@ -78,10 +83,11 @@ export default {
         { text: "Estado", value: "estado" },
         { text: "Acciones", value: "actions", sortable: false, class: "text-end"},
       ],
-    //  pedidos: [],
       activePlatos: "",
       activeMesa: "",
       activeEstado: "",
+      activeID: "",
+      activeFecha: ""
     };
   },
   components: {
@@ -93,8 +99,26 @@ export default {
       this.activePlatos = item.productos;
       this.activeMesa = item.detalles.mesa;
       this.activeEstado = item.detalles.estado;
-      console.log(this.activePlatos)
+      this.activeFecha = item.detalles.fecha;
+      this.activeID = item.id;
     },
+    changeOrder(estado){
+      let data = {
+        "estado": estado,
+        "fecha": this.activeFecha,
+        "mesa": this.activeMesa
+      }
+      updateOrder(this.activeID, data)
+      this.$store.dispatch("getOrders");
+      this.activePlatos = ""
+      this.activeMesa = ""
+      this.activeEstado = ""
+      this.activeFecha = ""
+      this.activeID = ""
+    },
+    deleteOrder(){
+      console.log(this.activeID)
+    }
   },
   created() {
     this.$store.dispatch("getOrders");
@@ -113,11 +137,16 @@ export default {
   padding: 5px 10px;
   text-transform: capitalize;
 }
-.listo {
+.finalizado {
   background: green !important;
+  color: white;
 }
 .pendiente {
   background: orange;
+}
+.terminado {
+  background: red;
+  color: white;
 }
 .resumen p {
   border-bottom: 1px solid black;
