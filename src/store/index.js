@@ -8,6 +8,7 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     email: "",
+    role: "",
     pedido: [],
     products: [],
     users: [],
@@ -28,11 +29,13 @@ export default new Vuex.Store({
     setEmail(state, data) {
       state.email = data;
     },
-
+    setRole(state, data){
+      state.role = data
+    },
     getUsers(state, data) {
       state.users = data;
     },
-
+    
     getProducts(state, data) {
       state.products = data;
       console.log(data)
@@ -45,6 +48,7 @@ export default new Vuex.Store({
 
     eraseEmail(state) {
       state.email = "";
+      state.role = "";
     },
 
     deleteUser(state, id) {
@@ -100,7 +104,6 @@ export default new Vuex.Store({
       }
       importUsers(saveUsers);
     },
-
     getProducts(context) {
       let saveProducts = ( data ) => {
           context.commit("getProducts", data);

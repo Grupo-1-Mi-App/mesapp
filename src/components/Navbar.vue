@@ -11,14 +11,16 @@
 
       <v-toolbar-items class="ml-5 hidden-sm-and-down" v-if="auth">
         <v-btn to="/qr" plain elevation="0">Generar código QR</v-btn>
-        <v-btn to="/users" plain elevation="0">Usuarios</v-btn>
-        <v-btn to="/admin_menu" plain elevation="0">Menú</v-btn>
+        <v-btn to="/users" plain elevation="0" v-if="userRole == 'Administrador'">Usuarios</v-btn>
+        <v-btn to="/admin_menu" plain elevation="0" v-if="userRole == 'Administrador'">Menú</v-btn>
+        <v-btn to="/kitchen" plain elevation="0" v-if="userRole == 'Cocina' || 'Administrador'">Cocina</v-btn>
+        <v-btn to="/waiter" plain elevation="0" v-if="userRole == 'Garzon' || 'Administrador'">Garzón</v-btn>
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="auth">
         <v-btn @click="logout" plain elevation="0">
-          {{ userEmail }}
+          {{ userEmail }} ({{ userRole }}) | 
             Salir <v-icon right dark> mdi-logout </v-icon>
         </v-btn>
       </v-toolbar-items>
@@ -56,6 +58,7 @@ export default {
     drawer: false,
     group: null,
     auth: false,
+    role: ''
   }),
   methods: {
     logout() {
@@ -74,6 +77,9 @@ export default {
   computed: {
     userEmail() {
       return this.$store.state.email;
+    },
+    userRole() {
+      return this.$store.state.role;
     },
   },
 

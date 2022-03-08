@@ -29,6 +29,7 @@
 
 <script>
 import { login } from "../firebase/auth.js";
+import { getUserRole } from "../firebase/firestore.js";
 export default {
   data() {
     return {
@@ -72,8 +73,13 @@ export default {
       this.$store.commit("setEmail", email);
     },
 
+    saveRole(role){
+      this.$store.commit("setRole", role);
+    },
+
     loginUser() {
       login(this.email, this.password, this.loginIncorrecto, this.saveEmail);
+      getUserRole(this.email, this.saveRole)
     },
   }
 };

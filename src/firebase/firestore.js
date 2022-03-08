@@ -9,6 +9,8 @@ import {
   deleteDoc,
   doc,
   updateDoc,
+  where,
+  limit
 } from "firebase/firestore";
 
 initializeApp(firebaseConfig);
@@ -19,7 +21,21 @@ const colUsers = "users";
 const colProducts = "products";
 const colOrders = "orders";
 
-// Agregar datos
+//Search user by email
+const getUserRole = async (email, callback) => {
+  const q = query(collection(db, colUsers), where("email", "==", email), limit(1));
+  // Where -> 1 arg: Campo - 2 arg: Operador - 3 arg: Valor
+  try {
+    const querySnapshot = await getDocs(q);
+    let role = ''
+    querySnapshot.forEach((doc) => {
+      role = doc.data().role;
+    });
+    callback(role);
+  } catch (e) {
+    console.log("Error", e);
+  }
+};
 
 //Usuario
 const addUser = async (data) => {
@@ -158,4 +174,5 @@ export {
   addOrder,
   importOrders,
   updateUser,
+  getUserRole
 };
