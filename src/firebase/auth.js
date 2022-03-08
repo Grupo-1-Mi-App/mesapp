@@ -59,7 +59,7 @@ const logout = () => {
   signOut(auth)
     .then((user) => {
       console.log(user);
-      alert("Te has deslogeado correctamente");
+      //Swal.fire("Te has deslogeado correctamente");
     })
     .catch((error) => {
       console.log(error);

@@ -99,7 +99,8 @@ export default {
       return `${window.location.origin}/${img}`;
     },
     createOrderCallback() {
-      alert("Pedido creado con éxito");
+      //alert("Pedido creado con éxito");
+      this.$swal("Pedido creado con éxito");
       this.currentTable = "";
       this.$store.commit("resetOrder");
     },

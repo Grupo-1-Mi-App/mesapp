@@ -263,7 +263,8 @@ export default {
     },
 
     saveProductCallback() {
-      alert("Producto creado con éxito");
+      //alert("Producto creado con éxito");
+      this.$swal("Producto creado con éxito");
       this.editedItem.productName = "";
       this.editedItem.description = "";
       this.editedItem.price = "";

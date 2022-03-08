@@ -275,7 +275,8 @@ export default {
     },
 
     createUserCallback() {
-      alert("Usuario creado con exito");
+     // alert("Usuario creado con exito");
+      this.$swal("Usuario creado con exito");
       this.editedItem.name = "";
       this.editedItem.email = "";
       this.editedItem.password = "";
