@@ -2,7 +2,7 @@
   <div>
     <navbarComponent></navbarComponent>
     <v-container fluid class="product">
-      <v-row>
+      <v-row class="mt-5">
         <v-col cols="8">
           <v-data-table
             :headers="headers"
@@ -49,6 +49,7 @@
                 >Resumen del Pedido: {{ activeMesa }}</v-card-title
               >
               <div>Estado: {{ activeEstado }}</div>
+              <div>Cantidad: </div>
               <p v-for="(plato, index) in activePlatos" :key="index">
                 <span>{{ plato.count }}</span>
                 <span>{{ plato.productName }}</span>
