@@ -169,6 +169,9 @@ export default {
       return this.$store.state.pedido;
     },
   },
+  created() {
+    this.$store.dispatch("getProducts");
+  },
 };
 </script>
 
