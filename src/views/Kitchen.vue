@@ -26,8 +26,8 @@
                 </v-btn>
               </div>
             </template>
-            <template v-slot:item.estado="{ item }">
-              <span class="ficha-estado mr-5" :class="item.detalles.estado">
+            <template v-slot:item.estado="{ item }" >
+              <span class="ficha-estado mr-5" :class="item.detalles.estado" v-show="item.detalles.estado !== 'terminado'">
                 {{ item.detalles.estado }}
               </span>
             </template>

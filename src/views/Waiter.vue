@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="waiter">
     <Navbar />
     <TableWaiter :products="products"/>
     <Footer/>
@@ -23,4 +23,7 @@
 </script>
 
 <style scoped>
+.waiter{
+  min-width: 768px
+}
 </style> 

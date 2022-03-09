@@ -59,6 +59,9 @@ export default {
       }
     },
   methods: {},
+  created() {
+    this.$store.dispatch("getProducts");
+  },
   components: {MenuSection}
 };
 </script>

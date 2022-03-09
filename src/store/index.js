@@ -98,13 +98,13 @@ export default new Vuex.Store({
   },
   actions: {
     getUsers(context) {
-      console.log('holita profe')
       let saveUsers = ( data ) => {
           context.commit("getUsers", data);
       }
       importUsers(saveUsers);
     },
     getProducts(context) {
+      console.log('chao profe')
       let saveProducts = ( data ) => {
           context.commit("getProducts", data);
       }
