@@ -19,6 +19,7 @@
         <v-btn to="/admin_menu" plain elevation="0" v-if="userRole == 'Administrador'">Menú</v-btn>
         <v-btn to="/kitchen" plain elevation="0" v-if="userRole == 'Cocina' || userRole == 'Administrador'">Cocina</v-btn>
         <v-btn to="/waiter" plain elevation="0" v-if="userRole == 'Garzon' || userRole == 'Administrador'">Garzón</v-btn>
+
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
