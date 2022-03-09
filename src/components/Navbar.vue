@@ -15,42 +15,10 @@
 
       <v-toolbar-items class="ml-5 hidden-sm-and-down" v-if="auth">
         <v-btn to="/qr" plain elevation="0">Generar código QR</v-btn>
-<<<<<<< Updated upstream
-        <v-btn
-          to="/users"
-          plain
-          elevation="0"
-          v-if="userRole == 'Administrador'"
-          id="userMenuOption"
-          >Usuarios</v-btn
-        >
-        <v-btn
-          to="/admin_menu"
-          plain
-          elevation="0"
-          v-if="userRole == 'Administrador'"
-          >Menú</v-btn
-        >
-        <v-btn
-          to="/kitchen"
-          plain
-          elevation="0"
-          v-if="userRole == 'Cocina' || 'Administrador'"
-          >Cocina</v-btn
-        >
-        <v-btn
-          to="/waiter"
-          plain
-          elevation="0"
-          v-if="userRole == 'Garzon' || 'Administrador'"
-          >Garzón</v-btn
-        >
-=======
         <v-btn to="/users" plain elevation="0" v-if="userRole == 'Administrador'">Usuarios</v-btn>
         <v-btn to="/admin_menu" plain elevation="0" v-if="userRole == 'Administrador'">Menú</v-btn>
         <v-btn to="/kitchen" plain elevation="0" v-if="userRole == 'Cocina' || userRole == 'Administrador'">Cocina</v-btn>
         <v-btn to="/waiter" plain elevation="0" v-if="userRole == 'Garzon' || userRole == 'Administrador'">Garzón</v-btn>
->>>>>>> Stashed changes
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
