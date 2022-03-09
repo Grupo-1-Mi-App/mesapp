@@ -36,6 +36,7 @@
                             </v-text-field>
                             <v-col cols="12">
                               <v-text-field
+                                id="NameLabelUser"
                                 outlined
                                 dense
                                 v-model="editedItem.name"
@@ -44,6 +45,7 @@
                             </v-col>
                             <v-col cols="12">
                               <v-text-field
+                                id="emailLabelUser"
                                 label="E-mail"
                                 outlined
                                 dense
@@ -52,6 +54,7 @@
                             </v-col>
                             <v-col cols="12">
                               <v-text-field
+                                id="passwordLabelUser"
                                 outlined
                                 dense
                                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -66,6 +69,7 @@
                             </v-col>
                             <v-col cols="12">
                               <v-autocomplete
+                                id="selectLabelUser"
                                 outlined
                                 v-model="editedItem.role"
                                 :items="roles"
@@ -90,6 +94,7 @@
                           Cancel
                         </v-btn>
                         <v-btn
+                          id="btnCrearUsuario"
                           color="#FFC107"
                           class="mr-4 my-3"
                           elevation="2"
@@ -275,7 +280,7 @@ export default {
     },
 
     createUserCallback() {
-     // alert("Usuario creado con exito");
+      // alert("Usuario creado con exito");
       this.$swal("Usuario creado con exito");
       this.editedItem.name = "";
       this.editedItem.email = "";

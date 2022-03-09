@@ -7,26 +7,55 @@
         class="hidden-sm-and-up"
       ></v-app-bar-nav-icon>
 
-      <v-toolbar-title><router-link to="/" class="text-decoration-none title" >mesapp</router-link></v-toolbar-title>
+      <v-toolbar-title
+        ><router-link to="/" class="text-decoration-none title"
+          >mesapp</router-link
+        ></v-toolbar-title
+      >
 
       <v-toolbar-items class="ml-5 hidden-sm-and-down" v-if="auth">
         <v-btn to="/qr" plain elevation="0">Generar código QR</v-btn>
-        <v-btn to="/users" plain elevation="0" v-if="userRole == 'Administrador'">Usuarios</v-btn>
-        <v-btn to="/admin_menu" plain elevation="0" v-if="userRole == 'Administrador'">Menú</v-btn>
-        <v-btn to="/kitchen" plain elevation="0" v-if="userRole == 'Cocina' || 'Administrador'">Cocina</v-btn>
-        <v-btn to="/waiter" plain elevation="0" v-if="userRole == 'Garzon' || 'Administrador'">Garzón</v-btn>
+        <v-btn
+          to="/users"
+          plain
+          elevation="0"
+          v-if="userRole == 'Administrador'"
+          id="userMenuOption"
+          >Usuarios</v-btn
+        >
+        <v-btn
+          to="/admin_menu"
+          plain
+          elevation="0"
+          v-if="userRole == 'Administrador'"
+          >Menú</v-btn
+        >
+        <v-btn
+          to="/kitchen"
+          plain
+          elevation="0"
+          v-if="userRole == 'Cocina' || 'Administrador'"
+          >Cocina</v-btn
+        >
+        <v-btn
+          to="/waiter"
+          plain
+          elevation="0"
+          v-if="userRole == 'Garzon' || 'Administrador'"
+          >Garzón</v-btn
+        >
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="auth">
-        <v-btn @click="logout" plain elevation="0">
-          {{ userEmail }} ({{ userRole }}) | 
-            Salir <v-icon right dark> mdi-logout </v-icon>
+        <v-btn id="logOutBtn" @click="logout" plain elevation="0">
+          {{ userEmail }} ({{ userRole }}) | Salir
+          <v-icon right dark> mdi-logout </v-icon>
         </v-btn>
       </v-toolbar-items>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute left temporary >
+    <v-navigation-drawer v-model="drawer" absolute left temporary>
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
@@ -37,13 +66,19 @@
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title><router-link to="/users" class="link"
-                >Usuarios</router-link></v-list-item-title>
+            <v-list-item-title
+              ><router-link to="/users" class="link"
+                >Usuarios</router-link
+              ></v-list-item-title
+            >
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title><router-link to="/admin_menu" class="link"
-                >Menú</router-link></v-list-item-title>
+            <v-list-item-title
+              ><router-link to="/admin_menu" class="link"
+                >Menú</router-link
+              ></v-list-item-title
+            >
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -58,13 +93,17 @@ export default {
     drawer: false,
     group: null,
     auth: false,
-    role: ''
+    role: "",
   }),
   methods: {
     logout() {
       logout();
       this.$store.commit("eraseEmail");
-      this.$swal("Te has deslogeado correctamente", "Nos vemos la próxima vez", "success")
+      this.$swal(
+        "Te has deslogeado correctamente",
+        "Nos vemos la próxima vez",
+        "success"
+      );
     },
     setAuthState() {
       if (this.userEmail == "") {
@@ -97,18 +136,17 @@ export default {
 </script>
 
 <style scoped>
-.theme--dark.v-app-bar.v-toolbar.v-sheet{
-    background: #31302E;
+.theme--dark.v-app-bar.v-toolbar.v-sheet {
+  background: #31302e;
 }
-.v-btn.v-size--default{
-    text-transform: initial !important;
-    font-weight: 300;
+.v-btn.v-size--default {
+  text-transform: initial !important;
+  font-weight: 300;
 }
-.title{
+.title {
   color: white;
 }
-.link{
+.link {
   color: black;
-
 }
 </style>
