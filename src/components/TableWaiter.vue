@@ -25,15 +25,19 @@
                       class="img-producto"
                       :src="product.image"
                     />
-                    <v-card-title>{{ product.productName }}</v-card-title>
+                   <div class="contenido">
+                     <div class="texto">
+                        <v-card-title>{{ product.productName }}</v-card-title>
                     <v-card-text>
                       <div>{{ product.description }}</div>
                       <div class="my-4 text-subtitle-1">
                         ${{ product.price }}
                       </div>
                     </v-card-text>
+                     </div>
 
-                    <v-divider class="mx-4"></v-divider>
+                    <div class="botones">
+                      <v-divider class="mx-4"></v-divider>
                     <v-card-actions>
                       <v-btn
                         class="text-capitalize"
@@ -43,6 +47,8 @@
                         Agregar
                       </v-btn>
                     </v-card-actions>
+                    </div>
+                   </div>
                   </v-card>
                 </v-col>
               </v-row>
@@ -167,6 +173,15 @@ export default {
 </script>
 
 <style scoped>
+.contenido{
+  display: flex;
+    flex-direction: column;
+    height: calc(100% - 250px);
+    justify-content: space-between;
+}
+.botones{
+ padding: 1rem 0;
+}
 .productos {
   width: 65%;
   float: left;
@@ -225,6 +240,7 @@ export default {
 }
 .food-card {
   min-height: 120px;
+  height: 100%;
 }
 @media (max-width: 480px) {
   .btn-borrar,
