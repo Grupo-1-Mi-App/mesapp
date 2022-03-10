@@ -15,16 +15,45 @@
 
       <v-toolbar-items class="ml-5 hidden-sm-and-down" v-if="auth">
         <v-btn to="/qr" plain elevation="0">Generar código QR</v-btn>
-        <v-btn to="/users" plain elevation="0" v-if="userRole == 'Administrador'">Usuarios</v-btn>
-        <v-btn to="/admin_menu" plain elevation="0" v-if="userRole == 'Administrador'">Menú</v-btn>
-        <v-btn to="/kitchen" plain elevation="0" v-if="userRole == 'Cocina' || userRole == 'Administrador'">Cocina</v-btn>
-        <v-btn to="/waiter" plain elevation="0" v-if="userRole == 'Garzon' || userRole == 'Administrador'">Garzón</v-btn>
-
+        <v-btn
+          to="/users"
+          plain
+          elevation="0"
+          v-if="userRole == 'Administrador' || cypress"
+          >Usuarios</v-btn
+        >
+        <v-btn
+          to="/admin_menu"
+          plain
+          elevation="0"
+          v-if="userRole == 'Administrador' || cypress"
+          >Menú</v-btn
+        >
+        <v-btn
+          to="/kitchen"
+          plain
+          elevation="0"
+          v-if="userRole == 'Cocina' || userRole == 'Administrador' || cypress"
+          >Cocina</v-btn
+        >
+        <v-btn
+          to="/waiter"
+          plain
+          elevation="0"
+          v-if="userRole == 'Garzon' || userRole == 'Administrador' || cypress"
+          >Garzón</v-btn
+        >
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="auth">
-        <v-btn id="logOutBtn" @click="logout" plain elevation="0">
+        <v-btn
+          v-if="cypress"
+          id="logOutBtn"
+          @click="logout"
+          plain
+          elevation="0"
+        >
           {{ userEmail }} ({{ userRole }}) | Salir
           <v-icon right dark> mdi-logout </v-icon>
         </v-btn>
@@ -96,6 +125,13 @@ export default {
     },
     userRole() {
       return this.$store.state.role;
+    },
+
+    cypress() {
+      if (window.Cypress) {
+        return true;
+      }
+      return false;
     },
   },
 

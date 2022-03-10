@@ -10,7 +10,14 @@ describe("Test que crea un usuario y lo valida iniciando sesión", () => {
     // cy.url().should("eq", "http://localhost:8080/qr");
     // cy.contains("h1", "QR Menú completo");
 
-    cy.visit("/qr");
+    cy.visit("/admin");
+    cy.contains("h1", "Iniciar Sesión");
+
+    cy.get("#usuarioLabel").type("admin@gmail.com");
+    cy.get("#passwordLabel").type("123456");
+    cy.get("#LogInButton").click();
+
+    cy.url().should("eq", "http://localhost:8080/qr");
     cy.contains("h1", "QR Menú completo");
 
     cy.visit("/users");
