@@ -1,5 +1,5 @@
 describe("Test que crea un usuario y lo valida iniciando sesión", () => {
-  it('Se debe poder logear exitosamente y llegar a la vista qr"', () => {
+  it("Se debe poder crear un usuario Marco, desplegar alerta de creado con exito y borrarlo", () => {
     cy.clearCookies();
 
     // cy.visit("/admin");
@@ -29,11 +29,35 @@ describe("Test que crea un usuario y lo valida iniciando sesión", () => {
       "button.mb-2.text-capitalize.v-btn.v-btn--is-elevated.v-btn--has-bg.theme--light.v-size--default"
     ).click();
 
-    cy.get("#NameLabelUser").type("Marcos");
+    cy.get("#NameLabelUser").type("1_Marcos");
     cy.get("#emailLabelUser").type("marcos_ejemplo@gmail.com");
     cy.get("#passwordLabelUser").type("123456");
     cy.get("#selectLabelUser").click();
     cy.get("[role=listbox]").eq(1).click();
     // cy.get("div#list-item-162-1").click();
+
+    cy.get("#btnCrearUsuario").click();
+
+    cy.wait(3000);
+
+    cy.get(
+      "button.swal2-confirm.sweet-alert-button.swal2-styled.swal2-default-outline"
+    ).click();
+
+    cy.get("button.btn-borrar.v-btn.v-btn--outlined.theme--dark.v-size--small")
+      .first()
+      .click();
+
+    cy.wait(3000);
+
+    cy.get("#deleteUser").click();
+
+    cy.wait(3000);
+
+    cy.get("#logOutBtn").click();
+
+    cy.get(
+      "button.swal2-confirm.sweet-alert-button.swal2-styled.swal2-default-outline"
+    ).click();
   });
 });

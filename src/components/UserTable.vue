@@ -116,6 +116,7 @@
                           >Cancelar</v-btn
                         >
                         <v-btn
+                          id="deleteUser"
                           color="blue darken-1"
                           text
                           @click="deleteItemConfirm"
