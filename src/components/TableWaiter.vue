@@ -25,30 +25,30 @@
                       class="img-producto"
                       :src="product.image"
                     />
-                   <div class="contenido">
-                     <div class="texto">
+                    <div class="contenido">
+                      <div class="texto">
                         <v-card-title>{{ product.productName }}</v-card-title>
-                    <v-card-text>
-                      <div>{{ product.description }}</div>
-                      <div class="my-4 text-subtitle-1">
-                        ${{ product.price }}
+                        <v-card-text>
+                          <div>{{ product.description }}</div>
+                          <div class="my-4 text-subtitle-1">
+                            ${{ product.price }}
+                          </div>
+                        </v-card-text>
                       </div>
-                    </v-card-text>
-                     </div>
 
-                    <div class="botones">
-                      <v-divider class="mx-4"></v-divider>
-                    <v-card-actions>
-                      <v-btn
-                        class="text-capitalize"
-                        color="#FFC107"
-                        @click="addProduct(product)"
-                      >
-                        Agregar
-                      </v-btn>
-                    </v-card-actions>
+                      <div class="botones">
+                        <v-divider class="mx-4"></v-divider>
+                        <v-card-actions>
+                          <v-btn
+                            class="text-capitalize"
+                            color="#FFC107"
+                            @click="addProduct(product)"
+                          >
+                            Agregar
+                          </v-btn>
+                        </v-card-actions>
+                      </div>
                     </div>
-                   </div>
                   </v-card>
                 </v-col>
               </v-row>
@@ -57,6 +57,7 @@
               <v-card outlined class="px-4 py-4" elevation="0">
                 <v-card-title>Resumen del Pedido</v-card-title>
                 <v-select
+                  id="selectLabelMesa"
                   :items="tables"
                   label="Mesa"
                   outlined
@@ -83,6 +84,7 @@
                       </v-btn>
                       <p>{{ product.count }}</p>
                       <v-btn
+                        id="agregarOtro"
                         color="#FFC107"
                         dark
                         x-small
@@ -94,6 +96,7 @@
                   <v-divider></v-divider>
                 </v-list>
                 <v-btn
+                  id="confirmarPedido"
                   color="#FFC107"
                   class="text-capitalize"
                   @click="createOrder"
@@ -176,14 +179,14 @@ export default {
 </script>
 
 <style scoped>
-.contenido{
+.contenido {
   display: flex;
-    flex-direction: column;
-    height: calc(100% - 250px);
-    justify-content: space-between;
+  flex-direction: column;
+  height: calc(100% - 250px);
+  justify-content: space-between;
 }
-.botones{
- padding: 1rem 0;
+.botones {
+  padding: 1rem 0;
 }
 .productos {
   width: 65%;
@@ -277,4 +280,4 @@ export default {
     width: initial;
   }
 }
-</style> 
+</style>

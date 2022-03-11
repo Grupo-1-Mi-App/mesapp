@@ -31,6 +31,7 @@
           >Menú</v-btn
         >
         <v-btn
+          id="cocinaMenuOption"
           to="/kitchen"
           plain
           elevation="0"
@@ -38,6 +39,7 @@
           >Cocina</v-btn
         >
         <v-btn
+          id="garzonMenuOption"
           to="/waiter"
           plain
           elevation="0"
