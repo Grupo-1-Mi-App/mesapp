@@ -77,23 +77,40 @@
         <v-list-item-group
           v-model="group"
           active-class="grey-darken-3--text text--accent-4"
+          v-if="auth"
         >
           <v-list-item>
-            <v-list-item-title>Generar código QR</v-list-item-title>
+            <v-list-item-title >Generar código QR</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item v-if="userRole == 'Administrador' || cypress">
             <v-list-item-title
-              ><router-link to="/users" class="link"
+              ><router-link to="/users" class="link" 
                 >Usuarios</router-link
               ></v-list-item-title
             >
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item v-if="userRole == 'Administrador' || cypress">
             <v-list-item-title
-              ><router-link to="/admin_menu" class="link"
+              ><router-link to="/admin_menu" class="link" 
                 >Menú</router-link
+              ></v-list-item-title
+            >
+          </v-list-item>
+
+          <v-list-item v-if="userRole == 'Cocina' || userRole == 'Administrador' || cypress">
+            <v-list-item-title
+              ><router-link to="/kitchen" class="link" 
+                >Cocina</router-link
+              ></v-list-item-title
+            >
+          </v-list-item>
+
+          <v-list-item v-if="userRole == 'Garzon' || userRole == 'Administrador' || cypress">
+            <v-list-item-title
+              ><router-link to="/waiter" class="link" 
+                >Garzón</router-link
               ></v-list-item-title
             >
           </v-list-item>
@@ -172,5 +189,6 @@ export default {
 }
 .link {
   color: black;
+  text-decoration: none;
 }
 </style>

@@ -10,9 +10,7 @@ describe("Test usuario Inexistentes", () => {
 
     cy.get(".v-alert").should("exist");
   });
-});
 
-describe("Test usuario Inexistentes", () => {
   it('Se debe levantar el alert de "El usuario no es correcto"', () => {
     cy.visit("/admin");
     cy.contains("h1", "Iniciar Sesión");
@@ -24,9 +22,7 @@ describe("Test usuario Inexistentes", () => {
 
     cy.get(".v-alert").should("exist");
   });
-});
 
-describe("Test usuario Inexistentes", () => {
   it('Se debe levantar el alert de "La contraseña es incorrecta"', () => {
     cy.visit("/admin");
     cy.contains("h1", "Iniciar Sesión");
