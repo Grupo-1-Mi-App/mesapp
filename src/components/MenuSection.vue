@@ -17,8 +17,8 @@
               </v-flex>
               <v-flex xs8>
                 <v-card-title primary-title>
-                  {{ product.productName }}
-                  <span class="price">${{ product.price }}</span>
+                  <h3>{{ product.productName }}</h3>
+                  <span class="price">${{ formatNumber(product.price) }}</span>
                 </v-card-title>
                 <v-card-text>
                   {{ product.description }}
@@ -33,6 +33,13 @@
 </template>
 <script>
 export default {
-    props: ['section', 'name', 'img']
+    props: ['section', 'name', 'img'],
+    methods:{
+      formatNumber(number){
+        const exp = /(\d)(?=(\d{3})+(?!\d))/g;
+        const rep = '$1.';
+        return number.toString().replace(exp,rep);
+      }
+    }
 }
 </script>

@@ -60,6 +60,15 @@
           {{ userEmail }} ({{ userRole }}) | Salir
           <v-icon right dark> mdi-logout </v-icon>
         </v-btn>
+        <v-btn 
+          v-else 
+          id="logOutBtn" 
+          @click="logout" 
+          plain elevation="0"
+        >
+          {{ userEmail }} ({{ userRole }}) | Salir
+          <v-icon right dark> mdi-logout </v-icon>
+        </v-btn>
       </v-toolbar-items>
     </v-app-bar>
 
