@@ -58,7 +58,8 @@ export default {
         return this.$store.state.products.filter( product => product.category == 'Bebestibles' )
       }
     },
-  methods: {},
+  methods: {
+  },
   created() {
     this.$store.dispatch("getProducts");
   },
@@ -79,8 +80,8 @@ export default {
   display: flex;
   box-shadow: 0px 5px 12px -5px #000000;
   height: 60px;
-  justify-content: center;
   padding-top: 1.1rem;
+  justify-content: center;
 }
 .menu::-webkit-scrollbar {
   display: none;
@@ -136,12 +137,19 @@ export default {
 .section .v-card__title {
   color: #8a5d3b;
   justify-content: space-between;
+  word-break: unset;
+}
+.section .v-card__title h3{
+  font-size: 17px;
+  line-height: 18px;
+  word-wrap: break-word;
 }
 .section .v-card__title .price {
   background: #8a5d3b;
   color: white;
   border-radius: 8px;
   padding: 0 10px;
+  margin-left: 15px;
 }
 .section .theme--light.v-image {
   height: 100%;
@@ -153,6 +161,12 @@ export default {
   border-bottom-left-radius: 10px;
 }
 @media (max-width: 480px) {
+  .menu{
+    justify-content: initial;
+  }
+  .menu a{
+    font-size: 1em;
+  }
   .header {
     height: 150px;
     width: 100%;
@@ -176,7 +190,34 @@ export default {
     padding-left: 0.6em;
   }
   .section .v-card__title {
-    justify-content: flex-end;
+    word-wrap: break-word;
+    font-size: 17px;
+    padding-bottom: 12px;
   }
+  .section .v-card__title h3{
+    padding-top: 25px;
+  }
+  
+  .section .v-card__text {
+    font-size: 13px;
+    line-height: 16px;
+    padding-bottom: 35px;
+  }
+  .section .theme--light.v-image{
+    height: 100% !important;
+  }
+  .section .v-card__title .price {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 0;
+    -webkit-border-top-right-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    -moz-border-radius-topright: 8px;
+    -moz-border-radius-bottomleft: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+  
 }
 </style>
