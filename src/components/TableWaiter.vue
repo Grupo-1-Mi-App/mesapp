@@ -53,9 +53,12 @@
                 </v-col>
               </v-row>
             </div>
-            <div class="detalles">
+            <div class="detalles" :class="{ active: showmenu }">
               <v-card outlined class="px-4 py-4" elevation="0">
-                <v-card-title>Resumen del Pedido</v-card-title>
+                <v-card-title class="titulo">Resumen del Pedido</v-card-title>
+                <div class="btn-up" @click="toggleMenu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <path fill="none" d="M0 0h24v24H0z"/><path d="M12 8l6 6H6z" fill="rgba(99,99,99,1)"/></svg>
+                </div>
                 <v-select
                   id="selectLabelMesa"
                   :items="tables"
@@ -63,38 +66,40 @@
                   outlined
                   v-model="currentTable"
                 ></v-select>
-                <v-list
-                  three-line
-                  v-for="(product, index) in pedido"
-                  :key="index"
-                >
-                  <v-row class="el-pedido">
-                    <div>
-                      <v-list-item-title>{{
-                        product.productName
-                      }}</v-list-item-title>
-                    </div>
-                    <div class="d-flex cantidades">
-                      <v-btn
-                        color="#FFC107"
-                        dark
-                        x-small
-                        @click="removeProduct(product)"
-                        >-
-                      </v-btn>
-                      <p>{{ product.count }}</p>
-                      <v-btn
-                        id="agregarOtro"
-                        color="#FFC107"
-                        dark
-                        x-small
-                        @click="addProduct(product)"
-                        >+
-                      </v-btn>
-                    </div>
-                  </v-row>
-                  <v-divider></v-divider>
-                </v-list>
+                <div class="platos">
+                  <v-list
+                    three-line
+                    v-for="(product, index) in pedido"
+                    :key="index"
+                  >
+                    <v-row class="el-pedido">
+                      <div>
+                        <v-list-item-title>{{
+                          product.productName
+                        }}</v-list-item-title>
+                      </div>
+                      <div class="d-flex cantidades">
+                        <v-btn
+                          color="#FFC107"
+                          dark
+                          x-small
+                          @click="removeProduct(product)"
+                          >-
+                        </v-btn>
+                        <p>{{ product.count }}</p>
+                        <v-btn
+                          id="agregarOtro"
+                          color="#FFC107"
+                          dark
+                          x-small
+                          @click="addProduct(product)"
+                          >+
+                        </v-btn>
+                      </div>
+                    </v-row>
+                    <v-divider></v-divider>
+                  </v-list>
+                </div>
                 <v-btn
                   id="confirmarPedido"
                   color="#FFC107"
@@ -125,9 +130,13 @@ export default {
       image: "",
       tables: ["Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4"],
       currentTable: "",
+      showmenu: false,
     };
   },
   methods: {
+    toggleMenu(){
+      this.showmenu = !this.showmenu;
+    },
     add(num) {
       let res = parseInt(this.inputpescao) + parseInt(num);
       this.inputpescao = res;
@@ -179,6 +188,9 @@ export default {
 </script>
 
 <style scoped>
+.btn-up{
+  display: none;
+}
 .contenido {
   display: flex;
   flex-direction: column;
@@ -249,6 +261,16 @@ export default {
   height: 100%;
 }
 @media (max-width: 480px) {
+  .btn-up{
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+  }
+  .detalles.active .btn-up{
+    transform: rotate(180deg);
+    top: 10px;
+  }
   .btn-borrar,
   .btn-editar {
     width: initial;
@@ -262,6 +284,16 @@ export default {
     width: 100%;
     bottom: 0;
     z-index: 99;
+    height: 18vh;
+    background: white;
+    transition: all .4s;
+  }
+  .detalles.active{
+    height: 80vh;
+  }
+  .detalles .v-card {
+    padding: 0 10px !important;
+    border-radius: 0;
   }
   .food-card {
     min-height: auto;
@@ -271,6 +303,29 @@ export default {
   }
   .v-card__text {
     display: none;
+  }
+  .v-card__title{
+    word-break: initial;
+    font-size: 0.9em;
+    line-height: 1.2em;
+  }
+  .platos {
+    max-height: 53vh;
+    overflow-y: scroll;
+  }
+  .v-input{
+    font-size: 0.9em;
+    line-height: 1.2em;
+  }
+  #confirmarPedido{
+    margin: 5px auto;
+  }
+  .v-text-field--outlined > .v-input__control > .v-input__slot{
+    min-height: auto;
+  }
+  .titulo{
+    justify-content: center;
+    font-size: 1.25em;
   }
 }
 

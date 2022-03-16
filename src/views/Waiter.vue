@@ -26,4 +26,11 @@
 .waiter{
   min-width: 768px
 }
+@media(max-width: 480px){
+  .waiter{
+    min-width: auto;
+    padding-bottom: 40vh;
+  }
+}
+
 </style> 
