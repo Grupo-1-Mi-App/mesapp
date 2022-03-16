@@ -3,7 +3,7 @@
     <navbarComponent></navbarComponent>
     <v-container fluid class="product">
       <v-row class="mt-5">
-        <v-col cols="8">
+        <div class="productos">
           <v-data-table
             :headers="headers"
             :items="pedidos"
@@ -41,13 +41,16 @@
               <v-btn color="primary"> Reset </v-btn>
             </template>
           </v-data-table>
-        </v-col>
-        <v-col cols="4" class="resumen">
+        </div>
+        <div class="resumen detalles" :class="{ active: showmenu }">
           <v-card outlined class="px-4 py-4" elevation="0">
             <div v-if="activeEstado">
               <v-card-title
                 >Resumen del Pedido: {{ activeMesa }}</v-card-title
               >
+              <div class="btn-up" @click="toggleMenu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <path fill="none" d="M0 0h24v24H0z"/><path d="M12 8l6 6H6z" fill="rgba(99,99,99,1)"/></svg>
+                </div>
               <div>Estado: {{ activeEstado }}</div>
               <div>Cantidad: </div>
               <p v-for="(plato, index) in activePlatos" :key="index">
@@ -63,7 +66,7 @@
             </div>
             <div v-else>Selecciona un pedido</div>
           </v-card>
-        </v-col>
+        </div>
       </v-row>
     </v-container>
     <footerComponent></footerComponent>
@@ -88,7 +91,8 @@ export default {
       activeMesa: "",
       activeEstado: "",
       activeID: "",
-      activeFecha: ""
+      activeFecha: "",
+      showmenu: false,
     };
   },
   components: {
@@ -96,6 +100,9 @@ export default {
     footerComponent,
   },
   methods: {
+    toggleMenu(){
+      this.showmenu = !this.showmenu;
+    },
     showDetails(item) {
       this.activePlatos = item.productos;
       this.activeMesa = item.detalles.mesa;
@@ -159,5 +166,152 @@ export default {
   border-bottom: 1px solid black;
   display: flex;
   justify-content: space-between;
+}
+.btn-up{
+  display: none;
+}
+.contenido {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 250px);
+  justify-content: space-between;
+}
+.botones {
+  padding: 1rem 0;
+}
+.productos {
+  width: 65%;
+  float: left;
+}
+.detalles {
+  width: 34%;
+  float: left;
+  margin-left: 1%;
+}
+.btn-editar {
+  width: 260px;
+  height: 31px;
+  background: #31302e 0% 0% no-repeat padding-box;
+  border-radius: 2px;
+  opacity: 1;
+}
+.btn-borrar {
+  width: 260px;
+  height: 31px;
+  border: 1px solid #31302e;
+  border-radius: 2px;
+  opacity: 1;
+}
+.el-pedido {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em;
+}
+.cantidades {
+  display: flex;
+  align-items: center;
+  width: 90px;
+}
+.cantidades .v-btn {
+  font-size: 1.3em;
+  min-width: auto;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+}
+.cantidades p {
+  margin-bottom: 0;
+  padding: 0;
+  text-align: center;
+  width: 30px;
+}
+.cantidades .v-text-field {
+  text-align: center !important;
+}
+.cantidades .v-text-field input {
+  text-align: center !important;
+}
+.img-producto {
+  object-fit: cover;
+  width: 100%;
+}
+.food-card {
+  min-height: 120px;
+  height: 100%;
+}
+@media (max-width: 480px) {
+  .btn-up{
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+  }
+  .detalles.active .btn-up{
+    transform: rotate(180deg);
+    top: 10px;
+  }
+  .btn-borrar,
+  .btn-editar {
+    width: initial;
+  }
+  .productos {
+    width: 100%;
+  }
+  .detalles {
+    position: fixed;
+    right: 0;
+    width: 100%;
+    bottom: 0;
+    z-index: 99;
+    height: 18vh;
+    background: white;
+    transition: all .4s;
+  }
+  .detalles.active{
+    height: 93vh;
+  }
+  .detalles .v-card {
+    padding: 0 10px !important;
+    border-radius: 0;
+  }
+  .food-card {
+    min-height: auto;
+  }
+  .img-producto {
+    height: 80px;
+  }
+  .v-card__text {
+    display: none;
+  }
+  .v-card__title{
+    word-break: initial;
+    font-size: 0.9em;
+    line-height: 1.2em;
+  }
+  .platos {
+    max-height: 53vh;
+    overflow-y: scroll;
+  }
+  .v-input{
+    font-size: 0.9em;
+    line-height: 1.2em;
+  }
+  #confirmarPedido{
+    margin: 5px auto;
+  }
+  .v-text-field--outlined > .v-input__control > .v-input__slot{
+    min-height: auto;
+  }
+  .titulo{
+    justify-content: center;
+    font-size: 1.25em;
+  }
+}
+
+@media (max-width: 992px) {
+  .btn-borrar,
+  .btn-editar {
+    width: initial;
+  }
 }
 </style>
