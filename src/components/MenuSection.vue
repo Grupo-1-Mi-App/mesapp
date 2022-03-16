@@ -13,7 +13,7 @@
           <v-card elevation="0" outlined>
             <v-layout>
               <v-flex xs4>
-                <v-img :src="product.image"></v-img>
+                <v-img  height="150px" :src="product.image"></v-img>
               </v-flex>
               <v-flex xs8>
                 <v-card-title primary-title>

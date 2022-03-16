@@ -2,7 +2,7 @@
   <div>
     <navbarComponent></navbarComponent>
     <v-container fluid class="product">
-      <v-row>
+      <v-row class="mt-5">
         <v-col cols="8">
           <v-data-table
             :headers="headers"
@@ -10,6 +10,9 @@
             sort-by="productName"
             class="elevation-0 mt-5"
           >
+            <template v-slot:item.orden="{ item }">
+                {{ pedidos.indexOf(item) + 1 }}
+            </template>
             <template v-slot:item.actions="{ item }">
               <div class="justify-end d-lg-flex d-md-flex">
                 <v-btn
@@ -23,13 +26,19 @@
                 </v-btn>
               </div>
             </template>
-            <template v-slot:item.estado="{ item }">
-              <span class="ficha-estado mr-5" :class="item.estado">
-                {{ item.estado }}
+            <template v-slot:item.estado="{ item }" >
+              <span class="ficha-estado mr-5" :class="item.detalles.estado" v-show="item.detalles.estado !== 'terminado'">
+                {{ item.detalles.estado }}
               </span>
             </template>
+            <template v-slot:item.fecha="{ item }">
+                {{ item.detalles.fecha }}
+            </template>
+            <template v-slot:item.mesa="{ item }">
+                {{ item.detalles.mesa }}
+            </template>
             <template v-slot:no-data>
-              <v-btn color="primary" @click="initialize"> Reset </v-btn>
+              <v-btn color="primary"> Reset </v-btn>
             </template>
           </v-data-table>
         </v-col>
@@ -40,12 +49,16 @@
                 >Resumen del Pedido: {{ activeMesa }}</v-card-title
               >
               <div>Estado: {{ activeEstado }}</div>
+              <div>Cantidad: </div>
               <p v-for="(plato, index) in activePlatos" :key="index">
-                <span>{{ plato.cantidad }}</span>
-                <span>{{ plato.nombre }}</span>
+                <span>{{ plato.count }}</span>
+                <span>{{ plato.productName }}</span>
               </p>
-              <v-btn color="#FFC107" class="text-capitalize">
+              <v-btn color="#FFC107" class="text-capitalize" @click="changeOrder('finalizado')" v-if="this.activeEstado !== 'finalizado' && this.activeEstado !== 'terminado'">
                 Finalizar pedido
+              </v-btn>
+              <v-btn color="#FFC107" class="text-capitalize" @click="changeOrder('terminado')" v-if="this.activeEstado == 'finalizado' && this.activeEstado !== 'terminado'">
+                Eliminar
               </v-btn>
             </div>
             <div v-else>Selecciona un pedido</div>
@@ -59,58 +72,23 @@
 <script>
 import navbarComponent from "../components/Navbar.vue";
 import footerComponent from "../components/Footer.vue";
+import { updateOrder } from "../firebase/firestore.js";
+
 export default {
   data() {
     return {
       headers: [
         { text: "Orden", value: "orden" },
         { text: "Mesa", value: "mesa" },
-        { text: "H. inicio", value: "inicio" },
+        { text: "H. inicio", value: "fecha" },
         { text: "Estado", value: "estado" },
-        {
-          text: "Acciones",
-          value: "actions",
-          sortable: false,
-          class: "text-end",
-        },
-      ],
-      pedidos: [
-        {
-          orden: 1,
-          mesa: 5,
-          inicio: "21:00:45",
-          estado: "pendiente",
-          platos: [
-            {
-              nombre: "Café",
-              cantidad: 2,
-            },
-            {
-              nombre: "pan",
-              cantidad: 1,
-            },
-          ],
-        },
-        {
-          orden: 2,
-          mesa: 2,
-          inicio: "21:00:45",
-          estado: "listo",
-          platos: [
-            {
-              nombre: "Pastel",
-              cantidad: 1,
-            },
-            {
-              nombre: "Helado",
-              cantidad: 3,
-            },
-          ],
-        },
+        { text: "Acciones", value: "actions", sortable: false, class: "text-end"},
       ],
       activePlatos: "",
       activeMesa: "",
       activeEstado: "",
+      activeID: "",
+      activeFecha: ""
     };
   },
   components: {
@@ -119,10 +97,37 @@ export default {
   },
   methods: {
     showDetails(item) {
-      this.activePlatos = item.platos;
-      this.activeMesa = `Mesa N°${item.mesa}`;
-      this.activeEstado = item.estado;
+      this.activePlatos = item.productos;
+      this.activeMesa = item.detalles.mesa;
+      this.activeEstado = item.detalles.estado;
+      this.activeFecha = item.detalles.fecha;
+      this.activeID = item.id;
     },
+    changeOrder(estado){
+      let data = {
+        "estado": estado,
+        "fecha": this.activeFecha,
+        "mesa": this.activeMesa
+      }
+      updateOrder(this.activeID, data)
+      this.$store.dispatch("getOrders");
+      this.activePlatos = ""
+      this.activeMesa = ""
+      this.activeEstado = ""
+      this.activeFecha = ""
+      this.activeID = ""
+    },
+    deleteOrder(){
+      console.log(this.activeID)
+    }
+  },
+  created() {
+    this.$store.dispatch("getOrders");
+  },
+  computed: {
+    pedidos() {
+      return this.$store.state.orders
+    }
   },
 };
 </script>
@@ -133,11 +138,16 @@ export default {
   padding: 5px 10px;
   text-transform: capitalize;
 }
-.listo {
+.finalizado {
   background: green !important;
+  color: white;
 }
 .pendiente {
   background: orange;
+}
+.terminado {
+  background: red;
+  color: white;
 }
 .resumen p {
   border-bottom: 1px solid black;

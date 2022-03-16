@@ -4,6 +4,7 @@
     <v-alert :value="alert" shaped text type="error">{{ msg }}</v-alert>
     <v-form ref="form" lazy-validation class="form">
       <v-text-field
+        id="usuarioLabel"
         v-model="email"
         label="Usuario"
         outlined
@@ -11,6 +12,7 @@
       ></v-text-field>
 
       <v-text-field
+        id="passwordLabel"
         v-model="password"
         outlined
         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -22,13 +24,14 @@
         @click:append="show1 = !show1"
         @keydown.enter="loginUser"
       ></v-text-field>
-      <v-btn elevation="2" class="" @click="loginUser">Iniciar Sesión</v-btn>
+      <v-btn id="LogInButton" elevation="2" class="" @click="loginUser">Iniciar Sesión</v-btn>
     </v-form>
   </div>
 </template>
 
 <script>
 import { login } from "../firebase/auth.js";
+import { getUserRole } from "../firebase/firestore.js";
 export default {
   data() {
     return {
@@ -67,15 +70,20 @@ export default {
         this.alert = false;
       }, 3000);
     },
-    
-    saveEmail(email){
+
+    saveEmail(email) {
       this.$store.commit("setEmail", email);
+    },
+
+    saveRole(role) {
+      this.$store.commit("setRole", role);
     },
 
     loginUser() {
       login(this.email, this.password, this.loginIncorrecto, this.saveEmail);
+      getUserRole(this.email, this.saveRole);
     },
-  }
+  },
 };
 </script>
 

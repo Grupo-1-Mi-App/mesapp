@@ -1,72 +1,116 @@
 <template>
-  <v-container fluid class="product">
-      <div class="productos">
-        <v-row>
-          <v-col cols="6" md="3" v-for="(product, index) in products" :key="index">
-            <v-card class="mx-auto food-card">
-              <template slot="progress">
-                <v-progress-linear
-                  color="deep-purple"
-                  height="10"
-                  indeterminate
-                ></v-progress-linear>
-              </template>
-              <img
-                height="250"
-                class="img-producto"
-                :src="baseRoutes(product.image)"
-              />
-              <v-card-title>{{ product.productName }}</v-card-title>
-              <v-card-text>
-                <div>{{ product.description }}</div>
-                <div class="my-4 text-subtitle-1">${{ product.price }}</div>
-              </v-card-text>
-
-              <v-divider class="mx-4"></v-divider>
-              <v-card-actions>
-                <v-btn
-                  class="text-capitalize"
-                  color="#FFC107"
-                  @click="addProduct(product)"
+  <div>
+    <v-container fluid class="product">
+      <v-row class="mt-5">
+        <v-col class="12">
+          <v-card class="px-4 py-4" elevation="0">
+            <div class="productos">
+              <v-row>
+                <v-col
+                  cols="6"
+                  md="3"
+                  v-for="(product, index) in products"
+                  :key="index"
                 >
-                  Agregar
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
-      <div class="detalles">
-        <v-card outlined class="px-4 py-4" elevation="0">
-          <v-card-title>Resumen del Pedido</v-card-title>
-          <v-select :items="mesas" label="Mesa" outlined></v-select>
-          <v-list three-line v-for="(product, index) in pedido" :key="index">
-            <v-row class="el-pedido">
-              <div>
-                <v-list-item-title>{{ product.productName }}</v-list-item-title>
-              </div>
-              <div class="d-flex cantidades">
+                  <v-card class="mx-auto food-card">
+                    <template slot="progress">
+                      <v-progress-linear
+                        color="deep-purple"
+                        height="10"
+                        indeterminate
+                      ></v-progress-linear>
+                    </template>
+                    <img
+                      height="250"
+                      class="img-producto"
+                      :src="product.image"
+                    />
+                   <div class="contenido">
+                     <div class="texto">
+                        <v-card-title>{{ product.productName }}</v-card-title>
+                    <v-card-text>
+                      <div>{{ product.description }}</div>
+                      <div class="my-4 text-subtitle-1">
+                        ${{ product.price }}
+                      </div>
+                    </v-card-text>
+                     </div>
+
+                    <div class="botones">
+                      <v-divider class="mx-4"></v-divider>
+                    <v-card-actions>
+                      <v-btn
+                        class="text-capitalize"
+                        color="#FFC107"
+                        @click="addProduct(product)"
+                      >
+                        Agregar
+                      </v-btn>
+                    </v-card-actions>
+                    </div>
+                   </div>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </div>
+            <div class="detalles">
+              <v-card outlined class="px-4 py-4" elevation="0">
+                <v-card-title>Resumen del Pedido</v-card-title>
+                <v-select
+                  :items="tables"
+                  label="Mesa"
+                  outlined
+                  v-model="currentTable"
+                ></v-select>
+                <v-list
+                  three-line
+                  v-for="(product, index) in pedido"
+                  :key="index"
+                >
+                  <v-row class="el-pedido">
+                    <div>
+                      <v-list-item-title>{{
+                        product.productName
+                      }}</v-list-item-title>
+                    </div>
+                    <div class="d-flex cantidades">
+                      <v-btn
+                        color="#FFC107"
+                        dark
+                        x-small
+                        @click="removeProduct(product)"
+                        >-
+                      </v-btn>
+                      <p>{{ product.count }}</p>
+                      <v-btn
+                        color="#FFC107"
+                        dark
+                        x-small
+                        @click="addProduct(product)"
+                        >+
+                      </v-btn>
+                    </div>
+                  </v-row>
+                  <v-divider></v-divider>
+                </v-list>
                 <v-btn
                   color="#FFC107"
-                  dark
-                  x-small
-                  @click="removeProduct(product)"
-                  >-
+                  class="text-capitalize"
+                  @click="createOrder"
+                  :disabled="!currentTable"
+                >
+                  Crear pedido
                 </v-btn>
-                <p>{{ product.count }}</p>
-                <v-btn color="#FFC107" dark x-small @click="addProduct(product)"
-                  >+
-                </v-btn>
-              </div>
-            </v-row>
-            <v-divider></v-divider>
-          </v-list>
-          <v-btn color="#FFC107" class="text-capitalize"> Crear pedido </v-btn>
-        </v-card>
-      </div>
-  </v-container>
+              </v-card>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 <script>
+import { addOrder } from "@/firebase/firestore.js";
 export default {
   props: ["products"],
   data() {
@@ -76,8 +120,8 @@ export default {
       price: 0,
       category: "",
       image: "",
-      mesas: ["Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4"],
-      inputpescao: 0,
+      tables: ["Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4"],
+      currentTable: "",
     };
   },
   methods: {
@@ -97,6 +141,28 @@ export default {
     baseRoutes(img) {
       return `${window.location.origin}/${img}`;
     },
+    createOrderCallback() {
+      //alert("Pedido creado con éxito");
+      this.$swal("Pedido creado con éxito");
+      this.currentTable = "";
+      this.$store.commit("resetOrder");
+    },
+    createOrder() {
+      // this.$store.commit("createOrder", this.currentTable);
+      let date = new Date();
+      let base = {
+        mesa: this.currentTable,
+        estado: "pendiente",
+        fecha: date.toLocaleString(),
+      };
+      //let data = { ...base.concat(this.$store.state.pedido) }
+      let data = {
+        detalles: base,
+        productos: this.$store.state.pedido,
+      };
+      //data = [...data]
+      addOrder(data, this.createOrderCallback);
+    },
   },
   computed: {
     pedido() {
@@ -107,15 +173,23 @@ export default {
 </script>
 
 <style scoped>
-.productos{
+.contenido{
+  display: flex;
+    flex-direction: column;
+    height: calc(100% - 250px);
+    justify-content: space-between;
+}
+.botones{
+ padding: 1rem 0;
+}
+.productos {
   width: 65%;
   float: left;
 }
-.detalles{
+.detalles {
   width: 34%;
   float: left;
   margin-left: 1%;
-  
 }
 .btn-editar {
   width: 260px;
@@ -165,30 +239,31 @@ export default {
   width: 100%;
 }
 .food-card {
-  min-height: 520px;
+  min-height: 120px;
+  height: 100%;
 }
 @media (max-width: 480px) {
   .btn-borrar,
   .btn-editar {
     width: initial;
   }
-  .productos{
+  .productos {
     width: 100%;
   }
-  .detalles{
+  .detalles {
     position: fixed;
     right: 0;
     width: 100%;
     bottom: 0;
     z-index: 99;
   }
-  .food-card{
+  .food-card {
     min-height: auto;
   }
-  .img-producto{
+  .img-producto {
     height: 80px;
   }
-  .v-card__text{
+  .v-card__text {
     display: none;
   }
 }

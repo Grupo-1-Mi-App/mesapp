@@ -3,27 +3,36 @@
     <div class="header">
       <h1>mesapp</h1>
       <v-flex class="menu">
-        <a href="#destacados" v-smooth-scroll="{ duration: 500, offset: -125 }"
+        <div id="container">
+        <a href="#destacados" v-smooth-scroll="{ duration: 1500, offset: -125 }"
           >Cafetería</a
         >
-        <a href="#id-2" v-smooth-scroll="{ duration: 500, offset: -125 }"
-          >Sandwiches</a
-        >
-        <a href="#id-3" v-smooth-scroll="{ duration: 500, offset: -125 }"
+        <a href="#icecream" v-smooth-scroll="{ duration: 1500, offset: -125 }"
           >Helados</a
         >
-        <a href="#id-4" v-smooth-scroll="{ duration: 500, offset: -125 }"
-          >Categoría</a
+        <a href="#sandwitch" v-smooth-scroll="{ duration: 1500, offset: -125 }"
+          >Sandwiches</a
         >
+        <a href="#drinks" v-smooth-scroll="{ duration: 1500, offset: -125 }"
+          >Bebestibles</a>
+        </div>
       </v-flex>
     </div>
 
     <span class="separator"></span>
 
-  <MenuSection :section="destacados" name="Cafetería" img="/img/destacados.png" />
-  <MenuSection :section="drinks" name="Helados" img="/img/postres.png"  />
-  <MenuSection :section="sandwitch" name="Sandwiches" img="/img/sandwichs.png" />
-    
+  <div id="destacados">
+    <MenuSection :section="destacados" name="Cafetería" img="/img/destacados.png" />
+  </div>
+   <div id="icecream">
+     <MenuSection :section="icecream" name="Helados" img="/img/postres.png"  />
+   </div>
+  <div id="sandwitch">
+    <MenuSection :section="sandwitch" name="Sandwiches" img="/img/sandwichs.png" />
+  </div>
+  <div id="drinks">
+    <MenuSection :section="drinks" name="Bebestibles" img="/img/smoothie.png"  />
+  </div>
   </div>
 </template>
 
@@ -39,23 +48,27 @@ export default {
       destacados() {
         return this.$store.state.products.filter( product => product.category == 'Cafetería' )
       },
-      drinks() {
+      icecream() {
         return this.$store.state.products.filter( product => product.category == 'Helados' )
       },
       sandwitch() {
         return this.$store.state.products.filter( product => product.category == 'Sandwiches' )
       },
-      // sandwitch() {
-      //   return this.$store.state.products.filter( product => product.category == 'sandwitch' )
-      // }
+      drinks() {
+        return this.$store.state.products.filter( product => product.category == 'Bebestibles' )
+      }
     },
   methods: {},
+  created() {
+    this.$store.dispatch("getProducts");
+  },
   components: {MenuSection}
 };
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+
 .v-main {
   overflow-x: hidden;
 }
@@ -66,6 +79,8 @@ export default {
   display: flex;
   box-shadow: 0px 5px 12px -5px #000000;
   height: 60px;
+  justify-content: center;
+  padding-top: 1.1rem;
 }
 .menu::-webkit-scrollbar {
   display: none;

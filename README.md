@@ -76,6 +76,108 @@ El segundo Hito consiste en la obtención de datos y el desarrollo de la lógica
 - Finalmente vemos que todo funciona al entrar a la vista inicial del qr. Además podemos confirmar el usuario en la esquina superior derecha.
   ![alt text](src/assets/readme/6.jpg)
 
+# Hito 3	💾
+
+## Firebase
+ Para esta etapa se debe implementar el proyecto en Firebase. Serán utilizados los servicios de autenticación y Firestore para la base de datos. Es importante recordar que será necesario tener instalada el CLI de FIrebase en el equipo.
+1. Implementación del servicio de autenticación de Firebase.
+2. Persistencia del estado de autenticación del usuario. 
+3. Manejo de rutas según estado de autenticación. 
+4. Opción de cerrar sesión.
+5. Creación de 2 usuarios.
+
+**Implementación del servicio de autenticación de Firebase**
+La conexión para la autenticación con Firebase se realiza en el archivo `auth` que se encuentra en la siguiente ruta `src/firebase/auth.js`
+![alt text](src/assets/readme/script_auth.png)
+Nuestro proyecto implica que al crear un usuario este se pueda autenticar, se hace una conexión entre auth y el *Firestore* con la columna `users` 
+**Auth desde Firebase**
+![alt text](src/assets/readme/auth.png)
+**Columna Users desde Firestore**
+![alt text](src/assets/readme/user_database.png)
+
+**Persistencia del estado de autenticación del usuario**
+Persistencia de autenticación usuario *Administrador*
+- Página QR
+![alt text](src/assets/readme/persis_admin.png)
+- Vista de Usuarios
+![alt text](src/assets/readme/persis_admin2.png)
+- Vista de Productos
+![alt text](src/assets/readme/persis_admin3.png)
+- Vista de Orders
+![alt text](src/assets/readme/persis_admin4.png)
+- Vista de Cocina
+![alt text](src/assets/readme/persis_admin5.png)
+
+**Manejo de rutas según estado de autenticación**
+Las rutas según la autenticación son:
+- Para Administrador: Generador QR, Usuarios, Productos, Garzón y Cocina
+- Para Garzón: Generador QR y Garzón
+- Para Cocina: Generador QR y Cocina
+
+**Opción de Cerrar Sesión**
+Todos los roles tienen permitido cerrar sesión
+![alt text](src/assets/readme/cerrar_sesion.png)
+El código de cerrar sesión se encuentra en `src/firebase/auth.js`
+```
+const logout = () => {
+  signOut(auth)
+    .then((user) => {
+      console.log(user);
+      //Swal.fire("Te has deslogeado correctamente");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+```
+ y en `src/components/Navbar.vue`
+ ```
+   <v-toolbar-items v-if="auth">
+        <v-btn id="logOutBtn" @click="logout" plain elevation="0">
+          {{ userEmail }} ({{ userRole }}) | Salir
+          <v-icon right dark> mdi-logout </v-icon>
+        </v-btn>
+      </v-toolbar-items>
+    </v-app-bar>
+    ...
+<script>
+import { logout } from "../firebase/auth.js";
+export default {
+  data: () => ({
+    drawer: false,
+    group: null,
+    auth: false,
+    role: "",
+  }),
+  methods: {
+    logout() {
+      logout();
+      this.$store.commit("eraseEmail");
+      this.$swal(
+        "Te has deslogeado correctamente",
+        "Nos vemos la próxima vez",
+        "success"
+      );
+    },
+    setAuthState() {
+      if (this.userEmail == "") {
+        this.auth = false;
+      } else {
+        this.auth = true;
+      }
+    },
+  },
+</script>
+```
+**Creación de usuarios**
+Existen 3 usuarios creados actualmente:
+1. admin@gmail.com para usuario admin
+2. lina@gmail.com para usuario garzon
+3. PedroTest@gmail.com para usuario cocina
+
+Para crear más usuarios, solo puede hacerse desde la cuenta administrador
+![alt text](src/assets/readme/persis_admin2.png)
+
 **Guía de instalación del proyecto**
 _Project setup_
 
@@ -119,12 +221,15 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 **Rutas de Acceso**
 Por el momento estamos usando las rutas de ambiente de desarrollo. Las rutas existentes son:
 
-- **_Administrativo_** Se encuentra todo lo que el admin puede realizar, puede visualizarlo ingresando a http://localhost:8080 (aún en etapa de desarrollo)
-- **_El menú_** lo pueden visualizar ingresando a: http://localhost:8080/menu en donde el usuario final puede elegir que desea pedir.
+- **_Administrativo_** Se encuentra todo lo que el admin puede realizar, puede visualizarlo ingresando a http://localhost:8080/admin (aún en etapa de desarrollo)
+- **_El menú_** lo pueden visualizar ingresando a: http://localhost:8080 en donde el usuario final puede elegir que desea pedir.
+- Garzón Se encuentra en: http://localhost:8080/waiter aquí este puede tomar el pedido de los clientes.
+- Cocina En esta vista podemos ver todos los pedidos recibidos en la cocina en http://localhost:8080/kitchen que fueron creados por el garzón anteriormente.
+
 
 ### Aclaraciones 📋
 
-La revisión del proyecto se debe hacer desde la rama `hito1`, en la rama `main` solo se verá el proyecto una vez realizado los cambios de acuerdo a las sugerencias hechas por parte del profesor y el ayudante.
+La revisión del proyecto se debe hacer desde la rama `hito2` e `hito3`, en la rama `main` solo se verá el proyecto una vez realizado los cambios de acuerdo a las sugerencias hechas por parte del profesor y el ayudante.
 
 # Construido con 🛠️
 
@@ -133,6 +238,7 @@ La revisión del proyecto se debe hacer desde la rama `hito1`, en la rama `main`
 - Vue Router [3.2.0] - Librería de enrutamiento oficial de Vue
 - Vuex [3.4.0] - Librería de gestión de estados
 - Firebase [9.6.5] - Plataforma para la autenticación y Bases de datos
+- Vue Sweetalert2 [5.0.2] - Librería para dar estilos a las alertas
 
 ## Autores ✒️
 

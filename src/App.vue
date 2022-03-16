@@ -22,4 +22,10 @@ export default {
   body .v-application{
     font-family: 'Open Sans', sans-serif;
   }
+  .swal2-styled.swal2-confirm,
+  .swal2-title,
+  .swal2-html-container{
+    color: black !important;
+    font-family: 'Open Sans', sans-serif !important;
+  }
 </style>
