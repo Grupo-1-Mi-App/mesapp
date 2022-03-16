@@ -4,7 +4,7 @@
 
 ## Pre-requisitos 📋
 
-Se requiere la previa instalación del framework Vue con las librerías Vuex, Vue-Router, Firebase y Vuetify
+Se requiere la previa instalación del framework Vue con las librerías Vuex, Vue-Router, Firebase, Vuetify y Cypress
 
 # Hito 1 📦
 
@@ -117,6 +117,7 @@ Las rutas según la autenticación son:
 **Opción de Cerrar Sesión**
 Todos los roles tienen permitido cerrar sesión
 ![alt text](src/assets/readme/cerrar_sesion.png)
+
 El código de cerrar sesión se encuentra en `src/firebase/auth.js`
 ```
 const logout = () => {
@@ -178,6 +179,222 @@ Existen 3 usuarios creados actualmente:
 Para crear más usuarios, solo puede hacerse desde la cuenta administrador
 ![alt text](src/assets/readme/persis_admin2.png)
 
+# Hito 4 ✏️
+La aplicación deberá superar con éxito todos los test programados y se revisará que los test escritos realmente contemplen todo el funcionamiento de la aplicación.
+
+Una vez finalizado el proceso de pruebas, se empaquetará la aplicación para su paso a producción.
+Esta será alojada en un servicio de hosting a elección. Dentro de las opciones sugeridas se
+encuentran Firebase hosting, GIthub Pages y Netlify.
+
+1. Escritura de tests para probar la aplicación completa.
+2. Alojamiento de la aplicación en un servicio de Hosting
+
+**Escritura de test de la aplicación completa**
+Todos los test se realizaron con el login y logout realizando el flujo completo, para la revisión del correcto funcionamiento del test se sugiere *eliminar las cookies del historial del navegador* de `Cypress`
+Para el proyecto generamos los siguientes test:
+***Login Success***
+```
+describe("Test logIn exitoso", () => {
+  it('Se debe poder logear exitosamente y llegar a la vista qr y deslogear luego de 10s"', () => {
+    // cy.clearLocalStorage();
+    // cy.clearCookies();
+
+    cy.visit("/admin");
+    cy.contains("h1", "Iniciar Sesión");
+
+    cy.get("#usuarioLabel").type("admin@gmail.com");
+    cy.get("#passwordLabel").type("123456");
+    cy.get("#LogInButton").click();
+
+    cy.url().should("eq", "http://localhost:8080/qr");
+    cy.contains("h1", "QR Menú completo");
+    cy.wait(5000);
+
+    cy.get("#logOutBtn").click();
+    cy.wait(3000);
+
+    cy.get(
+      "button.swal2-confirm.sweet-alert-button.swal2-styled.swal2-default-outline"
+    ).click();
+  });
+});
+```
+![alt text](src/assets/readme/login_success.png)
+
+***Error del Login***
+```
+describe("Test usuario Inexistentes", () => {
+  it('Se debe levantar el alert de "El mail es incorrecto"', () => {
+    cy.visit("/admin");
+    cy.contains("h1", "Iniciar Sesión");
+
+    cy.get("#usuarioLabel").type("EstoNoEsUnCorreo");
+    cy.get("#passwordLabel").type("123456");
+    cy.get("#LogInButton").click();
+    cy.wait(5000);
+
+    cy.get(".v-alert").should("exist");
+  });
+
+  it('Se debe levantar el alert de "El usuario no es correcto"', () => {
+    cy.visit("/admin");
+    cy.contains("h1", "Iniciar Sesión");
+
+    cy.get("#usuarioLabel").type("test@noexiste.com");
+    cy.get("#passwordLabel").type("123456");
+    cy.get("#LogInButton").click();
+    cy.wait(5000);
+
+    cy.get(".v-alert").should("exist");
+  });
+
+  it('Se debe levantar el alert de "La contraseña es incorrecta"', () => {
+    cy.visit("/admin");
+    cy.contains("h1", "Iniciar Sesión");
+
+    cy.get("#usuarioLabel").type("admin@gmail.com");
+    cy.get("#passwordLabel").type("45678");
+    cy.get("#LogInButton").click();
+    cy.wait(5000);
+
+    cy.get(".v-alert").should("exist");
+  });
+});
+```
+![alt text](src/assets/readme/error_email_login.png)
+
+***createUser***
+```
+describe("Test que crea un usuario y lo valida iniciando sesión", () => {
+  it("Se debe poder crear un usuario Marco, desplegar alerta de creado con exito y borrarlo", () => {
+    cy.clearCookies();
+
+    cy.visit("/admin");
+    cy.contains("h1", "Iniciar Sesión");
+
+    cy.get("#usuarioLabel").type("admin@gmail.com");
+    cy.get("#passwordLabel").type("123456");
+    cy.get("#LogInButton").click();
+
+    cy.url().should("eq", "http://localhost:8080/qr");
+    cy.contains("h1", "QR Menú completo");
+
+    cy.get("#userMenuOption").click();
+    cy.url().should("eq", "http://localhost:8080/users");
+
+    cy.get(
+      "button.mb-2.text-capitalize.v-btn.v-btn--is-elevated.v-btn--has-bg.theme--light.v-size--default"
+    ).click();
+
+    cy.get("#NameLabelUser").type("1_Ana");
+    cy.get("#emailLabelUser").type("ana_ejemplo@gmail.com");
+    cy.get("#passwordLabelUser").type("123456");
+    cy.get("#selectLabelUser").click();
+    cy.get("[role=listbox]").eq(1).click();
+    // cy.get("div#list-item-162-1").click();
+
+    cy.get("#btnCrearUsuario").click();
+
+    cy.wait(3000);
+
+    cy.get(
+      "button.swal2-confirm.sweet-alert-button.swal2-styled.swal2-default-outline"
+    ).click();
+
+    cy.get("button.btn-borrar.v-btn.v-btn--outlined.theme--dark.v-size--small")
+      .first()
+      .click();
+
+    cy.wait(3000);
+
+    cy.get("#deleteUser").click();
+
+    cy.wait(3000);
+
+    cy.get("#logOutBtn").click();
+
+    cy.get(
+      "button.swal2-confirm.sweet-alert-button.swal2-styled.swal2-default-outline"
+    ).click();
+  });
+});
+```
+![alt text](src/assets/readme/create_user.png)
+
+***tomarPedido***
+```
+describe("Test generar pedido de camarero", () => {
+  it("Se debe poder crear un usuario Marco, desplegar alerta de creado con exito y borrarlo", () => {
+    cy.clearCookies();
+
+    cy.visit("/admin");
+    cy.contains("h1", "Iniciar Sesión");
+
+    cy.get("#usuarioLabel").type("admin@gmail.com");
+    cy.get("#passwordLabel").type("123456");
+    cy.get("#LogInButton").click();
+
+    cy.url().should("eq", "http://localhost:8080/qr");
+    cy.contains("h1", "QR Menú completo");
+
+    cy.get("#garzonMenuOption").click();
+    cy.url().should("eq", "http://localhost:8080/waiter");
+
+    cy.get(
+      "button.text-capitalize.v-btn.v-btn--is-elevated.v-btn--has-bg.theme--light.v-size--default"
+    )
+      .eq(6)
+      .click();
+    cy.get(
+      "button.text-capitalize.v-btn.v-btn--is-elevated.v-btn--has-bg.theme--light.v-size--default"
+    )
+      .eq(11)
+      .click();
+    cy.get(
+      "button.text-capitalize.v-btn.v-btn--is-elevated.v-btn--has-bg.theme--light.v-size--default"
+    )
+      .eq(7)
+      .click();
+
+    cy.get("div.v-select__selections").click();
+    cy.get("[role=listbox]").eq(1).click();
+
+    cy.get("button#agregarOtro").eq(2).click();
+    cy.get("#confirmarPedido").click();
+
+    cy.wait(3000);
+
+    cy.get(
+      "button.swal2-confirm.sweet-alert-button.swal2-styled.swal2-default-outline"
+    ).click();
+
+    cy.get("#cocinaMenuOption").click();
+    cy.url().should("eq", "http://localhost:8080/kitchen");
+
+    cy.get(
+      "button.btn-editar.mr-5.v-btn.v-btn--is-elevated.v-btn--has-bg.theme--dark.v-size--small"
+    )
+      .eq(0)
+      .click();
+
+    cy.wait(5000);
+
+    cy.get("#logOutBtn").click();
+
+    cy.get(
+      "button.swal2-confirm.sweet-alert-button.swal2-styled.swal2-default-outline"
+    ).click();
+  });
+});
+```
+![alt text](src/assets/readme/tomar_pedido.png)
+
+**Alojamiento de la aplicación**
+Para el alojamiento hemos elegido `Netlify`[https://www.netlify.com/] como hosting y le agregamos el dominio `mesapp.cl`. Para permitir redirecciones para una SPA (Single Page Application) se debe agregar en la carpeta *public* un archivo de nombre *_redirects* dentro del proyecto el cual lleva lo siguiente:
+```
+/* /index.html 200
+```
+
 **Guía de instalación del proyecto**
 _Project setup_
 
@@ -221,15 +438,15 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 **Rutas de Acceso**
 Por el momento estamos usando las rutas de ambiente de desarrollo. Las rutas existentes son:
 
-- **_Administrativo_** Se encuentra todo lo que el admin puede realizar, puede visualizarlo ingresando a http://localhost:8080/admin (aún en etapa de desarrollo)
-- **_El menú_** lo pueden visualizar ingresando a: http://localhost:8080 en donde el usuario final puede elegir que desea pedir.
-- Garzón Se encuentra en: http://localhost:8080/waiter aquí este puede tomar el pedido de los clientes.
-- Cocina En esta vista podemos ver todos los pedidos recibidos en la cocina en http://localhost:8080/kitchen que fueron creados por el garzón anteriormente.
+- **_Administrativo_** Se encuentra todo lo que el admin puede realizar, puede visualizarlo ingresando a http://mesapp.cl/admin 
+- **_El menú_** lo pueden visualizar ingresando a: http://mesapp.cl en donde el usuario final puede elegir que desea pedir.
+- **_Garzón_** Se encuentra en: http://mesapp.cl/waiter aquí este puede tomar el pedido de los clientes.
+- **_Cocina_** En esta vista podemos ver todos los pedidos recibidos en la cocina en http://mesapp.cl/kitchen que fueron creados por el garzón anteriormente.
 
 
 ### Aclaraciones 📋
 
-La revisión del proyecto se debe hacer desde la rama `hito2` e `hito3`, en la rama `main` solo se verá el proyecto una vez realizado los cambios de acuerdo a las sugerencias hechas por parte del profesor y el ayudante.
+La revisión del proyecto se debe hacer desde la rama `hito4` o en la rama `main` la cual tiene el proyecto completo y limpio.
 
 # Construido con 🛠️
 
@@ -239,6 +456,7 @@ La revisión del proyecto se debe hacer desde la rama `hito2` e `hito3`, en la r
 - Vuex [3.4.0] - Librería de gestión de estados
 - Firebase [9.6.5] - Plataforma para la autenticación y Bases de datos
 - Vue Sweetalert2 [5.0.2] - Librería para dar estilos a las alertas
+- Cyperss [4.5.0] - End-To-End testing
 
 ## Autores ✒️
 
