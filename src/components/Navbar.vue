@@ -48,8 +48,8 @@
         >
       </v-toolbar-items>
 
-      <v-spacer></v-spacer>
-      <v-toolbar-items v-if="auth">
+      <v-spacer class="hidden-sm-and-down"></v-spacer>
+      <v-toolbar-items v-if="auth" class="hidden-sm-and-down">
         <v-btn
           v-if="cypress"
           id="logOutBtn"
@@ -73,6 +73,21 @@
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute left temporary>
+
+      <v-btn
+          v-if="cypress"
+          id="logOutBtn"
+          @click="logout"
+          plain
+          elevation="0"
+        >
+          {{ userEmail }} ({{ userRole }}) | Salir
+          <v-icon right dark> mdi-logout </v-icon>
+        </v-btn>
+          <p class="ml-5 mt-5">
+            {{ userEmail }}<br/>({{ userRole }})
+          </p>
+        
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
@@ -80,7 +95,9 @@
           v-if="auth"
         >
           <v-list-item>
-            <v-list-item-title >Generar código QR</v-list-item-title>
+            <v-list-item-title >
+              <router-link to="/qr" class="link">Generar código QR</router-link>
+            </v-list-item-title>
           </v-list-item>
 
           <v-list-item v-if="userRole == 'Administrador' || cypress">
@@ -112,6 +129,19 @@
               ><router-link to="/waiter" class="link" 
                 >Garzón</router-link
               ></v-list-item-title
+            >
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title
+              >
+            <a
+              @click="logout" 
+              class="link"
+            >
+              Salir
+            </a>
+            </v-list-item-title
             >
           </v-list-item>
         </v-list-item-group>
