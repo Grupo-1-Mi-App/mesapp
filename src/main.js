@@ -19,9 +19,18 @@ Vue.use(VueSmoothScroll)
 Vue.config.productionTip = false
 
 
-new Vue({
+const app = new Vue({
+  data: {
+    loading: true
+  },
   router,
   store,
   vuetify,
   render: h => h(App)
 }).$mount('#app')
+
+router.afterEach(() => {
+  setTimeout(() => {
+    app.loading = false;
+  }, 513);
+});
