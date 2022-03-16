@@ -46,6 +46,7 @@
           v-if="userRole == 'Garzon' || userRole == 'Administrador' || cypress"
           >Garzón</v-btn
         >
+
       </v-toolbar-items>
 
       <v-spacer class="hidden-sm-and-down"></v-spacer>
