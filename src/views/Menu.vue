@@ -89,7 +89,7 @@ export default {
 .menu a {
   padding: 10px 18px;
   text-decoration: none;
-  color: #555;
+  color: #555 !important;
   font-size: 1.2em;
 }
 .header {
